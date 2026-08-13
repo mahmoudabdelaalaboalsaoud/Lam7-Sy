@@ -108,6 +108,28 @@
   .slot.slot-done:hover{opacity:1;}
   .btn-publish-done{background:var(--ink-700); box-shadow:none; color:var(--text-2);}
 
+  /* compact today list (simplified, replaces big slot cards) */
+  .today-list{ margin-top:2px; }
+  .today-row{ position:relative; display:flex; align-items:center; gap:10px; background:var(--ink-850); border:1px solid var(--ink-700); border-radius:14px; padding:10px 12px; margin-bottom:8px; overflow:hidden; animation:rise .22s ease-out; }
+  .today-row-bar{ position:absolute; top:0; bottom:0; right:0; width:3px; }
+  html[dir="rtl"] .today-row-bar{ right:0; left:auto; }
+  .today-row.today-row-done{ opacity:.68; }
+  .today-row.today-row-done:hover{ opacity:1; }
+  .today-row-empty{ border-style:dashed; opacity:.7; }
+  .today-icon{ width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0; }
+  .today-mid{ flex:1; min-width:0; }
+  .today-plat{ font-size:11px; font-weight:800; color:var(--text-4); display:flex; align-items:center; gap:6px; }
+  .today-slot-tag{ font-size:9.5px; font-weight:800; background:var(--ink-700); color:var(--text-3); padding:1px 5px; border-radius:6px; }
+  .today-done-check{ font-size:10.5px; font-weight:800; color:#34d399; }
+  .today-car{ font-size:14.5px; font-weight:800; color:#fff; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .today-empty-txt{ font-size:12px; color:var(--text-4); margin-top:2px; }
+  .today-time{ font-size:11px; font-weight:700; margin-top:2px; }
+  .today-right{ display:flex; align-items:center; gap:6px; flex-shrink:0; }
+  .today-link-btn{ width:30px; height:30px; border-radius:9px; background:var(--ink-800); border:1px solid var(--ink-600); display:flex; align-items:center; justify-content:center; color:var(--text-3); }
+  .today-btn{ width:34px; height:34px; border-radius:10px; background:var(--red); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 16px -6px rgba(232,25,44,.5); transition:transform .1s; }
+  .today-btn:active{ transform:scale(.9); }
+  .today-btn.today-btn-done{ background:var(--ink-700); box-shadow:none; color:var(--text-3); }
+
   @keyframes rise{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
   @keyframes pop{0%{transform:scale(1);} 40%{transform:scale(.97);} 100%{transform:scale(1);}}
   .pop{animation:pop .25s ease-out;}
@@ -239,6 +261,13 @@
   .chan-icon-btn svg{width:14px; height:14px;}
   .chan-icon-btn.danger-confirm{width:auto; padding:0 10px; background:var(--red); color:#fff; font-size:11px; font-weight:800; white-space:nowrap;}
   .chan-editing{background:var(--ink-850); border:1px solid var(--red); border-radius:16px; padding:14px; margin-bottom:10px;}
+  .chan-freq-row{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:8px;}
+  .chan-freq-label{font-size:11px; font-weight:700; color:var(--text-4);}
+  .chan-freq{display:flex; align-items:center; gap:8px;}
+  .chan-freq-btn{width:24px; height:24px; border-radius:7px; background:var(--ink-800); border:1px solid var(--ink-600); color:#fff; font-size:15px; font-weight:800; display:flex; align-items:center; justify-content:center; line-height:1;}
+  .chan-freq-btn:disabled{opacity:.3;}
+  .chan-freq-btn:active:not(:disabled){transform:scale(.9);}
+  .chan-freq-val{font-size:13px; font-weight:900; color:#fff; min-width:14px; text-align:center;}
 
   /* ===== desktop layout ===== */
   @media (min-width: 880px){
@@ -256,8 +285,8 @@
     .topbar-inner{ max-width:900px; margin:0 auto; padding-top:26px; }
     .content{ max-width:900px; margin:0 auto; padding:20px 16px 16px; }
 
-    .today-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(320px,1fr)); gap:16px; align-items:start; }
-    .today-grid .slot, .today-grid .empty-slot{ margin-bottom:0; }
+    .today-list{ display:grid; grid-template-columns:repeat(auto-fill, minmax(360px,1fr)); gap:10px; align-items:start; }
+    .today-list .today-row{ margin-bottom:0; }
 
     .mgmt-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(360px,1fr)); gap:14px; align-items:start; }
     .mgmt-grid .mgmt-item{ margin-bottom:0; }
@@ -335,12 +364,12 @@ var firebaseConfig = {
   function uid(){ return Math.random().toString(36).slice(2,10) + Date.now().toString(36); }
 
   var DEFAULT_PLATFORMS = [
-    { id:"fb1", label:"فيسبوك — منشور 1", emoji:"📘", bg:"rgba(24,119,242,.15)", order:0 },
-    { id:"fb2", label:"فيسبوك — منشور 2", emoji:"📘", bg:"rgba(24,119,242,.15)", order:1 },
-    { id:"whatsapp", label:"واتساب", emoji:"💬", bg:"rgba(37,211,102,.15)", order:2 },
-    { id:"telegram", label:"تيليجرام", emoji:"✈️", bg:"rgba(41,182,246,.15)", order:3 },
-    { id:"tiktok", label:"تيك توك", emoji:"🎵", bg:"rgba(255,255,255,.10)", order:4 },
-    { id:"youtube", label:"يوتيوب شورتس", emoji:"▶️", bg:"rgba(255,0,51,.15)", order:5 }
+    { id:"fb1", label:"فيسبوك — منشور 1", emoji:"📘", bg:"rgba(24,119,242,.15)", order:0, frequency:1 },
+    { id:"fb2", label:"فيسبوك — منشور 2", emoji:"📘", bg:"rgba(24,119,242,.15)", order:1, frequency:1 },
+    { id:"whatsapp", label:"واتساب", emoji:"💬", bg:"rgba(37,211,102,.15)", order:2, frequency:1 },
+    { id:"telegram", label:"تيليجرام", emoji:"✈️", bg:"rgba(41,182,246,.15)", order:3, frequency:1 },
+    { id:"tiktok", label:"تيك توك", emoji:"🎵", bg:"rgba(255,255,255,.10)", order:4, frequency:1 },
+    { id:"youtube", label:"يوتيوب شورتس", emoji:"▶️", bg:"rgba(255,0,51,.15)", order:5, frequency:1 }
   ];
   var PRIORITY_META = {
     high:   { label:"عالية",  weight:3, urgencyWeight:1.5,  chip:"background:rgba(232,25,44,.15);color:#E8192C;border-color:rgba(232,25,44,.3)" },
@@ -420,7 +449,7 @@ var firebaseConfig = {
         platformsSeedAttempted = true;
         DEFAULT_PLATFORMS.forEach(function(p){
           setDoc(doc(db, "accounts", userId, "platforms", p.id), {
-            label: p.label, emoji: p.emoji, bg: p.bg, order: p.order, active: true, createdAt: Date.now()
+            label: p.label, emoji: p.emoji, bg: p.bg, order: p.order, active: true, createdAt: Date.now(), frequency: p.frequency || 1
           }).catch(function(err){ console.error("seed platform error:", err); });
         });
         return; // the setDoc calls will re-trigger this listener
@@ -433,7 +462,8 @@ var firebaseConfig = {
           emoji: data.emoji || "📣",
           bg: data.bg || "rgba(232,25,44,.14)",
           order: typeof data.order === "number" ? data.order : 999,
-          active: data.active !== false
+          active: data.active !== false,
+          frequency: (typeof data.frequency === "number" && data.frequency >= 1) ? Math.round(data.frequency) : 1
         };
       }).sort(function(a,b){ return a.order - b.order; });
       state.platformsLoaded = true;
@@ -627,6 +657,13 @@ var firebaseConfig = {
     return list.length ? list[0] : null;
   }
 
+  /** top-N distinct cars for a platform, most urgent first — used when a channel publishes more than once a day */
+  function suggestionsFor(platform, count){
+    var n = Math.max(1, count || 1);
+    var list = activeCars().slice().sort(function(a,b){ return cmpForPlatform(a,b,platform); });
+    return list.slice(0, n);
+  }
+
   function republishQueue(){
     return activeCars().slice().sort(function(a,b){ return cmpForPlatform(a,b,"global"); });
   }
@@ -695,7 +732,7 @@ var firebaseConfig = {
     car.lastPublished = Object.assign({}, car.lastPublished);
     car.lastPublished[platform] = now;
     car.totalPublishes += 1;
-    state.justPublished = platform;
+    state.justPublished = platform + ":" + carId;
     render();
     setTimeout(function(){ state.justPublished = null; }, 500);
 
@@ -772,44 +809,36 @@ var firebaseConfig = {
     '</div></div>';
   }
 
-  function slotCard(platform){
+  function slotRow(platform, car, slotIndex, slotTotal){
     var meta = state.platforms.filter(function(p){return p.id===platform;})[0];
     if(!meta) return "";
-    var car = suggestionFor(platform);
+    var slotTag = slotTotal > 1 ? ' <span class="today-slot-tag">' + slotIndex + '/' + slotTotal + '</span>' : '';
+
     if(!car){
-      return '<div class="empty-slot">' +
-        '<div class="platform-icon" style="background:' + meta.bg + '">' + meta.emoji + '</div>' +
-        '<p class="t1">' + esc(meta.label) + '</p>' +
-        '<p class="t2">لا توجد سيارات نشطة في القائمة</p>' +
+      return '<div class="today-row today-row-empty">' +
+        '<div class="today-icon" style="background:' + meta.bg + '">' + meta.emoji + '</div>' +
+        '<div class="today-mid"><p class="today-plat">' + esc(meta.label) + slotTag + '</p><p class="today-empty-txt">لا توجد سيارات نشطة</p></div>' +
       '</div>';
     }
+
     var ts = car.lastPublished[platform];
     var days = daysSince(ts);
     var tier = urgencyTier(days);
     var u = URGENCY[tier];
-    var prio = PRIORITY_META[car.priority];
-    var justPub = state.justPublished === platform;
+    var justPub = state.justPublished === (platform + ":" + car.id);
     var doneToday = isToday(ts);
-    return '<div class="card slot' + (justPub?' pop':'') + (doneToday?' slot-done':'') + '">' +
-      '<div class="slot-bar" style="background:' + (doneToday ? '#34d399' : u.text) + '"></div>' +
-      '<div class="slot-body">' +
-        '<div class="slot-head">' +
-          '<div class="platform-icon" style="background:' + meta.bg + '">' + meta.emoji + '</div>' +
-          '<div class="slot-label">' + esc(meta.label) + '</div>' +
-          (doneToday ?
-            '<span class="done-badge">' + ICONS.check.replace('viewBox','style="width:11px;height:11px" viewBox') + ' تم اليوم</span>' :
-            '<span class="prio-badge" style="' + prio.chip + '">' + prio.label + '</span>'
-          ) +
-        '</div>' +
-        '<p class="car-name">🚗 ' + esc(car.name) + '</p>' +
-        (car.notes ? '<p class="car-notes">' + ICONS.note.replace('viewBox', 'style="width:14px;height:14px;flex-shrink:0;margin-top:2px;color:#6c6c74" viewBox') + '<span>' + esc(car.notes) + '</span></p>' : '') +
-        '<div class="fresh-pill" style="background:' + u.bg + ';color:' + u.text + '">' +
-          '<span class="fresh-dot" style="background:' + u.text + '"></span>' + formatRelative(ts) +
-        '</div>' +
-        '<div class="slot-actions">' +
-          (car.adLink ? '<a class="btn-link" href="' + esc(car.adLink) + '" target="_blank" rel="noreferrer">' + ICONS.link.replace('viewBox','style="width:16px;height:16px" viewBox') + 'الإعلان</a>' : '') +
-          '<button class="btn-publish' + (doneToday?' btn-publish-done':'') + '" data-action="publish" data-car="' + car.id + '" data-platform="' + platform + '">' + ICONS.check.replace('viewBox','style="width:18px;height:18px" viewBox') + (doneToday ? 'نشر مرة أخرى' : 'تم النشر') + '</button>' +
-        '</div>' +
+
+    return '<div class="today-row' + (justPub?' pop':'') + (doneToday?' today-row-done':'') + '">' +
+      '<span class="today-row-bar" style="background:' + (doneToday ? '#34d399' : u.text) + '"></span>' +
+      '<div class="today-icon" style="background:' + meta.bg + '">' + meta.emoji + '</div>' +
+      '<div class="today-mid">' +
+        '<p class="today-plat">' + esc(meta.label) + slotTag + (doneToday ? ' <span class="today-done-check">✓ تم اليوم</span>' : '') + '</p>' +
+        '<p class="today-car">🚗 ' + esc(car.name) + '</p>' +
+        '<p class="today-time" style="color:' + u.text + '">' + formatRelative(ts) + '</p>' +
+      '</div>' +
+      '<div class="today-right">' +
+        (car.adLink ? '<a class="today-link-btn" href="' + esc(car.adLink) + '" target="_blank" rel="noreferrer">' + ICONS.link.replace('viewBox','style="width:14px;height:14px" viewBox') + '</a>' : '') +
+        '<button class="today-btn' + (doneToday?' today-btn-done':'') + '" data-action="publish" data-car="' + car.id + '" data-platform="' + platform + '">' + ICONS.check.replace('viewBox','style="width:16px;height:16px" viewBox') + '</button>' +
       '</div>' +
     '</div>';
   }
@@ -821,19 +850,27 @@ var firebaseConfig = {
       body = '<div class="empty-state"><div class="box">' + ICONS.send.replace('viewBox','style="width:24px;height:24px;color:#6c6c74" viewBox') + '</div>' +
         '<p class="t1">لا توجد قنوات نشر مفعّلة</p><p class="t2">أضف قناة من تبويب "القنوات"</p></div>';
     } else {
-      var withStatus = activePlatforms.map(function(p){
-        var car = suggestionFor(p.id);
-        var doneToday = car ? isToday(car.lastPublished[p.id]) : false;
-        var urgency = car ? urgencyScore(car, p.id) : -1;
-        return { platform:p, doneToday:doneToday, urgency:urgency };
+      var tasks = [];
+      activePlatforms.forEach(function(p){
+        var freq = p.frequency || 1;
+        var cars = suggestionsFor(p.id, freq);
+        if(cars.length === 0){
+          tasks.push({ platform:p.id, car:null, slotIndex:1, slotTotal:freq, doneToday:false, urgency:-1 });
+        } else {
+          cars.forEach(function(car, i){
+            var doneToday = isToday(car.lastPublished[p.id]);
+            tasks.push({ platform:p.id, car:car, slotIndex:i+1, slotTotal:freq, doneToday:doneToday, urgency:urgencyScore(car, p.id) });
+          });
+        }
       });
-      var doneCount = withStatus.filter(function(x){ return x.doneToday; }).length;
-      var total = withStatus.length;
+
+      var doneCount = tasks.filter(function(t){ return t.doneToday; }).length;
+      var total = tasks.length;
       var pct = total ? Math.round((doneCount/total)*100) : 0;
       var allDone = total > 0 && doneCount === total;
 
-      /* pending channels first (most urgent first among them), completed ones after */
-      var ordered = withStatus.slice().sort(function(a,b){
+      /* pending tasks first (most urgent first among them), completed ones after */
+      var ordered = tasks.slice().sort(function(a,b){
         if(a.doneToday !== b.doneToday) return a.doneToday ? 1 : -1;
         return b.urgency - a.urgency;
       });
@@ -845,10 +882,10 @@ var firebaseConfig = {
             '<span class="progress-count">' + doneCount + ' / ' + total + '</span>' +
           '</div>' +
           '<div class="progress-track"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
-          '<p class="progress-sub">' + (allDone ? 'كل القنوات اتنشرت اليوم — تقدر تنشر تاني أي وقت' : (total - doneCount) + ' قناة متبقية للنشر النهارده' ) + '</p>' +
+          '<p class="progress-sub">' + (allDone ? 'كل القنوات اتنشرت اليوم — تقدر تنشر تاني أي وقت' : (total - doneCount) + ' مهمة نشر متبقية النهارده' ) + '</p>' +
         '</div>';
 
-      body = progressCard + alertsPanel() + '<div class="today-grid">' + ordered.map(function(x){ return slotCard(x.platform.id); }).join("") + '</div>';
+      body = progressCard + alertsPanel() + '<div class="today-list">' + ordered.map(function(t){ return slotRow(t.platform, t.car, t.slotIndex, t.slotTotal); }).join("") + '</div>';
     }
     return topbar("مهام اليوم", "خطة نشر اليوم لكل قناة") + '<div class="content">' + body + '</div>';
   }
@@ -1058,11 +1095,20 @@ var firebaseConfig = {
   function chanItem(p){
     if(state.editingChannelId === p.id) return chanEditForm(p);
     var isConfirm = state.confirmDeleteId === "chan:" + p.id;
+    var freq = p.frequency || 1;
     return '<div class="chan-item">' +
       '<div class="chan-emoji" style="background:' + p.bg + '">' + esc(p.emoji) + '</div>' +
       '<div class="chan-mid">' +
         '<p class="chan-name">' + esc(p.label) + '</p>' +
         '<p class="chan-sub" style="color:' + (p.active ? "#34d399" : "#8b8b93") + '">' + (p.active ? "مفعّلة" : "موقوفة") + '</p>' +
+        '<div class="chan-freq-row">' +
+          '<span class="chan-freq-label">مرات النشر يوميًا</span>' +
+          '<div class="chan-freq">' +
+            '<button class="chan-freq-btn" data-action="dec-frequency" data-channel="' + p.id + '"' + (freq<=1?' disabled':'') + '>−</button>' +
+            '<span class="chan-freq-val">' + freq + '</span>' +
+            '<button class="chan-freq-btn" data-action="inc-frequency" data-channel="' + p.id + '"' + (freq>=9?' disabled':'') + '>+</button>' +
+          '</div>' +
+        '</div>' +
       '</div>' +
       '<div class="chan-actions">' +
         '<button class="chan-icon-btn" data-action="edit-channel" data-channel="' + p.id + '">' + ICONS.edit + '</button>' +
@@ -1384,7 +1430,7 @@ var firebaseConfig = {
       var maxOrder = state.platforms.reduce(function(m,p){ return Math.max(m, p.order); }, -1);
       addDoc(platformsCol, {
         label: newLabel, emoji: newEmoji, bg: "rgba(232,25,44,.14)",
-        order: maxOrder + 1, active: true, createdAt: Date.now()
+        order: maxOrder + 1, active: true, createdAt: Date.now(), frequency: 1
       }).then(function(){
         showToast("تمت إضافة القناة");
       }).catch(function(err){
@@ -1425,6 +1471,18 @@ var firebaseConfig = {
       if(!toggleChan) return;
       updateDoc(doc(db, "accounts", currentUser.uid, "platforms", toggleChanId), { active: !toggleChan.active }).catch(function(err){
         console.error("toggle-channel-active error:", err);
+        showToast("فشل التحديث — تحقق من الاتصال");
+      });
+    } else if(action === "inc-frequency" || action === "dec-frequency"){
+      var freqChanId = el.getAttribute("data-channel");
+      var freqChan = state.platforms.find(function(p){ return p.id === freqChanId; });
+      if(!freqChan) return;
+      var newFreq = (freqChan.frequency || 1) + (action === "inc-frequency" ? 1 : -1);
+      newFreq = Math.max(1, Math.min(9, newFreq));
+      freqChan.frequency = newFreq; // optimistic
+      render();
+      updateDoc(doc(db, "accounts", currentUser.uid, "platforms", freqChanId), { frequency: newFreq }).catch(function(err){
+        console.error("frequency update error:", err);
         showToast("فشل التحديث — تحقق من الاتصال");
       });
     } else if(action === "chan-ask-delete"){
