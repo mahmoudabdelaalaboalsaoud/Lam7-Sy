@@ -243,7 +243,11 @@
   .pending-badge svg{width:13px; height:13px;}
   .whatsapp-btn{display:flex; align-items:center; justify-content:center; gap:10px; width:100%; background:#25D366; color:#fff; border-radius:12px; padding:14px 20px; font-size:15.5px; font-weight:800; box-shadow:0 0 0 1px rgba(37,211,102,.35), 0 8px 24px -10px rgba(37,211,102,.55); transition:transform .1s;}
   .whatsapp-btn:active{transform:scale(.97);}
-  .mkt-item{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:15px 16px; border-bottom:1px solid var(--ink-700);}
+  .mkt-item{display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"main act" "badges badges"; column-gap:12px; row-gap:9px; align-items:start; padding:13px 16px 12px; border-bottom:1px solid var(--ink-700);}
+  .mkt-main{grid-area:main; min-width:0;}
+  .mkt-badges{grid-area:badges; display:flex; flex-wrap:nowrap; align-items:center; gap:6px; overflow-x:auto; scrollbar-width:none;}
+  .mkt-badges::-webkit-scrollbar{display:none;}
+  .mkt-badges .mkt-role-badge{flex-shrink:0; white-space:nowrap; font-size:10.5px; padding:3px 9px 3px 8px;}
   .mkt-item:last-child{border-bottom:none;}
   .mkt-name{font-size:15px; font-weight:800; color:#fff; line-height:1.4; min-width:0; overflow-wrap:break-word;}
   .mkt-name-link{color:var(--sky); text-decoration:underline; text-decoration-style:dotted; text-decoration-thickness:1.5px; text-underline-offset:5px; text-decoration-color:rgba(56,189,248,.55); display:inline; padding:2px 0; transition:color .15s, text-decoration-color .15s, text-shadow .15s;}
@@ -251,10 +255,12 @@
   .mkt-name-link:active{color:#7dd3fc; text-decoration-style:solid; text-decoration-color:#7dd3fc; text-shadow:0 0 12px rgba(56,189,248,.6);}
   @media (hover:hover){ .mkt-name-link:hover{color:#7dd3fc; text-decoration-style:solid; text-decoration-color:#7dd3fc; text-shadow:0 0 12px rgba(56,189,248,.5);} }
   .mkt-phone{font-size:12.5px; color:var(--text-4); font-weight:600; margin-top:3px; direction:ltr; display:inline-block;}
-  .mkt-contact-btn{display:flex; align-items:center; justify-content:center; gap:6px; flex-shrink:0; background:#25D366; color:#fff; border-radius:10px; padding:9px 14px; font-size:12.5px; font-weight:800; white-space:nowrap; transition:transform .1s;}
+  .mkt-contact-btn{display:flex; align-items:center; justify-content:center; gap:6px; flex-shrink:0; background:#25D366; color:#fff; border-radius:10px; padding:6px 10px; font-size:12px; font-weight:800; white-space:nowrap; box-shadow:0 5px 14px -8px rgba(37,211,102,.7); transition:transform .1s;}
   .mkt-contact-btn:active{transform:scale(.94);}
   .mkt-contact-btn svg{width:14px; height:14px;}
-  .mkt-actions{display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0;}
+  .mkt-actions{grid-area:act; display:flex; flex-direction:column; align-items:stretch; gap:5px; width:96px;}
+  .mkt-actions > *{box-sizing:border-box; min-height:30px; text-align:center; justify-content:center;}
+  .mkt-actions > span{display:flex; align-items:center; justify-content:center;}
   .mkt-pin-badge{display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:800; color:var(--gold); background:rgba(245,166,35,.12); border:1px solid rgba(245,166,35,.35); border-radius:999px; padding:3px 9px; margin-top:6px; width:fit-content;}
   .mkt-role-badge{display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:800; color:#38bdf8; background:rgba(56,189,248,.12); border:1px solid rgba(56,189,248,.3); border-radius:999px; padding:3px 9px; width:fit-content; text-decoration:none;}
   a.mkt-role-badge{cursor:pointer;}
@@ -262,11 +268,11 @@
   .mkt-badge-lbl{font-weight:600; opacity:.65; padding-inline-end:6px; margin-inline-end:2px; border-inline-end:1px solid currentColor;}
   a.mkt-role-badge:active{opacity:.75;}
   .mkt-pin-badge svg{width:10px; height:10px;}
-  .mkt-admin-pin-btn{display:flex; align-items:center; justify-content:center; gap:5px; flex-shrink:0; background:var(--ink-800); border:1px solid var(--ink-600); color:var(--text-3); border-radius:10px; padding:8px 12px; font-size:12px; font-weight:800; white-space:nowrap; transition:transform .1s;}
+  .mkt-admin-pin-btn{display:flex; align-items:center; justify-content:center; gap:5px; flex-shrink:0; background:var(--ink-800); border:1px solid var(--ink-600); color:var(--text-3); border-radius:10px; padding:6px 10px; font-size:12px; font-weight:800; white-space:nowrap; transition:transform .1s;}
   .mkt-admin-pin-btn.is-pinned{background:rgba(245,166,35,.12); border-color:rgba(245,166,35,.4); color:var(--gold);}
   .mkt-admin-pin-btn:active{transform:scale(.94);}
   .mkt-admin-pin-btn svg{width:13px; height:13px;}
-  .mkt-request-pin-btn{display:flex; align-items:center; justify-content:center; gap:5px; flex-shrink:0; background:var(--ink-800); border:1px solid var(--ink-600); color:var(--text-3); border-radius:10px; padding:8px 12px; font-size:12px; font-weight:700; white-space:nowrap; transition:transform .1s;}
+  .mkt-request-pin-btn{display:flex; align-items:center; justify-content:center; gap:5px; flex-shrink:0; background:var(--ink-800); border:1px solid var(--ink-600); color:var(--text-3); border-radius:10px; padding:6px 10px; font-size:12px; font-weight:700; white-space:nowrap; transition:transform .1s;}
   .mkt-request-pin-btn:active{transform:scale(.94);}
   .mkt-request-pin-btn svg{width:12px; height:12px;}
   .pending-signout{margin-top:22px; font-size:13px; font-weight:700; color:var(--text-5); padding:8px 4px; transition:color .15s;}
@@ -2700,7 +2706,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
             '<span class="prio-badge" style="' + prio.chip + '">' + priorityLabel(car.priority) + '</span>'
           ) +
         '</div>' +
-        '<p class="car-name">' + (state.domain==="property"?'🏠':'🚗') + ' ' + esc(car.name) + '</p>' +
+        '<p class="car-name">' + (state.domain==="property"?'🏠':'🚘') + ' ' + esc(car.name) + '</p>' +
         '<div class="fresh-pill" style="background:' + u.bg + ';color:' + u.text + '">' +
           '<span class="fresh-dot" style="background:' + u.text + '"></span>' + formatRelative(ts) +
         '</div>' +
@@ -2735,7 +2741,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     return '<div class="done-item">' +
       '<div class="done-item-icon" style="background:' + meta.bg + '">' + meta.emoji + '</div>' +
       '<div class="done-item-body">' +
-        '<p class="done-item-title">' + (state.domain==="property"?'🏠':'🚗') + ' ' + esc(car.name) + '</p>' +
+        '<p class="done-item-title">' + (state.domain==="property"?'🏠':'🚘') + ' ' + esc(car.name) + '</p>' +
         '<p class="done-item-sub">' + esc(meta.label) + (meta.scope==="private" ? privateTag(true) : '') + ' · ' + formatRelative(ts) + '</p>' +
       '</div>' +
       '<span class="done-item-check">' + checkIcon + '</span>' +
@@ -2983,7 +2989,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     return '<div class="card mgmt-item">' +
       '<div class="mgmt-item-body">' +
         '<div class="mgmt-item-head">' +
-          '<p class="mgmt-name">🚗 ' + esc(car.name) + '</p>' +
+          '<p class="mgmt-name">🚘 ' + esc(car.name) + '</p>' +
         '</div>' +
         '<div class="mgmt-badges">' +
           (car.pinned ? '<span class="status-badge" style="background:rgba(245,166,35,.15);color:#F5A623;border-color:rgba(245,166,35,.3)">' + ICONS.pin.replace('viewBox','style="width:9px;height:9px;display:inline-block;vertical-align:-1px" viewBox') + ' ' + esc(t("pinned_badge")) + '</span>' : '') +
@@ -3623,14 +3629,16 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       ? '<a class="mkt-name-link" href="' + esc(safeAdLink) + '" target="_blank" rel="noopener noreferrer">' + nameHtml + ICONS.link + '</a>'
       : nameHtml;
 
+    var badgesHtml = (roleHtml || listingTypeHtml) ? '<div class="mkt-badges">' + roleHtml + listingTypeHtml + '</div>' : '';
+
     return '<div class="mkt-item">' +
-      '<div style="min-width:0">' +
-        '<p class="mkt-name">' + (state.domain==="property"?'🏠':'🚗') + ' ' + nameBlock + (state.isAdmin ? ' <span style="color:var(--text-5);font-weight:700;font-size:11px">' + countryLabel(effCountry(mc)) + '</span>' : '') + '</p>' +
-        (roleHtml || listingTypeHtml ? '<div style="margin:3px 0;display:flex;gap:6px;flex-wrap:wrap">' + roleHtml + listingTypeHtml + '</div>' : '') +
+      '<div class="mkt-main">' +
+        '<p class="mkt-name">' + (state.domain==="property"?'🏠':'🚘') + ' ' + nameBlock + (state.isAdmin ? ' <span style="color:var(--text-5);font-weight:700;font-size:11px">' + countryLabel(effCountry(mc)) + '</span>' : '') + '</p>' +
         (mc.phone && !isMine ? '<span class="mkt-phone">' + esc(mc.phone) + '</span>' : '') +
         (mc.pinned ? '<span class="mkt-pin-badge">' + ICONS.pin + ' ' + esc(t("pinned_badge")) + '</span>' : '') +
       '</div>' +
       '<div class="mkt-actions">' + contactHtml + pinHtml + '</div>' +
+      badgesHtml +
     '</div>';
   }
 
@@ -3924,7 +3932,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     return '<div class="hl-card">' +
       '<div class="hl-icon" style="color:' + color + '">' + icon.replace('viewBox','style="width:20px;height:20px" viewBox') + '</div>' +
       '<div style="min-width:0"><p class="hl-title">' + esc(title) + '</p>' +
-      '<p class="hl-name">' + (state.domain==="property"?'🏠':'🚗') + ' ' + esc(name) + '</p>' +
+      '<p class="hl-name">' + (state.domain==="property"?'🏠':'🚘') + ' ' + esc(name) + '</p>' +
       '<p class="hl-detail">' + esc(detail) + '</p></div>' +
     '</div>';
   }
