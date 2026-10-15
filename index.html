@@ -5037,6 +5037,14 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
         console.error("save-edit error:", err);
         showToast(state.lang==="en" ? "Save failed — check your connection" : "فشل الحفظ — تحقق من الاتصال");
       });
+      /* نسخة المعرض بتتحفظ وقت العرض بس، فلازم نزامنها لما صاحب السيارة يعدّل. */
+      if(carBeingEdited && carBeingEdited.listedForSale){
+        updateDoc(doc(db, "marketplace", editId), {
+          name: newName,
+          adLink: linkEl2 ? linkEl2.value.trim() : "",
+          listingType: editDraft.listingType || ""
+        }).catch(function(err){ console.error("marketplace sync error:", err); });
+      }
       render();
     } else if(action === "toggle-active"){
       var toggleId = el.getAttribute("data-car");
@@ -5319,6 +5327,13 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
         console.error("save-prop-edit error:", err);
         showToast(state.lang==="en" ? "Save failed — check your connection" : "فشل الحفظ — تحقق من الاتصال");
       });
+      if(propBeingEdited && propBeingEdited.listedForSale){
+        updateDoc(doc(db, "propertyMarketplace", peId), {
+          name: peName,
+          adLink: peLinkEl ? peLinkEl.value.trim() : "",
+          listingType: propEditDraft.listingType || ""
+        }).catch(function(err){ console.error("marketplace sync error:", err); });
+      }
       render();
     } else if(action === "toggle-prop-active"){
       var tpId = el.getAttribute("data-prop");
