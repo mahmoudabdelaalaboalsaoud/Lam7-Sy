@@ -246,6 +246,10 @@
   .mkt-item{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:15px 16px; border-bottom:1px solid var(--ink-700);}
   .mkt-item:last-child{border-bottom:none;}
   .mkt-name{font-size:15px; font-weight:800; color:#fff; line-height:1.4; min-width:0; overflow-wrap:break-word;}
+  .mkt-name-link{color:var(--sky); text-decoration:underline; text-decoration-style:dotted; text-decoration-thickness:1.5px; text-underline-offset:5px; text-decoration-color:rgba(56,189,248,.55); display:inline; padding:2px 0; transition:color .15s, text-decoration-color .15s, text-shadow .15s;}
+  .mkt-name-link svg{width:12px; height:12px; margin-inline-start:5px; vertical-align:-1px; opacity:.75; display:inline-block;}
+  .mkt-name-link:active{color:#7dd3fc; text-decoration-style:solid; text-decoration-color:#7dd3fc; text-shadow:0 0 12px rgba(56,189,248,.6);}
+  @media (hover:hover){ .mkt-name-link:hover{color:#7dd3fc; text-decoration-style:solid; text-decoration-color:#7dd3fc; text-shadow:0 0 12px rgba(56,189,248,.5);} }
   .mkt-phone{font-size:12.5px; color:var(--text-4); font-weight:600; margin-top:3px; direction:ltr; display:inline-block;}
   .mkt-contact-btn{display:flex; align-items:center; justify-content:center; gap:6px; flex-shrink:0; background:#25D366; color:#fff; border-radius:10px; padding:9px 14px; font-size:12.5px; font-weight:800; white-space:nowrap; transition:transform .1s;}
   .mkt-contact-btn:active{transform:scale(.94);}
@@ -2646,13 +2650,6 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     var channelMet = channelCountToday >= channelTargetVal;
     var camp = campaignEntry(car, platform);
     var safeAdLink = sanitizeHref(car.adLink);
-    var linkHtml = car.adLink ? (
-      meta.messaging
-        ? '<span class="btn-link" dir="ltr">' + ICONS.link.replace('viewBox','style="width:16px;height:16px" viewBox') + esc(car.adLink) + '</span>'
-        : (safeAdLink
-            ? '<a class="btn-link" href="' + esc(safeAdLink) + '" target="_blank" rel="noopener noreferrer">' + ICONS.link.replace('viewBox','style="width:16px;height:16px" viewBox') + esc(t("ad_link_word")) + '</a>'
-            : '<span class="btn-link" dir="ltr">' + ICONS.link.replace('viewBox','style="width:16px;height:16px" viewBox') + esc(car.adLink) + '</span>')
-    ) : '';
     var pending = isPending(car.id, platform);
     var isMessaging = !!meta.messaging;
     var safeChanUrl = !isMessaging ? sanitizeHref(meta.url) : "";
@@ -2669,14 +2666,14 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
         '</div>';
       var campAction = isMessaging ? "register-campaign" : "register-campaign-with-link";
       actionsHtml =
-        '<div class="slot-actions">' + gotoHtml + linkHtml +
+        '<div class="slot-actions">' + gotoHtml +
           '<input class="input" type="number" min="1" id="camp-qty-' + platform + '-' + car.id + '"' + (pending?' disabled':'') + ' placeholder="' + (isFacebookGroupsChannel(meta) ? esc(t("qty_required")) : esc(t("qty_default"))) + '" style="width:78px;flex-shrink:0;text-align:center;padding:13px 8px" />' +
           '<button class="btn-publish' + (pending?' saving':'') + '" data-action="' + campAction + '" data-car="' + car.id + '" data-platform="' + platform + '"' + (pending?' disabled':'') + '>' + (pending ? '<span class="spin-dot"></span>' : esc(t("register_btn"))) + '</button>' +
         '</div>';
     } else {
       var pubAction = isMessaging ? "publish" : "publish-with-link";
       actionsHtml =
-        '<div class="slot-actions">' + gotoHtml + linkHtml +
+        '<div class="slot-actions">' + gotoHtml +
           '<button class="btn-publish' + (doneToday?' btn-publish-done':'') + (pending?' saving':'') + '" data-action="' + pubAction + '" data-car="' + car.id + '" data-platform="' + platform + '"' + (pending?' disabled':'') + '>' + (pending ? '<span class="spin-dot"></span>' : (ICONS.check.replace('viewBox','style="width:18px;height:18px" viewBox') + (doneToday ? esc(t("publish_again_btn")) : esc(t("published_btn"))))) + '</button>' +
         '</div>';
     }
@@ -3606,18 +3603,18 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       ? '<span class="mkt-role-badge" style="background:rgba(245,166,35,.12);color:var(--gold);border-color:rgba(245,166,35,.3)">' + esc(state.lang==="en"?listingTypeText.en:listingTypeText.ar) + '</span>'
       : "";
     var safeAdLink = mc.adLink && isValidUrl(mc.adLink) ? mc.adLink : "";
-    var adLinkHtml = safeAdLink
-      ? '<a class="mkt-contact-btn" style="background:var(--ink-700)" href="' + esc(safeAdLink) + '" target="_blank" rel="noopener noreferrer">' + ICONS.link.replace('viewBox','style="width:13px;height:13px" viewBox') + ' ' + esc(t("mkt_view_ad_link")) + '</a>'
-      : "";
+    var nameBlock = safeAdLink
+      ? '<a class="mkt-name-link" href="' + esc(safeAdLink) + '" target="_blank" rel="noopener noreferrer">' + nameHtml + ICONS.link + '</a>'
+      : nameHtml;
 
     return '<div class="mkt-item">' +
       '<div style="min-width:0">' +
-        '<p class="mkt-name">' + (state.domain==="property"?'🏠':'🚗') + ' ' + nameHtml + (state.isAdmin ? ' <span style="color:var(--text-5);font-weight:700;font-size:11px">' + countryLabel(effCountry(mc)) + '</span>' : '') + '</p>' +
+        '<p class="mkt-name">' + (state.domain==="property"?'🏠':'🚗') + ' ' + nameBlock + (state.isAdmin ? ' <span style="color:var(--text-5);font-weight:700;font-size:11px">' + countryLabel(effCountry(mc)) + '</span>' : '') + '</p>' +
         (roleHtml || listingTypeHtml ? '<div style="margin:3px 0;display:flex;gap:6px;flex-wrap:wrap">' + roleHtml + listingTypeHtml + '</div>' : '') +
         (mc.phone && !isMine ? '<span class="mkt-phone">' + esc(mc.phone) + '</span>' : '') +
         (mc.pinned ? '<span class="mkt-pin-badge">' + ICONS.pin + ' ' + esc(t("pinned_badge")) + '</span>' : '') +
       '</div>' +
-      '<div class="mkt-actions">' + adLinkHtml + contactHtml + pinHtml + '</div>' +
+      '<div class="mkt-actions">' + contactHtml + pinHtml + '</div>' +
     '</div>';
   }
 
