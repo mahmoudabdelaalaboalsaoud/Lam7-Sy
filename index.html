@@ -258,6 +258,8 @@
   .mkt-pin-badge{display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:800; color:var(--gold); background:rgba(245,166,35,.12); border:1px solid rgba(245,166,35,.35); border-radius:999px; padding:3px 9px; margin-top:6px; width:fit-content;}
   .mkt-role-badge{display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:800; color:#38bdf8; background:rgba(56,189,248,.12); border:1px solid rgba(56,189,248,.3); border-radius:999px; padding:3px 9px; width:fit-content; text-decoration:none;}
   a.mkt-role-badge{cursor:pointer;}
+  .mkt-role-badge--gold{background:rgba(245,166,35,.12); color:var(--gold); border-color:rgba(245,166,35,.3);}
+  .mkt-badge-lbl{font-weight:600; opacity:.65; padding-inline-end:6px; margin-inline-end:2px; border-inline-end:1px solid currentColor;}
   a.mkt-role-badge:active{opacity:.75;}
   .mkt-pin-badge svg{width:10px; height:10px;}
   .mkt-admin-pin-btn{display:flex; align-items:center; justify-content:center; gap:5px; flex-shrink:0; background:var(--ink-800); border:1px solid var(--ink-600); color:var(--text-3); border-radius:10px; padding:8px 12px; font-size:12px; font-weight:800; white-space:nowrap; transition:transform .1s;}
@@ -905,7 +907,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       view_profile_link: "عرض البروفايل",
       car_listing_type_label: "مصدر السيارة", prop_listing_type_label: "مصدر العقار",
       listing_type_none: "غير محدد",
-      mkt_view_ad_link: "رابط الإعلان",
+      mkt_view_ad_link: "رابط الإعلان", mkt_lbl_user: "المستخدم", mkt_lbl_car: "السيارة", mkt_lbl_prop: "العقار",
       new_trial_single: "عضو جديد بدأ الشهر التجريبي: ",
       new_trial_plural: " أعضاء جدد بدأوا الشهر التجريبي",
       trial_badge: "تجريبي", sub_trial_chip: "تجريبي",
@@ -1124,7 +1126,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       view_profile_link: "View profile",
       car_listing_type_label: "Car source", prop_listing_type_label: "Property source",
       listing_type_none: "Not set",
-      mkt_view_ad_link: "Ad link",
+      mkt_view_ad_link: "Ad link", mkt_lbl_user: "User", mkt_lbl_car: "Car", mkt_lbl_prop: "Property",
       new_trial_single: "New trial signup: ",
       new_trial_plural: " new members started their trial",
       trial_badge: "Trial", sub_trial_chip: "Trial",
@@ -2139,6 +2141,16 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     if(!t) return false;
     if(t.length > 2000) return false; // guard against pathological input
     return /^https?:\/\/[^\s"'<>]+$/i.test(t);
+  }
+  /* بيقبل روابط مكتوبة من غير https:// (زي www.site.com) ويضيفها تلقائيًا. */
+  function normalizeUrl(s){
+    if(typeof s !== "string") return "";
+    var u = s.trim();
+    if(!u || /\s/.test(u)) return "";
+    if(!/^[a-z][a-z0-9+.-]*:\/\//i.test(u)){
+      if(/^[^\/:?#]+\.[^\/:?#]{2,}/.test(u)) u = "https://" + u; else return "";
+    }
+    return isValidUrl(u) ? u : "";
   }
   function sanitizeHref(s){
     return isValidUrl(s) ? String(s).trim() : "";
@@ -3588,21 +3600,25 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       pinHtml = '';
     }
 
-    var safeProfileLink = mc.profileLink && isValidUrl(mc.profileLink) ? mc.profileLink : "";
-    var roleText = roleLabel(state.domain, mc.role);
+    var effRole = mc.role || (isMine ? (state.domain === "property" ? state.myProfile.propertyRole : state.myProfile.carRole) : "");
+    var effProfileLink = mc.profileLink || (isMine ? state.myProfile.profileLink : "");
+    var safeProfileLink = effProfileLink && isValidUrl(effProfileLink) ? effProfileLink : "";
+    var roleText = roleLabel(state.domain, effRole);
+    var lblUser = '<span class="mkt-badge-lbl">' + esc(t("mkt_lbl_user")) + '</span>';
+    var lblItem = '<span class="mkt-badge-lbl">' + esc(t(state.domain === "property" ? "mkt_lbl_prop" : "mkt_lbl_car")) + '</span>';
     var nameHtml = esc(mc.name);
     var roleHtml = roleText
       ? (safeProfileLink
-          ? '<a class="mkt-role-badge" href="' + esc(safeProfileLink) + '" target="_blank" rel="noopener noreferrer" title="' + esc(t("view_profile_link")) + '">' + esc(roleText) + ' ' + ICONS.link.replace('viewBox','style="width:10px;height:10px;display:inline-block;vertical-align:-1px" viewBox') + '</a>'
-          : '<span class="mkt-role-badge">' + esc(roleText) + '</span>')
+          ? '<a class="mkt-role-badge" href="' + esc(safeProfileLink) + '" target="_blank" rel="noopener noreferrer" title="' + esc(t("view_profile_link")) + '">' + lblUser + esc(roleText) + ' ' + ICONS.link.replace('viewBox','style="width:10px;height:10px;display:inline-block;vertical-align:-1px" viewBox') + '</a>'
+          : '<span class="mkt-role-badge">' + lblUser + esc(roleText) + '</span>')
       : "";
     /* شارة "مصدر" السيارة/العقار نفسه (معرض/تاجر/مالك مباشر) — منفصلة
        تمامًا عن شارة مهنة الناشر اللي فوق. */
     var listingTypeText = listingTypeOptions(state.domain).find(function(r){ return r.id === mc.listingType; });
     var listingTypeHtml = listingTypeText
-      ? '<span class="mkt-role-badge" style="background:rgba(245,166,35,.12);color:var(--gold);border-color:rgba(245,166,35,.3)">' + esc(state.lang==="en"?listingTypeText.en:listingTypeText.ar) + '</span>'
+      ? '<span class="mkt-role-badge mkt-role-badge--gold">' + lblItem + esc(state.lang==="en"?listingTypeText.en:listingTypeText.ar) + '</span>'
       : "";
-    var safeAdLink = mc.adLink && isValidUrl(mc.adLink) ? mc.adLink : "";
+    var safeAdLink = normalizeUrl(mc.adLink);
     var nameBlock = safeAdLink
       ? '<a class="mkt-name-link" href="' + esc(safeAdLink) + '" target="_blank" rel="noopener noreferrer">' + nameHtml + ICONS.link + '</a>'
       : nameHtml;
@@ -5042,7 +5058,9 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
         updateDoc(doc(db, "marketplace", editId), {
           name: newName,
           adLink: linkEl2 ? linkEl2.value.trim() : "",
-          listingType: editDraft.listingType || ""
+          listingType: editDraft.listingType || "",
+          role: state.myProfile.carRole || "",
+          profileLink: state.myProfile.profileLink || ""
         }).catch(function(err){ console.error("marketplace sync error:", err); });
       }
       render();
@@ -5331,7 +5349,9 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
         updateDoc(doc(db, "propertyMarketplace", peId), {
           name: peName,
           adLink: peLinkEl ? peLinkEl.value.trim() : "",
-          listingType: propEditDraft.listingType || ""
+          listingType: propEditDraft.listingType || "",
+          role: state.myProfile.propertyRole || "",
+          profileLink: state.myProfile.profileLink || ""
         }).catch(function(err){ console.error("marketplace sync error:", err); });
       }
       render();
