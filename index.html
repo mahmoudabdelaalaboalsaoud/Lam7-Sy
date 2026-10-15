@@ -254,6 +254,39 @@
   .mkt-name-link svg{width:12px; height:12px; margin-inline-start:5px; vertical-align:-1px; opacity:.75; display:inline-block;}
   .mkt-name-link:active{color:#7dd3fc; text-decoration-style:solid; text-decoration-color:#7dd3fc; text-shadow:0 0 12px rgba(56,189,248,.6);}
   @media (hover:hover){ .mkt-name-link:hover{color:#7dd3fc; text-decoration-style:solid; text-decoration-color:#7dd3fc; text-shadow:0 0 12px rgba(56,189,248,.5);} }
+  /* المزيد + الوظائف */
+  .more-tile{display:flex; align-items:center; gap:14px; width:100%; text-align:start; background:var(--ink-850); border:1px solid var(--ink-700); border-radius:16px; padding:16px; color:#fff; transition:transform .1s;}
+  .more-tile:active{transform:scale(.98);}
+  .more-ico{position:relative; flex-shrink:0; width:46px; height:46px; border-radius:14px; display:flex; align-items:center; justify-content:center; background:var(--ink-800); color:var(--text-3);}
+  .more-ico svg{width:23px; height:23px;}
+  .more-ico .nav-badge{position:absolute; top:-5px; inset-inline-end:-5px; min-width:18px; height:18px; padding:0 5px; border-radius:999px; background:var(--red); color:#fff; font-size:11px; font-weight:900; line-height:18px; text-align:center;}
+  .more-txt{display:flex; flex-direction:column; gap:3px; min-width:0;}
+  .more-txt b{font-size:15.5px; font-weight:800;}
+  .more-txt small{font-size:12px; color:var(--text-4); font-weight:600; line-height:1.4;}
+  .more-hero{background:linear-gradient(135deg, rgba(232,25,44,.22), rgba(232,25,44,.05) 60%), var(--ink-850); border-color:rgba(232,25,44,.35); padding:20px 16px; margin-bottom:12px;}
+  .more-hero .more-ico{background:var(--red); color:#fff; width:52px; height:52px; border-radius:16px; box-shadow:0 8px 22px -8px rgba(232,25,44,.7);}
+  .more-hero .more-txt b{font-size:17px;}
+  .more-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .more-grid .more-tile{flex-direction:column; align-items:flex-start; gap:12px;}
+  .job-add-btn{display:flex; align-items:center; justify-content:center; gap:8px; width:100%; background:var(--red); color:#fff; border-radius:12px; padding:13px 0; font-size:15px; font-weight:800; margin-bottom:14px; box-shadow:0 8px 24px -10px rgba(232,25,44,.6); transition:transform .1s;}
+  .job-add-btn:active{transform:scale(.98);}
+  .job-add-btn svg{width:18px; height:18px;}
+  .job-form{padding:16px; margin-bottom:14px;}
+  .job-form-actions{display:flex; gap:10px;}
+  .job-form-actions .submit-btn{flex:1;}
+  .job-cancel{flex-shrink:0; padding:0 18px; border-radius:12px; border:1px solid var(--ink-600); background:var(--ink-800); color:var(--text-3); font-weight:800; font-size:14px;}
+  .job-card{background:var(--ink-850); border:1px solid var(--ink-700); border-inline-start:3px solid var(--red); border-radius:14px; padding:14px 15px; margin-bottom:12px;}
+  .job-head{display:flex; align-items:flex-start; justify-content:space-between; gap:10px;}
+  .job-title{font-size:15.5px; font-weight:800; color:#fff; line-height:1.45; min-width:0; overflow-wrap:anywhere;}
+  .job-time{flex-shrink:0; font-size:11px; color:var(--text-5); font-weight:700; padding-top:3px;}
+  .job-pub{display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; margin:8px 0 10px;}
+  .job-owner{font-size:12px; color:var(--text-4); font-weight:700;}
+  .job-mine{color:var(--gold);}
+  .job-desc{font-size:13.5px; color:var(--text-2); line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere;}
+  .job-actions{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px;}
+  .job-contact{padding:8px 16px;}
+  .job-contact-text{font-size:13px; font-weight:700; color:var(--text-3); direction:ltr;}
+  .job-del{font-size:12px; font-weight:800; color:var(--red); background:rgba(232,25,44,.1); border:1px solid rgba(232,25,44,.3); border-radius:9px; padding:7px 14px; margin-inline-start:auto;}
   .mkt-phone{font-size:12.5px; color:var(--text-4); font-weight:600; margin-top:3px; direction:ltr; display:inline-block;}
   .mkt-contact-btn{display:flex; align-items:center; justify-content:center; gap:6px; flex-shrink:0; background:#25D366; color:#fff; border-radius:10px; padding:6px 10px; font-size:12px; font-weight:800; white-space:nowrap; box-shadow:0 5px 14px -8px rgba(37,211,102,.7); transition:transform .1s;}
   .mkt-contact-btn:active{transform:scale(.94);}
@@ -627,6 +660,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
   var unsubCars = null, unsubPlatforms = null, unsubLog = null;
   var unsubMyAccount = null, unsubAdminAccounts = null, unsubGlobalChannels = null, unsubOverrides = null;
   var unsubMarketplace = null, marketplaceListenerStarted = false;
+  var unsubJobs = null, unsubPropertyJobs = null;
   var unsubProperties = null, unsubPropertyPlatforms = null, unsubPropertyGlobalChannels = null, unsubPropertyOverrides = null;
   var unsubPropertyLog = null;
 
@@ -913,7 +947,9 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       view_profile_link: "عرض البروفايل",
       car_listing_type_label: "مصدر السيارة", prop_listing_type_label: "مصدر العقار",
       listing_type_none: "غير محدد",
-      mkt_view_ad_link: "رابط الإعلان", mkt_lbl_user: "المستخدم", mkt_lbl_car: "السيارة", mkt_lbl_prop: "العقار",
+      mkt_view_ad_link: "رابط الإعلان", tab_more: "المزيد", more_title: "المزيد", more_sub: "أقسام وأدوات إضافية", more_jobs_car: "وظائف مسوقي السيارات", more_jobs_prop: "وظائف مسوقي العقارات", more_jobs_desc: "اعرض فرصة عمل أو اعثر على واحدة", more_stats_desc: "أرقام نشاطك وحملاتك", more_subs_desc: "إدارة اشتراكات المستخدمين",
+      jobs_sub_suffix: " وظيفة", jobs_add_btn: "إضافة وظيفة", jobs_f_title: "عنوان الوظيفة", jobs_f_title_ph: "مثال: مطلوب مسوق بالعمولة", jobs_f_desc: "تفاصيل الوظيفة", jobs_f_desc_ph: "المهام، الشروط، العمولة أو الراتب...", jobs_f_contact: "رقم التواصل (واتساب)", jobs_publish: "نشر الوظيفة", jobs_cancel: "إلغاء", jobs_empty_title: "لا توجد وظائف حتى الآن", jobs_empty_sub: "كن أول من ينشر فرصة عمل", jobs_loading: "جاري تحميل الوظائف...", jobs_contact_btn: "تواصل", jobs_delete: "حذف", jobs_delete_confirm: "حذف هذه الوظيفة؟", jobs_published: "تم نشر الوظيفة", jobs_deleted: "تم حذف الوظيفة", jobs_required: "اكتب العنوان والتفاصيل ورقم التواصل", jobs_failed: "فشلت العملية — تحقق من الاتصال", jobs_mine: "وظيفتك", jobs_wa_msg: "السلام عليكم، بخصوص وظيفة: ",
+      mkt_lbl_user: "المستخدم", mkt_lbl_car: "السيارة", mkt_lbl_prop: "العقار",
       new_trial_single: "عضو جديد بدأ الشهر التجريبي: ",
       new_trial_plural: " أعضاء جدد بدأوا الشهر التجريبي",
       trial_badge: "تجريبي", sub_trial_chip: "تجريبي",
@@ -1132,7 +1168,9 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       view_profile_link: "View profile",
       car_listing_type_label: "Car source", prop_listing_type_label: "Property source",
       listing_type_none: "Not set",
-      mkt_view_ad_link: "Ad link", mkt_lbl_user: "User", mkt_lbl_car: "Car", mkt_lbl_prop: "Property",
+      mkt_view_ad_link: "Ad link", tab_more: "More", more_title: "More", more_sub: "Extra sections and tools", more_jobs_car: "Car marketer jobs", more_jobs_prop: "Property marketer jobs", more_jobs_desc: "Post a job or find one", more_stats_desc: "Your activity and campaign numbers", more_subs_desc: "Manage user subscriptions",
+      jobs_sub_suffix: " jobs", jobs_add_btn: "Post a job", jobs_f_title: "Job title", jobs_f_title_ph: "e.g. Commission-based marketer wanted", jobs_f_desc: "Job details", jobs_f_desc_ph: "Duties, requirements, commission or pay...", jobs_f_contact: "Contact number (WhatsApp)", jobs_publish: "Publish job", jobs_cancel: "Cancel", jobs_empty_title: "No jobs yet", jobs_empty_sub: "Be the first to post an opportunity", jobs_loading: "Loading jobs...", jobs_contact_btn: "Contact", jobs_delete: "Delete", jobs_delete_confirm: "Delete this job?", jobs_published: "Job published", jobs_deleted: "Job deleted", jobs_required: "Enter the title, details and contact number", jobs_failed: "Action failed — check your connection", jobs_mine: "Your job", jobs_wa_msg: "Hello, regarding the job: ",
+      mkt_lbl_user: "User", mkt_lbl_car: "Car", mkt_lbl_prop: "Property",
       new_trial_single: "New trial signup: ",
       new_trial_plural: " new members started their trial",
       trial_badge: "Trial", sub_trial_chip: "Trial",
@@ -1194,6 +1232,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     state.showAddCarForm = false; state.showAddPropertyForm = false;
     state.publishModal = null;
     if(state.tab === "marketplace"){ if(state.domain === "property") maybeStartPropertyMarketplaceListening(); else maybeStartMarketplaceListening(); }
+    if(state.tab === "jobs") maybeStartJobsListening();
     render();
   }
 
@@ -1516,6 +1555,9 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     unsubProperties = unsubPropertyPlatforms = unsubPropertyGlobalChannels = unsubPropertyOverrides = unsubPropertyLog = null;
     if(unsubPropertyMarketplace) unsubPropertyMarketplace();
     unsubPropertyMarketplace = null; propertyMarketplaceListenerStarted = false;
+    if(unsubJobs) unsubJobs(); if(unsubPropertyJobs) unsubPropertyJobs();
+    unsubJobs = unsubPropertyJobs = null;
+    state.jobs = []; state.jobsLoaded = false; state.propertyJobs = []; state.propertyJobsLoaded = false;
     marketplaceListenerStarted = false;
     state.marketplaceCars = []; state.marketplaceLoaded = false;
     state.propertyMarketplaceCars = []; state.propertyMarketplaceLoaded = false;
@@ -2544,6 +2586,8 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
 
   /* ---------------- icons (inline svg) ---------------- */
   var ICONS = {
+    more: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>',
+    briefcase: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M2 13h20"/></svg>',
     today: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg>',
     republish: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4L21 8"/><path d="M21 3v5h-5"/></svg>',
     add: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>',
@@ -2901,6 +2945,8 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
   state.mgmtSearch = "";
   state.mktSearch = "";
   state.mktCountryFilter = "all";
+  state.jobs = []; state.jobsLoaded = false; state.propertyJobs = []; state.propertyJobsLoaded = false; state.showJobForm = false;
+  var jobDraft = { title:"", desc:"", contact:"" };
   state.mgmtFilter = "all";
   state.mgmtSort = "recent";
   state.mgmtSearchFocused = false;
@@ -3937,25 +3983,114 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     '</div>';
   }
 
+  /* ---------------- المزيد + الوظائف ---------------- */
+  function maybeStartJobsListening(){
+    var isProp = state.domain === "property";
+    if(isProp ? unsubPropertyJobs : unsubJobs) return;
+    var unsub = onSnapshot(collection(db, isProp ? "propertyJobs" : "jobs"), function(snap){
+      var myC = state.myCountry || "egypt";
+      var list = snap.docs.map(function(d){
+        var x = d.data();
+        return { id:d.id, ownerId:x.ownerId||"", ownerName:x.ownerName||"", title:x.title||"", desc:x.desc||"", contact:x.contact||"", role:x.role||"", country:x.country||"egypt", createdAt:x.createdAt||0 };
+      }).filter(function(j){ return state.isAdmin || j.country === myC; })
+        .sort(function(a,b){ return b.createdAt - a.createdAt; });
+      if(isProp){ state.propertyJobs = list; state.propertyJobsLoaded = true; } else { state.jobs = list; state.jobsLoaded = true; }
+      render();
+    }, function(err){
+      console.error("jobs sync error:", err);
+      if(isProp) state.propertyJobsLoaded = true; else state.jobsLoaded = true;
+      render();
+    });
+    if(isProp) unsubPropertyJobs = unsub; else unsubJobs = unsub;
+  }
+
+  function screenMore(){
+    var isProp = state.domain === "property";
+    var pend = state.isAdmin ? pendingCount() : 0;
+    function tile(id, icon, title, desc, cls, badge){
+      return '<button class="more-tile ' + cls + '" data-action="switch-tab" data-value="' + id + '">' +
+        '<span class="more-ico">' + icon + (badge ? '<span class="nav-badge">' + (badge > 9 ? '9+' : badge) + '</span>' : '') + '</span>' +
+        '<span class="more-txt"><b>' + esc(title) + '</b><small>' + esc(desc) + '</small></span></button>';
+    }
+    var html = tile("jobs", ICONS.briefcase, t(isProp ? "more_jobs_prop" : "more_jobs_car"), t("more_jobs_desc"), "more-hero", 0) +
+      '<div class="more-grid">' +
+        tile("stats", ICONS.stats, t("tab_stats"), t("more_stats_desc"), "", 0) +
+        (state.isAdmin ? tile("subscriptions", ICONS.crown, t("tab_subscriptions"), t("more_subs_desc"), "", pend) : '') +
+      '</div>';
+    return topbar(t("more_title"), t("more_sub")) + '<div class="content">' + html + '</div>';
+  }
+
+  function jobsList(){ return state.domain === "property" ? state.propertyJobs : state.jobs; }
+
+  function jobItemHtml(j){
+    var isMine = currentUser && j.ownerId === currentUser.uid;
+    var roleText = roleLabel(state.domain, j.role);
+    var digits = waDigits(j.contact);
+    var contactHtml = '';
+    if(digits.length >= 7){
+      contactHtml = '<a class="mkt-contact-btn job-contact" href="https://wa.me/' + digits + '?text=' + encodeURIComponent(t("jobs_wa_msg") + j.title) + '" target="_blank" rel="noreferrer">' + ICONS.send + ' ' + esc(t("jobs_contact_btn")) + '</a>';
+    } else if(normalizeUrl(j.contact)){
+      contactHtml = '<a class="mkt-contact-btn job-contact" href="' + esc(normalizeUrl(j.contact)) + '" target="_blank" rel="noopener noreferrer">' + ICONS.link + ' ' + esc(t("jobs_contact_btn")) + '</a>';
+    } else if(j.contact){
+      contactHtml = '<span class="job-contact-text">' + esc(j.contact) + '</span>';
+    }
+    var delHtml = (isMine || state.isAdmin) ? '<button class="job-del" data-action="job-delete" data-id="' + esc(j.id) + '">' + esc(t("jobs_delete")) + '</button>' : '';
+    return '<div class="job-card">' +
+      '<div class="job-head"><p class="job-title">' + esc(j.title) + '</p><span class="job-time">' + esc(formatRelative(j.createdAt)) + '</span></div>' +
+      '<div class="job-pub">' +
+        (roleText ? '<span class="mkt-role-badge"><span class="mkt-badge-lbl">' + esc(t("mkt_lbl_user")) + '</span>' + esc(roleText) + '</span>' : '') +
+        (j.ownerName ? '<span class="job-owner">' + esc(j.ownerName) + '</span>' : '') +
+        (state.isAdmin ? '<span class="job-owner">' + countryLabel(j.country) + '</span>' : '') +
+        (isMine ? '<span class="job-owner job-mine">' + esc(t("jobs_mine")) + '</span>' : '') +
+      '</div>' +
+      '<p class="job-desc">' + esc(j.desc) + '</p>' +
+      ((contactHtml || delHtml) ? '<div class="job-actions">' + contactHtml + delHtml + '</div>' : '') +
+    '</div>';
+  }
+
+  function jobFormHtml(){
+    return '<div class="card job-form">' +
+      '<div class="field"><label>' + esc(t("jobs_f_title")) + '</label><input class="input" id="job-title" maxlength="80" placeholder="' + esc(t("jobs_f_title_ph")) + '" value="' + esc(jobDraft.title) + '" /></div>' +
+      '<div class="field"><label>' + esc(t("jobs_f_desc")) + '</label><textarea class="input" id="job-desc" rows="5" maxlength="700" placeholder="' + esc(t("jobs_f_desc_ph")) + '">' + esc(jobDraft.desc) + '</textarea></div>' +
+      '<div class="field"><label>' + esc(t("jobs_f_contact")) + '</label><input class="input" id="job-contact" dir="ltr" style="text-align:left" maxlength="60" inputmode="tel" value="' + esc(jobDraft.contact) + '" /></div>' +
+      '<div class="job-form-actions"><button class="submit-btn" data-action="job-submit">' + esc(t("jobs_publish")) + '</button>' +
+      '<button class="job-cancel" data-action="job-cancel">' + esc(t("jobs_cancel")) + '</button></div>' +
+    '</div>';
+  }
+
+  function screenJobs(){
+    var isProp = state.domain === "property";
+    var list = jobsList();
+    var loaded = isProp ? state.propertyJobsLoaded : state.jobsLoaded;
+    var title = t(isProp ? "more_jobs_prop" : "more_jobs_car");
+    var iconBox = '<div class="box">' + ICONS.briefcase.replace('viewBox','style="width:24px;height:24px;color:#6c6c74" viewBox') + '</div>';
+    var body = state.showJobForm ? jobFormHtml() : '<button class="job-add-btn" data-action="job-show-form">' + ICONS.briefcase + ' ' + esc(t("jobs_add_btn")) + '</button>';
+    if(!loaded){
+      body += '<div class="empty-state">' + iconBox + '<p class="t1">' + esc(t("jobs_loading")) + '</p></div>';
+    } else if(list.length === 0){
+      body += '<div class="empty-state">' + iconBox + '<p class="t1">' + esc(t("jobs_empty_title")) + '</p><p class="t2">' + esc(t("jobs_empty_sub")) + '</p></div>';
+    } else {
+      body += list.map(jobItemHtml).join("");
+    }
+    return topbar(title, list.length + t("jobs_sub_suffix")) + '<div class="content">' + body + '</div>';
+  }
+
   function tabsList(){
+
     var isProp = state.domain === "property";
     return [
       { id:"today", label:t("tab_today"), icon:ICONS.today },
       { id:"manage", label: isProp ? t("tab_properties") : t("tab_manage"), icon: isProp ? ICONS.home : ICONS.cars },
       { id:"marketplace", label:t("tab_marketplace"), icon:ICONS.tag },
       { id:"channels", label:t("tab_channels"), icon:ICONS.broadcast },
-      { id:"stats", label:t("tab_stats"), icon:ICONS.stats }
+      { id:"more", label:t("tab_more"), icon:ICONS.more }
     ];
   }
 
-  function visibleTabs(){
-    return state.isAdmin
-      ? tabsList().concat([{ id:"subscriptions", label:t("tab_subscriptions"), icon:ICONS.crown }])
-      : tabsList();
-  }
+  function visibleTabs(){ return tabsList(); }
 
   function navIcon(t){
-    var n = (t.id === "subscriptions") ? pendingCount() : 0;
+    var n = (t.id === "more" && state.isAdmin) ? pendingCount() : 0;
     if(!n) return '<span class="nav-ico">' + t.icon + '</span>';
     return '<span class="nav-ico has-alert">' + t.icon +
       '<span class="nav-badge" role="status" aria-label="' + n + ' طلب اشتراك بانتظار الموافقة">' + (n > 9 ? '9+' : n) + '</span></span>';
@@ -3964,7 +4099,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
   function bottomNav(){
     return '<div class="bottomnav"><div class="bottomnav-inner" style="--tab-count:' + visibleTabs().length + '">' +
       visibleTabs().map(function(t){
-        var active = state.tab === t.id;
+        var active = state.tab === t.id || (t.id === "more" && ["stats","jobs","subscriptions"].indexOf(state.tab) > -1);
         return '<button class="navbtn' + (active?' active':'') + '" data-action="switch-tab" data-value="' + t.id + '">' +
           (active ? '<span class="bar"></span>' : '') + navIcon(t) + '<span>' + t.label + '</span></button>';
       }).join("") +
@@ -4613,6 +4748,8 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     else if(state.tab === "marketplace") html += screenMarketplace();
     else if(state.tab === "channels") html += screenChannels();
     else if(state.tab === "stats") html += screenStats();
+    else if(state.tab === "more") html += screenMore();
+    else if(state.tab === "jobs") html += screenJobs();
     else if(state.tab === "subscriptions" && state.isAdmin) html += screenSubscriptions();
     else html += screenToday();
     html += bottomNav() + toast() + publishModalHtml() + broadcastModalHtml() + legacyCleanupModalHtml() + profileModalHtml();
@@ -4689,6 +4826,13 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
         var cEl = document.getElementById("cf-camp-" + p.id);
         if(cEl) cEl.oninput = function(e){ formDraft.campaign[p.id] = e.target.value; };
       });
+    }
+
+    if(state.tab === "jobs" && state.showJobForm){
+      var jtEl = document.getElementById("job-title"), jdEl = document.getElementById("job-desc"), jcEl = document.getElementById("job-contact");
+      if(jtEl) jtEl.oninput = function(e){ jobDraft.title = e.target.value; };
+      if(jdEl) jdEl.oninput = function(e){ jobDraft.desc = e.target.value; };
+      if(jcEl) jcEl.oninput = function(e){ jobDraft.contact = e.target.value; };
     }
 
     if(state.tab === "marketplace"){
@@ -4884,7 +5028,9 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       state.editingPropertyId = null;
       state.editingPropertyChannelId = null;
       state.showAddPropertyForm = false;
+      state.showJobForm = false;
       if(state.tab === "marketplace"){ if(state.domain === "property") maybeStartPropertyMarketplaceListening(); else maybeStartMarketplaceListening(); }
+      if(state.tab === "jobs") maybeStartJobsListening();
       render();
     } else if(action === "publish"){
       markPublished(el.getAttribute("data-car"), el.getAttribute("data-platform"));
@@ -5195,7 +5341,42 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
           showToast(state.lang==="en" ? "Failed to unlist" : "فشل إلغاء العرض");
         });
       }
+    } else if(action === "job-show-form"){
+      if(!jobDraft.contact) jobDraft.contact = state.myPhone || "";
+      state.showJobForm = true;
+      render();
+    } else if(action === "job-cancel"){
+      state.showJobForm = false;
+      jobDraft = { title:"", desc:"", contact:"" };
+      render();
+    } else if(action === "job-submit"){
+      var jTitle = jobDraft.title.trim(), jDesc = jobDraft.desc.trim(), jContact = jobDraft.contact.trim();
+      if(!jTitle || !jDesc || !jContact){ showToast(t("jobs_required")); return; }
+      var jProp = state.domain === "property";
+      var jName = ((state.myProfile.firstName || "") + " " + (state.myProfile.lastName || "")).trim() || (currentUser && currentUser.displayName) || "";
+      addDoc(collection(db, jProp ? "propertyJobs" : "jobs"), {
+        ownerId: currentUser.uid, ownerName: jName, title: jTitle, desc: jDesc, contact: jContact,
+        role: (jProp ? state.myProfile.propertyRole : state.myProfile.carRole) || "",
+        country: state.myCountry || "egypt", createdAt: Date.now()
+      }).then(function(){
+        showToast(t("jobs_published"));
+      }).catch(function(err){
+        console.error("job-submit error:", err);
+        showToast(t("jobs_failed"));
+      });
+      state.showJobForm = false;
+      jobDraft = { title:"", desc:"", contact:"" };
+      render();
+    } else if(action === "job-delete"){
+      if(!window.confirm(t("jobs_delete_confirm"))) return;
+      deleteDoc(doc(db, state.domain === "property" ? "propertyJobs" : "jobs", el.getAttribute("data-id"))).then(function(){
+        showToast(t("jobs_deleted"));
+      }).catch(function(err){
+        console.error("job-delete error:", err);
+        showToast(t("jobs_failed"));
+      });
     } else if(action === "mkt-country-filter"){
+
       state.mktCountryFilter = el.getAttribute("data-value");
       render();
     } else if(action === "toggle-marketplace-pin"){
