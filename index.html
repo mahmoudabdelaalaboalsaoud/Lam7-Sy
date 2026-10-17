@@ -280,11 +280,18 @@
   .job-head{display:flex; align-items:flex-start; justify-content:space-between; gap:10px;}
   .job-title{font-size:15.5px; font-weight:800; color:#fff; line-height:1.45; min-width:0; overflow-wrap:anywhere;}
   .job-time{flex-shrink:0; font-size:11px; color:var(--text-5); font-weight:700; padding-top:3px;}
-  .job-pub{display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; margin:8px 0 10px;}
+  .job-pub{display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; margin:8px 0 8px;}
   .job-owner{font-size:12px; color:var(--text-4); font-weight:700;}
   .job-mine{color:var(--gold);}
   .job-desc{font-size:13.5px; color:var(--text-2); line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere;}
   .job-actions{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px;}
+  .job-more{display:none;}
+  .job-card.open .job-more{display:block;}
+  .job-toggle{display:block; width:100%; margin-top:2px; padding:9px 0 2px; font-size:12.5px; font-weight:800; color:var(--sky); text-align:center; border-top:1px solid var(--ink-700);}
+  .job-card.open .job-toggle{margin-top:12px;}
+  .job-toggle .jt-less{display:none;}
+  .job-card.open .job-toggle .jt-more{display:none;}
+  .job-card.open .job-toggle .jt-less{display:inline;}
   .job-btns{display:flex; flex-wrap:wrap; gap:8px;}
   .job-btn{display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:10px; font-size:12.5px; font-weight:800; white-space:nowrap; border:1px solid transparent; transition:transform .1s;}
   .job-btn:active{transform:scale(.96);}
@@ -973,7 +980,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       car_listing_type_label: "مصدر السيارة", prop_listing_type_label: "مصدر العقار",
       listing_type_none: "غير محدد",
       mkt_view_ad_link: "رابط الإعلان", tab_more: "المزيد", more_title: "المزيد", more_sub: "أقسام وأدوات إضافية", more_jobs_car: "وظائف مسوقي السيارات", more_jobs_prop: "وظائف مسوقي العقارات", more_jobs_desc: "اعرض فرصة عمل أو اعثر على واحدة", more_stats_desc: "أرقام نشاطك وحملاتك", more_subs_desc: "إدارة اشتراكات المستخدمين",
-      jobs_sub_suffix: " وظيفة", jobs_add_btn: "إضافة وظيفة", jobs_f_title: "عنوان الوظيفة", jobs_f_title_ph: "مثال: مطلوب مسوق بالعمولة", jobs_f_desc: "تفاصيل الوظيفة", jobs_f_desc_ph: "المهام، الشروط، العمولة أو الراتب...", jobs_f_contact: "رقم التواصل (واتساب)", jobs_publish: "نشر الوظيفة", jobs_cancel: "إلغاء", jobs_empty_title: "لا توجد وظائف حتى الآن", jobs_empty_sub: "كن أول من ينشر فرصة عمل", jobs_loading: "جاري تحميل الوظائف...", jobs_contact_btn: "تواصل", jobs_delete: "حذف", jobs_delete_confirm: "حذف هذه الوظيفة؟", jobs_published: "تم نشر الوظيفة", jobs_deleted: "تم حذف الوظيفة", jobs_required: "اكتب العنوان والتفاصيل ووسيلة تواصل واحدة على الأقل", jobs_f_email: "الإيميل (اختياري)", jobs_f_link: "رابط الإعلان (اختياري)", jobs_f_wa: "رقم الواتساب (اختياري)", jobs_btn_wa: "واتساب", jobs_btn_email: "إيميل", jobs_btn_link: "رابط الإعلان", jobs_bad_email: "الإيميل غير صحيح", jobs_bad_link: "الرابط غير صحيح", jobs_failed: "فشلت العملية — تحقق من الاتصال", jobs_mine: "وظيفتك", jobs_wa_msg: "السلام عليكم، بخصوص وظيفة: ",
+      jobs_sub_suffix: " وظيفة", jobs_add_btn: "إضافة وظيفة", jobs_f_title: "عنوان الوظيفة", jobs_f_title_ph: "مثال: مطلوب مسوق بالعمولة", jobs_f_desc: "تفاصيل الوظيفة", jobs_f_desc_ph: "المهام، الشروط، العمولة أو الراتب...", jobs_f_contact: "رقم التواصل (واتساب)", jobs_publish: "نشر الوظيفة", jobs_cancel: "إلغاء", jobs_empty_title: "لا توجد وظائف حتى الآن", jobs_empty_sub: "كن أول من ينشر فرصة عمل", jobs_loading: "جاري تحميل الوظائف...", jobs_contact_btn: "تواصل", jobs_delete: "حذف", jobs_delete_confirm: "حذف هذه الوظيفة؟", jobs_published: "تم نشر الوظيفة", jobs_deleted: "تم حذف الوظيفة", jobs_required: "اكتب العنوان والتفاصيل ووسيلة تواصل واحدة على الأقل", jobs_f_email: "الإيميل (اختياري)", jobs_f_link: "رابط الإعلان (اختياري)", jobs_f_wa: "رقم الواتساب (اختياري)", jobs_btn_wa: "واتساب", jobs_read_more: "قراءة المزيد", jobs_show_less: "إخفاء التفاصيل", jobs_btn_email: "إيميل", jobs_btn_link: "رابط الإعلان", jobs_bad_email: "الإيميل غير صحيح", jobs_bad_link: "الرابط غير صحيح", jobs_failed: "فشلت العملية — تحقق من الاتصال", jobs_mine: "وظيفتك", jobs_wa_msg: "السلام عليكم، بخصوص وظيفة: ",
       more_assistant: "مساعد التطبيق", more_assistant_desc: "إجابات سريعة عن استخدام التطبيق",
       mkt_lbl_user: "المستخدم", mkt_lbl_car: "السيارة", mkt_lbl_prop: "العقار",
       new_trial_single: "عضو جديد بدأ الشهر التجريبي: ",
@@ -1195,7 +1202,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       car_listing_type_label: "Car source", prop_listing_type_label: "Property source",
       listing_type_none: "Not set",
       mkt_view_ad_link: "Ad link", tab_more: "More", more_title: "More", more_sub: "Extra sections and tools", more_jobs_car: "Car marketer jobs", more_jobs_prop: "Property marketer jobs", more_jobs_desc: "Post a job or find one", more_stats_desc: "Your activity and campaign numbers", more_subs_desc: "Manage user subscriptions",
-      jobs_sub_suffix: " jobs", jobs_add_btn: "Post a job", jobs_f_title: "Job title", jobs_f_title_ph: "e.g. Commission-based marketer wanted", jobs_f_desc: "Job details", jobs_f_desc_ph: "Duties, requirements, commission or pay...", jobs_f_contact: "Contact number (WhatsApp)", jobs_publish: "Publish job", jobs_cancel: "Cancel", jobs_empty_title: "No jobs yet", jobs_empty_sub: "Be the first to post an opportunity", jobs_loading: "Loading jobs...", jobs_contact_btn: "Contact", jobs_delete: "Delete", jobs_delete_confirm: "Delete this job?", jobs_published: "Job published", jobs_deleted: "Job deleted", jobs_required: "Enter the title, details and at least one contact method", jobs_f_email: "Email (optional)", jobs_f_link: "Ad link (optional)", jobs_f_wa: "WhatsApp number (optional)", jobs_btn_wa: "WhatsApp", jobs_btn_email: "Email", jobs_btn_link: "Ad link", jobs_bad_email: "Invalid email", jobs_bad_link: "Invalid link", jobs_failed: "Action failed — check your connection", jobs_mine: "Your job", jobs_wa_msg: "Hello, regarding the job: ",
+      jobs_sub_suffix: " jobs", jobs_add_btn: "Post a job", jobs_f_title: "Job title", jobs_f_title_ph: "e.g. Commission-based marketer wanted", jobs_f_desc: "Job details", jobs_f_desc_ph: "Duties, requirements, commission or pay...", jobs_f_contact: "Contact number (WhatsApp)", jobs_publish: "Publish job", jobs_cancel: "Cancel", jobs_empty_title: "No jobs yet", jobs_empty_sub: "Be the first to post an opportunity", jobs_loading: "Loading jobs...", jobs_contact_btn: "Contact", jobs_delete: "Delete", jobs_delete_confirm: "Delete this job?", jobs_published: "Job published", jobs_deleted: "Job deleted", jobs_required: "Enter the title, details and at least one contact method", jobs_f_email: "Email (optional)", jobs_f_link: "Ad link (optional)", jobs_f_wa: "WhatsApp number (optional)", jobs_btn_wa: "WhatsApp", jobs_read_more: "Read more", jobs_show_less: "Show less", jobs_btn_email: "Email", jobs_btn_link: "Ad link", jobs_bad_email: "Invalid email", jobs_bad_link: "Invalid link", jobs_failed: "Action failed — check your connection", jobs_mine: "Your job", jobs_wa_msg: "Hello, regarding the job: ",
       more_assistant: "App assistant", more_assistant_desc: "Quick answers about using the app",
       mkt_lbl_user: "User", mkt_lbl_car: "Car", mkt_lbl_prop: "Property",
       new_trial_single: "New trial signup: ",
@@ -2974,7 +2981,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
   state.mgmtSearch = "";
   state.mktSearch = "";
   state.mktCountryFilter = "all";
-  state.jobs = []; state.jobsLoaded = false; state.propertyJobs = []; state.propertyJobsLoaded = false; state.showJobForm = false;
+  state.jobs = []; state.jobsLoaded = false; state.propertyJobs = []; state.propertyJobsLoaded = false; state.showJobForm = false; state.jobsOpen = {};
   var jobDraft = { title:"", desc:"", contact:"", email:"", link:"" };
   state.mgmtFilter = "all";
   state.mgmtSort = "recent";
@@ -4072,7 +4079,8 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     }
     var contactHtml = btns ? '<div class="job-btns">' + btns + '</div>' : (j.contact && digits.length < 7 && !normalizeUrl(j.contact) ? '<span class="job-contact-text">' + esc(j.contact) + '</span>' : '');
     var delHtml = (isMine || state.isAdmin) ? '<button class="job-del" data-action="job-delete" data-id="' + esc(j.id) + '">' + esc(t("jobs_delete")) + '</button>' : '';
-    return '<div class="job-card">' +
+    var open = !!state.jobsOpen[j.id];
+    return '<div class="job-card' + (open ? ' open' : '') + '">' +
       '<div class="job-head"><p class="job-title">' + esc(j.title) + '</p><span class="job-time">' + esc(formatRelative(j.createdAt)) + '</span></div>' +
       '<div class="job-pub">' +
         (roleText ? '<span class="mkt-role-badge"><span class="mkt-badge-lbl">' + esc(t("mkt_lbl_user")) + '</span>' + esc(roleText) + '</span>' : '') +
@@ -4080,8 +4088,11 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
         (state.isAdmin ? '<span class="job-owner">' + countryLabel(j.country) + '</span>' : '') +
         (isMine ? '<span class="job-owner job-mine">' + esc(t("jobs_mine")) + '</span>' : '') +
       '</div>' +
-      '<p class="job-desc">' + esc(j.desc) + '</p>' +
-      ((contactHtml || delHtml) ? '<div class="job-actions">' + contactHtml + delHtml + '</div>' : '') +
+      '<div class="job-more">' +
+        '<p class="job-desc">' + esc(j.desc) + '</p>' +
+        ((contactHtml || delHtml) ? '<div class="job-actions">' + contactHtml + delHtml + '</div>' : '') +
+      '</div>' +
+      '<button class="job-toggle" data-action="job-toggle" data-id="' + esc(j.id) + '"><span class="jt-more">' + esc(t("jobs_read_more")) + ' ▾</span><span class="jt-less">' + esc(t("jobs_show_less")) + ' ▴</span></button>' +
     '</div>';
   }
 
@@ -5383,6 +5394,11 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
           showToast(state.lang==="en" ? "Failed to unlist" : "فشل إلغاء العرض");
         });
       }
+    } else if(action === "job-toggle"){
+      var jtId = el.getAttribute("data-id");
+      var jtCard = el.closest(".job-card");
+      state.jobsOpen[jtId] = !state.jobsOpen[jtId];
+      if(jtCard) jtCard.classList.toggle("open", !!state.jobsOpen[jtId]);
     } else if(action === "open-assistant"){
       faqOpen();
     } else if(action === "job-show-form"){
