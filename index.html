@@ -268,6 +268,7 @@
   .more-hero .more-txt b{font-size:17px;}
   .more-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
   .more-grid .more-tile{flex-direction:column; align-items:flex-start; gap:12px;}
+  .more-grid .more-wide{grid-column:1/-1; flex-direction:row; align-items:center;}
   .job-add-btn{display:flex; align-items:center; justify-content:center; gap:8px; width:100%; background:var(--red); color:#fff; border-radius:12px; padding:13px 0; font-size:15px; font-weight:800; margin-bottom:14px; box-shadow:0 8px 24px -10px rgba(232,25,44,.6); transition:transform .1s;}
   .job-add-btn:active{transform:scale(.98);}
   .job-add-btn svg{width:18px; height:18px;}
@@ -284,7 +285,13 @@
   .job-mine{color:var(--gold);}
   .job-desc{font-size:13.5px; color:var(--text-2); line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere;}
   .job-actions{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px;}
-  .job-contact{padding:8px 16px;}
+  .job-btns{display:flex; flex-wrap:wrap; gap:8px;}
+  .job-btn{display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:10px; font-size:12.5px; font-weight:800; white-space:nowrap; border:1px solid transparent; transition:transform .1s;}
+  .job-btn:active{transform:scale(.96);}
+  .job-btn svg{width:14px; height:14px;}
+  .job-btn-wa{background:#22c55e; color:#06240f;}
+  .job-btn-mail{background:rgba(56,189,248,.12); color:var(--sky); border-color:rgba(56,189,248,.35);}
+  .job-btn-link{background:rgba(245,166,35,.12); color:var(--gold); border-color:rgba(245,166,35,.35);}
   .job-contact-text{font-size:13px; font-weight:700; color:var(--text-3); direction:ltr;}
   .job-del{font-size:12px; font-weight:800; color:var(--red); background:rgba(232,25,44,.1); border:1px solid rgba(232,25,44,.3); border-radius:9px; padding:7px 14px; margin-inline-start:auto;}
   .mkt-phone{font-size:12.5px; color:var(--text-4); font-weight:600; margin-top:3px; direction:ltr; display:inline-block;}
@@ -572,7 +579,25 @@
 
     .btn-publish:hover, .btn-link:hover, .submit-btn:hover, .mgmt-btn:hover, .chip:hover{ filter:brightness(1.1); }
     .rq-del:hover{ background:var(--ink-700); }
-  }</style>
+  }  /* مساعد الأسئلة الشائعة */
+  .faq-backdrop{position:fixed; inset:0; z-index:70; background:rgba(0,0,0,.55); opacity:0; pointer-events:none; transition:opacity .2s;}
+  .faq-backdrop.open{opacity:1; pointer-events:auto;}
+  .faq-sheet{position:fixed; z-index:71; left:0; right:0; bottom:0; margin:0 auto; max-width:520px; height:72vh; display:flex; flex-direction:column; background:var(--ink-900); border:1px solid var(--ink-700); border-bottom:none; border-radius:20px 20px 0 0; transform:translateY(105%); transition:transform .25s ease; padding-bottom:env(safe-area-inset-bottom,0px);}
+  .faq-sheet.open{transform:translateY(0);}
+  .faq-head{display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid var(--ink-700);}
+  .faq-title{font-size:16px; font-weight:800; color:#fff;}
+  .faq-x{width:32px; height:32px; border-radius:50%; background:var(--ink-800); color:var(--text-3); font-size:14px;}
+  .faq-list{flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:10px;}
+  .faq-msg{max-width:86%; padding:10px 13px; border-radius:14px; font-size:14px; line-height:1.65; font-weight:600; overflow-wrap:anywhere;}
+  .faq-bot{align-self:flex-start; background:var(--ink-800); color:var(--text-2); border:1px solid var(--ink-700); border-end-start-radius:4px;}
+  .faq-user{align-self:flex-end; background:var(--red); color:#fff; border-end-end-radius:4px;}
+  .faq-chips{display:flex; flex-direction:column; gap:7px; align-items:flex-start;}
+  .faq-chip{text-align:start; padding:9px 13px; border-radius:12px; border:1px solid rgba(56,189,248,.35); background:rgba(56,189,248,.08); color:var(--sky); font-size:13px; font-weight:700; transition:transform .1s;}
+  .faq-chip:active{transform:scale(.97);}
+  .faq-inputrow{display:flex; gap:8px; padding:10px 12px 12px; border-top:1px solid var(--ink-700);}
+  .faq-input{flex:1; min-width:0; border-radius:12px; border:1px solid var(--ink-600); background:var(--ink-800); padding:12px 14px; font-size:15px; font-weight:600; color:#fff; outline:none;}
+  .faq-send{flex-shrink:0; width:46px; border-radius:12px; background:var(--red); color:#fff; font-size:17px;}
+</style>
 </head>
 <body>
 <div id="app">
@@ -948,7 +973,8 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       car_listing_type_label: "مصدر السيارة", prop_listing_type_label: "مصدر العقار",
       listing_type_none: "غير محدد",
       mkt_view_ad_link: "رابط الإعلان", tab_more: "المزيد", more_title: "المزيد", more_sub: "أقسام وأدوات إضافية", more_jobs_car: "وظائف مسوقي السيارات", more_jobs_prop: "وظائف مسوقي العقارات", more_jobs_desc: "اعرض فرصة عمل أو اعثر على واحدة", more_stats_desc: "أرقام نشاطك وحملاتك", more_subs_desc: "إدارة اشتراكات المستخدمين",
-      jobs_sub_suffix: " وظيفة", jobs_add_btn: "إضافة وظيفة", jobs_f_title: "عنوان الوظيفة", jobs_f_title_ph: "مثال: مطلوب مسوق بالعمولة", jobs_f_desc: "تفاصيل الوظيفة", jobs_f_desc_ph: "المهام، الشروط، العمولة أو الراتب...", jobs_f_contact: "رقم التواصل (واتساب)", jobs_publish: "نشر الوظيفة", jobs_cancel: "إلغاء", jobs_empty_title: "لا توجد وظائف حتى الآن", jobs_empty_sub: "كن أول من ينشر فرصة عمل", jobs_loading: "جاري تحميل الوظائف...", jobs_contact_btn: "تواصل", jobs_delete: "حذف", jobs_delete_confirm: "حذف هذه الوظيفة؟", jobs_published: "تم نشر الوظيفة", jobs_deleted: "تم حذف الوظيفة", jobs_required: "اكتب العنوان والتفاصيل ورقم التواصل", jobs_failed: "فشلت العملية — تحقق من الاتصال", jobs_mine: "وظيفتك", jobs_wa_msg: "السلام عليكم، بخصوص وظيفة: ",
+      jobs_sub_suffix: " وظيفة", jobs_add_btn: "إضافة وظيفة", jobs_f_title: "عنوان الوظيفة", jobs_f_title_ph: "مثال: مطلوب مسوق بالعمولة", jobs_f_desc: "تفاصيل الوظيفة", jobs_f_desc_ph: "المهام، الشروط، العمولة أو الراتب...", jobs_f_contact: "رقم التواصل (واتساب)", jobs_publish: "نشر الوظيفة", jobs_cancel: "إلغاء", jobs_empty_title: "لا توجد وظائف حتى الآن", jobs_empty_sub: "كن أول من ينشر فرصة عمل", jobs_loading: "جاري تحميل الوظائف...", jobs_contact_btn: "تواصل", jobs_delete: "حذف", jobs_delete_confirm: "حذف هذه الوظيفة؟", jobs_published: "تم نشر الوظيفة", jobs_deleted: "تم حذف الوظيفة", jobs_required: "اكتب العنوان والتفاصيل ووسيلة تواصل واحدة على الأقل", jobs_f_email: "الإيميل (اختياري)", jobs_f_link: "رابط الإعلان (اختياري)", jobs_f_wa: "رقم الواتساب (اختياري)", jobs_btn_wa: "واتساب", jobs_btn_email: "إيميل", jobs_btn_link: "رابط الإعلان", jobs_bad_email: "الإيميل غير صحيح", jobs_bad_link: "الرابط غير صحيح", jobs_failed: "فشلت العملية — تحقق من الاتصال", jobs_mine: "وظيفتك", jobs_wa_msg: "السلام عليكم، بخصوص وظيفة: ",
+      more_assistant: "مساعد التطبيق", more_assistant_desc: "إجابات سريعة عن استخدام التطبيق",
       mkt_lbl_user: "المستخدم", mkt_lbl_car: "السيارة", mkt_lbl_prop: "العقار",
       new_trial_single: "عضو جديد بدأ الشهر التجريبي: ",
       new_trial_plural: " أعضاء جدد بدأوا الشهر التجريبي",
@@ -1169,7 +1195,8 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       car_listing_type_label: "Car source", prop_listing_type_label: "Property source",
       listing_type_none: "Not set",
       mkt_view_ad_link: "Ad link", tab_more: "More", more_title: "More", more_sub: "Extra sections and tools", more_jobs_car: "Car marketer jobs", more_jobs_prop: "Property marketer jobs", more_jobs_desc: "Post a job or find one", more_stats_desc: "Your activity and campaign numbers", more_subs_desc: "Manage user subscriptions",
-      jobs_sub_suffix: " jobs", jobs_add_btn: "Post a job", jobs_f_title: "Job title", jobs_f_title_ph: "e.g. Commission-based marketer wanted", jobs_f_desc: "Job details", jobs_f_desc_ph: "Duties, requirements, commission or pay...", jobs_f_contact: "Contact number (WhatsApp)", jobs_publish: "Publish job", jobs_cancel: "Cancel", jobs_empty_title: "No jobs yet", jobs_empty_sub: "Be the first to post an opportunity", jobs_loading: "Loading jobs...", jobs_contact_btn: "Contact", jobs_delete: "Delete", jobs_delete_confirm: "Delete this job?", jobs_published: "Job published", jobs_deleted: "Job deleted", jobs_required: "Enter the title, details and contact number", jobs_failed: "Action failed — check your connection", jobs_mine: "Your job", jobs_wa_msg: "Hello, regarding the job: ",
+      jobs_sub_suffix: " jobs", jobs_add_btn: "Post a job", jobs_f_title: "Job title", jobs_f_title_ph: "e.g. Commission-based marketer wanted", jobs_f_desc: "Job details", jobs_f_desc_ph: "Duties, requirements, commission or pay...", jobs_f_contact: "Contact number (WhatsApp)", jobs_publish: "Publish job", jobs_cancel: "Cancel", jobs_empty_title: "No jobs yet", jobs_empty_sub: "Be the first to post an opportunity", jobs_loading: "Loading jobs...", jobs_contact_btn: "Contact", jobs_delete: "Delete", jobs_delete_confirm: "Delete this job?", jobs_published: "Job published", jobs_deleted: "Job deleted", jobs_required: "Enter the title, details and at least one contact method", jobs_f_email: "Email (optional)", jobs_f_link: "Ad link (optional)", jobs_f_wa: "WhatsApp number (optional)", jobs_btn_wa: "WhatsApp", jobs_btn_email: "Email", jobs_btn_link: "Ad link", jobs_bad_email: "Invalid email", jobs_bad_link: "Invalid link", jobs_failed: "Action failed — check your connection", jobs_mine: "Your job", jobs_wa_msg: "Hello, regarding the job: ",
+      more_assistant: "App assistant", more_assistant_desc: "Quick answers about using the app",
       mkt_lbl_user: "User", mkt_lbl_car: "Car", mkt_lbl_prop: "Property",
       new_trial_single: "New trial signup: ",
       new_trial_plural: " new members started their trial",
@@ -2586,6 +2613,8 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
 
   /* ---------------- icons (inline svg) ---------------- */
   var ICONS = {
+    mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>',
+    chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
     more: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>',
     briefcase: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M2 13h20"/></svg>',
     today: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg>',
@@ -2946,7 +2975,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
   state.mktSearch = "";
   state.mktCountryFilter = "all";
   state.jobs = []; state.jobsLoaded = false; state.propertyJobs = []; state.propertyJobsLoaded = false; state.showJobForm = false;
-  var jobDraft = { title:"", desc:"", contact:"" };
+  var jobDraft = { title:"", desc:"", contact:"", email:"", link:"" };
   state.mgmtFilter = "all";
   state.mgmtSort = "recent";
   state.mgmtSearchFocused = false;
@@ -3991,7 +4020,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       var myC = state.myCountry || "egypt";
       var list = snap.docs.map(function(d){
         var x = d.data();
-        return { id:d.id, ownerId:x.ownerId||"", ownerName:x.ownerName||"", title:x.title||"", desc:x.desc||"", contact:x.contact||"", role:x.role||"", country:x.country||"egypt", createdAt:x.createdAt||0 };
+        return { id:d.id, ownerId:x.ownerId||"", ownerName:x.ownerName||"", title:x.title||"", desc:x.desc||"", contact:x.contact||"", email:x.email||"", link:x.link||"", role:x.role||"", country:x.country||"egypt", createdAt:x.createdAt||0 };
       }).filter(function(j){ return state.isAdmin || j.country === myC; })
         .sort(function(a,b){ return b.createdAt - a.createdAt; });
       if(isProp){ state.propertyJobs = list; state.propertyJobsLoaded = true; } else { state.jobs = list; state.jobsLoaded = true; }
@@ -4012,11 +4041,12 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
         '<span class="more-ico">' + icon + (badge ? '<span class="nav-badge">' + (badge > 9 ? '9+' : badge) + '</span>' : '') + '</span>' +
         '<span class="more-txt"><b>' + esc(title) + '</b><small>' + esc(desc) + '</small></span></button>';
     }
+    var items = [ tile("stats", ICONS.stats, t("tab_stats"), t("more_stats_desc"), "", 0) ];
+    if(state.isAdmin) items.push(tile("subscriptions", ICONS.crown, t("tab_subscriptions"), t("more_subs_desc"), "", pend));
+    items.push(tile("assistant", ICONS.chat, t("more_assistant"), t("more_assistant_desc"), "", 0).replace('data-action="switch-tab"', 'data-action="open-assistant"'));
+    if(items.length % 2 === 1) items[items.length - 1] = items[items.length - 1].replace('class="more-tile ', 'class="more-tile more-wide ');
     var html = tile("jobs", ICONS.briefcase, t(isProp ? "more_jobs_prop" : "more_jobs_car"), t("more_jobs_desc"), "more-hero", 0) +
-      '<div class="more-grid">' +
-        tile("stats", ICONS.stats, t("tab_stats"), t("more_stats_desc"), "", 0) +
-        (state.isAdmin ? tile("subscriptions", ICONS.crown, t("tab_subscriptions"), t("more_subs_desc"), "", pend) : '') +
-      '</div>';
+      '<div class="more-grid">' + items.join("") + '</div>';
     return topbar(t("more_title"), t("more_sub")) + '<div class="content">' + html + '</div>';
   }
 
@@ -4026,14 +4056,21 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     var isMine = currentUser && j.ownerId === currentUser.uid;
     var roleText = roleLabel(state.domain, j.role);
     var digits = waDigits(j.contact);
-    var contactHtml = '';
+    var btns = '';
     if(digits.length >= 7){
-      contactHtml = '<a class="mkt-contact-btn job-contact" href="https://wa.me/' + digits + '?text=' + encodeURIComponent(t("jobs_wa_msg") + j.title) + '" target="_blank" rel="noreferrer">' + ICONS.send + ' ' + esc(t("jobs_contact_btn")) + '</a>';
-    } else if(normalizeUrl(j.contact)){
-      contactHtml = '<a class="mkt-contact-btn job-contact" href="' + esc(normalizeUrl(j.contact)) + '" target="_blank" rel="noopener noreferrer">' + ICONS.link + ' ' + esc(t("jobs_contact_btn")) + '</a>';
-    } else if(j.contact){
-      contactHtml = '<span class="job-contact-text">' + esc(j.contact) + '</span>';
+      btns += '<a class="job-btn job-btn-wa" href="https://wa.me/' + digits + '?text=' + encodeURIComponent(t("jobs_wa_msg") + j.title) + '" target="_blank" rel="noreferrer">' + ICONS.send + ' ' + esc(t("jobs_btn_wa")) + '</a>';
+    } else if(j.contact && normalizeUrl(j.contact)){
+      btns += '<a class="job-btn job-btn-link" href="' + esc(normalizeUrl(j.contact)) + '" target="_blank" rel="noopener noreferrer">' + ICONS.link + ' ' + esc(t("jobs_btn_link")) + '</a>';
     }
+    var jEmail = (j.email || "").trim();
+    if(jEmail && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(jEmail)){
+      btns += '<a class="job-btn job-btn-mail" href="mailto:' + esc(jEmail) + '?subject=' + encodeURIComponent(j.title) + '">' + ICONS.mail + ' ' + esc(t("jobs_btn_email")) + '</a>';
+    }
+    var jLink = normalizeUrl(j.link);
+    if(jLink){
+      btns += '<a class="job-btn job-btn-link" href="' + esc(jLink) + '" target="_blank" rel="noopener noreferrer">' + ICONS.link + ' ' + esc(t("jobs_btn_link")) + '</a>';
+    }
+    var contactHtml = btns ? '<div class="job-btns">' + btns + '</div>' : (j.contact && digits.length < 7 && !normalizeUrl(j.contact) ? '<span class="job-contact-text">' + esc(j.contact) + '</span>' : '');
     var delHtml = (isMine || state.isAdmin) ? '<button class="job-del" data-action="job-delete" data-id="' + esc(j.id) + '">' + esc(t("jobs_delete")) + '</button>' : '';
     return '<div class="job-card">' +
       '<div class="job-head"><p class="job-title">' + esc(j.title) + '</p><span class="job-time">' + esc(formatRelative(j.createdAt)) + '</span></div>' +
@@ -4052,7 +4089,9 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     return '<div class="card job-form">' +
       '<div class="field"><label>' + esc(t("jobs_f_title")) + '</label><input class="input" id="job-title" maxlength="80" placeholder="' + esc(t("jobs_f_title_ph")) + '" value="' + esc(jobDraft.title) + '" /></div>' +
       '<div class="field"><label>' + esc(t("jobs_f_desc")) + '</label><textarea class="input" id="job-desc" rows="5" maxlength="700" placeholder="' + esc(t("jobs_f_desc_ph")) + '">' + esc(jobDraft.desc) + '</textarea></div>' +
-      '<div class="field"><label>' + esc(t("jobs_f_contact")) + '</label><input class="input" id="job-contact" dir="ltr" style="text-align:left" maxlength="60" inputmode="tel" value="' + esc(jobDraft.contact) + '" /></div>' +
+      '<div class="field"><label>' + esc(t("jobs_f_wa")) + '</label><input class="input" id="job-contact" dir="ltr" style="text-align:left" maxlength="20" inputmode="tel" value="' + esc(jobDraft.contact) + '" /></div>' +
+      '<div class="field"><label>' + esc(t("jobs_f_email")) + '</label><input class="input" id="job-email" type="email" dir="ltr" style="text-align:left" maxlength="100" inputmode="email" autocapitalize="off" value="' + esc(jobDraft.email) + '" /></div>' +
+      '<div class="field"><label>' + esc(t("jobs_f_link")) + '</label><input class="input" id="job-link" type="url" dir="ltr" style="text-align:left" maxlength="300" inputmode="url" autocapitalize="off" placeholder="https://" value="' + esc(jobDraft.link) + '" /></div>' +
       '<div class="job-form-actions"><button class="submit-btn" data-action="job-submit">' + esc(t("jobs_publish")) + '</button>' +
       '<button class="job-cancel" data-action="job-cancel">' + esc(t("jobs_cancel")) + '</button></div>' +
     '</div>';
@@ -4833,6 +4872,9 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       if(jtEl) jtEl.oninput = function(e){ jobDraft.title = e.target.value; };
       if(jdEl) jdEl.oninput = function(e){ jobDraft.desc = e.target.value; };
       if(jcEl) jcEl.oninput = function(e){ jobDraft.contact = e.target.value; };
+      var jeEl = document.getElementById("job-email"), jlEl = document.getElementById("job-link");
+      if(jeEl) jeEl.oninput = function(e){ jobDraft.email = e.target.value; };
+      if(jlEl) jlEl.oninput = function(e){ jobDraft.link = e.target.value; };
     }
 
     if(state.tab === "marketplace"){
@@ -5341,21 +5383,27 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
           showToast(state.lang==="en" ? "Failed to unlist" : "فشل إلغاء العرض");
         });
       }
+    } else if(action === "open-assistant"){
+      faqOpen();
     } else if(action === "job-show-form"){
       if(!jobDraft.contact) jobDraft.contact = state.myPhone || "";
       state.showJobForm = true;
       render();
     } else if(action === "job-cancel"){
       state.showJobForm = false;
-      jobDraft = { title:"", desc:"", contact:"" };
+      jobDraft = { title:"", desc:"", contact:"", email:"", link:"" };
       render();
     } else if(action === "job-submit"){
       var jTitle = jobDraft.title.trim(), jDesc = jobDraft.desc.trim(), jContact = jobDraft.contact.trim();
-      if(!jTitle || !jDesc || !jContact){ showToast(t("jobs_required")); return; }
+      var jEmailV = jobDraft.email.trim(), jLinkRaw = jobDraft.link.trim();
+      if(!jTitle || !jDesc || (!jContact && !jEmailV && !jLinkRaw)){ showToast(t("jobs_required")); return; }
+      if(jEmailV && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(jEmailV)){ showToast(t("jobs_bad_email")); return; }
+      var jLinkV = jLinkRaw ? normalizeUrl(jLinkRaw) : "";
+      if(jLinkRaw && !jLinkV){ showToast(t("jobs_bad_link")); return; }
       var jProp = state.domain === "property";
       var jName = ((state.myProfile.firstName || "") + " " + (state.myProfile.lastName || "")).trim() || (currentUser && currentUser.displayName) || "";
       addDoc(collection(db, jProp ? "propertyJobs" : "jobs"), {
-        ownerId: currentUser.uid, ownerName: jName, title: jTitle, desc: jDesc, contact: jContact,
+        ownerId: currentUser.uid, ownerName: jName, title: jTitle, desc: jDesc, contact: jContact, email: jEmailV, link: jLinkV,
         role: (jProp ? state.myProfile.propertyRole : state.myProfile.carRole) || "",
         country: state.myCountry || "egypt", createdAt: Date.now()
       }).then(function(){
@@ -5365,7 +5413,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
         showToast(t("jobs_failed"));
       });
       state.showJobForm = false;
-      jobDraft = { title:"", desc:"", contact:"" };
+      jobDraft = { title:"", desc:"", contact:"", email:"", link:"" };
       render();
     } else if(action === "job-delete"){
       if(!window.confirm(t("jobs_delete_confirm"))) return;
@@ -6347,6 +6395,202 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
   syncHtmlDir();
   render();
 })();
+
+  /* ---------------- مساعد الأسئلة الشائعة ----------------
+     مش AI: مطابقة كلمات مفتاحية على قاعدة أسئلة وأجوبة مكتوبة هنا.
+     لإضافة سؤال جديد: أضف عنصر جديد في FAQ_DATA (k = كلمات مفتاحية بدون "ال"). */
+  var FAQ_DATA = [
+    { qa:"إيه هو Lam7Track وبيعمل إيه؟", qe:"What is Lam7Track?",
+      k:["lam7","ايه هو","ما هو","ايه التطبيق","بيعمل ايه","فايده","what is","about the app","what does"],
+      aa:"Lam7Track نظام تتبع تسويق للسيارات والعقارات: بتسجّل كل نشر بتعمله على قنواتك، وبيوريك مهام اليوم والإحصائيات، وفيه معرض بيع ووظائف للمسوقين.",
+      ae:"Lam7Track is a marketing tracker for cars and properties: log every post on your channels, see daily tasks and stats, plus a sales gallery and marketer jobs." },
+    { qa:"إزاي أضيف سيارة أو عقار؟", qe:"How do I add a car or property?",
+      k:["اضيف","اضافه","اضف","سيار جديد","عقار جديد","اعمل سيار","سجل سيار","add car","add property","new car","new property","add a car"],
+      aa:"من تاب «السيارات» (أو «العقارات» في وضع العقارات) اضغط زرار الإضافة، اكتب الاسم ورابط الإعلان (اختياري)، حدّد الأولوية والمصدر، واختار القنوات وعدد مرات النشر المستهدفة، وبعدين احفظ.",
+      ae:"Open the Cars tab (Properties in property mode), tap add, enter the name and optional ad link, pick priority and source, choose channels and target posts, then save." },
+    { qa:"إزاي أسجّل إني نشرت؟", qe:"How do I log a post?",
+      k:["سجل نشر","تسجيل","نشرت","انشر","مهام اليوم","تم النشر","log post","publish","i posted","mark published","daily tasks"],
+      aa:"من تاب «اليوم» هتلاقي مهمة لكل سيارة على كل قناة. اضغط «تسجيل» بعد ما تنشر، وتقدر تحدد الكمية لو نشرت أكتر من مرة. الشريط بيوريك تقدم هدف القناة اليوم.",
+      ae:"On the Today tab each car has a task per channel. Tap Log after posting (set the quantity if you posted several times). The bar shows today's channel target." },
+    { qa:"إيه هي القنوات وإزاي أضيف قناة؟", qe:"What are channels and how do I add one?",
+      k:["قناه","قنوات","جروب","مجموعه","فيس","واتساب","تليجرام","تيليجرام","channel","group","facebook","whatsapp","telegram"],
+      aa:"القنوات هي أماكن نشرك (جروبات فيسبوك، قنوات واتساب، تليجرام...). من تاب «القنوات» تضيف قناة خاصة بيك بإيموجي واسم ورابط وهدف يومي. فيه كمان قنوات عامة بيديرها الأدمن وتظهر لكل مستخدمي بلدك.",
+      ae:"Channels are where you post (Facebook groups, WhatsApp, Telegram...). In the Channels tab add your own with an emoji, name, link and daily target. Admin-managed public channels also appear for your country." },
+    { qa:"يعني إيه هدف الحملة (0 / 2)؟", qe:"What does the campaign target (0 / 2) mean?",
+      k:["هدف","حمله","2 / 0","تارجت","متبقي","تقدم","target","campaign","progress","goal"],
+      aa:"الرقم الأول عدد مرات النشر اللي تمت، والتاني الهدف المطلوب لكل قناة. أول ما توصل للهدف المهمة بتتحسب منفّذة وبتظهر تحت «مهام تم تنفيذها».",
+      ae:"First number = posts done, second = the target for that channel. Once reached, the task counts as done and moves under completed tasks." },
+    { qa:"إزاي أعرض سيارتي أو عقاري للمسوقين؟", qe:"How do I list my car/property in the gallery?",
+      k:["اعرض","عرض للمسوقين","معرض","للبيع","ابيع","list","gallery","marketplace","sell","show to marketers"],
+      aa:"من تاب «السيارات» افتح السيارة واضغط «عرض للمسوقين». لازم تكمّل ملفك الشخصي الأول (الاسم والمهنة). بعدها تظهر في «معرض البيع» لكل مسوقي بلدك مع رقمك وزرار تواصل واتساب.",
+      ae:"In the Cars tab open the car and tap Show to marketers. Complete your profile first (name and role). It then appears in the Sales Gallery for marketers in your country with a WhatsApp contact button." },
+    { qa:"إيه فايدة رابط الإعلان؟", qe:"What is the ad link for?",
+      k:["رابط الاعلان","رابط اعلان","لينك","ازرق","ad link","link","blue name"],
+      aa:"لو ضفت رابط الإعلان لسيارتك أو عقارك، اسمه في معرض البيع بيتحول للون الأزرق ويبقى قابل للضغط، وبيفتح الإعلان مباشرة. اكتب الرابط وهتحفظ، ولو كنت عارضه قبل كده احفظ التعديل مرة عشان يتحدّث.",
+      ae:"If you add an ad link, the item's name in the gallery turns blue and tappable, opening the ad directly. If it was already listed, save the edit once to sync it." },
+    { qa:"إيه معنى الشارات (مسوق / مالك مباشر...)؟", qe:"What do the badges mean?",
+      k:["شاره","شارات","مسوق","مالك مباشر","تاجر","معرض","سمسار","badge","role","owner","dealer"],
+      aa:"فيه شارتين: «المستخدم» = مهنة الناشر (مسوق، معرض، تاجر، مالك مباشر، وفي العقارات شركة/سمسار)، و«السيارة/العقار» = مصدره (معرض، تاجر، مالك مباشر). الاتنين بيتحددوا من ملفك ومن بيانات السيارة.",
+      ae:"Two badges: User = the publisher's role (marketer, showroom, dealer, direct owner; company/broker for properties) and Car/Property = its source (showroom, dealer, direct owner)." },
+    { qa:"إزاي أبدّل بين السيارات والعقارات؟", qe:"How do I switch between cars and properties?",
+      k:["بدل","وضع","عقارات","سيارات","تبديل","تحويل","switch","mode","cars mode","property mode"],
+      aa:"اضغط على صورتك أعلى الشاشة وهتلاقي زرار تبديل الوضع. كل حاجة (اليوم، الإدارة، المعرض، القنوات، الإحصائيات) بتتغير معاه، وبيانات كل وضع منفصلة تمامًا.",
+      ae:"Tap your avatar at the top and use the mode switch. Everything (Today, management, gallery, channels, stats) changes with it, and each mode's data is fully separate." },
+    { qa:"إزاي أغيّر اللغة أو الوضع الليلي؟", qe:"How do I change language or dark mode?",
+      k:["لغه","انجليزي","عربي","ليلي","نهاري","dark","language","english","arabic","theme"],
+      aa:"من القائمة اللي بتفتح لما تضغط على صورتك أعلى الشاشة: فيها تبديل اللغة (عربي/English) وتبديل الوضع الليلي/النهاري.",
+      ae:"From the menu that opens when you tap your avatar at the top: language (Arabic/English) and dark/light mode." },
+    { qa:"إيه اللي لازم أكمله في الملف الشخصي؟", qe:"What must I fill in my profile?",
+      k:["ملف شخصي","بروفايل","ملفي","بياناتي","مهنه","نبذه","profile","my profile","bio","fill"],
+      aa:"الاسم وتاريخ الميلاد ونبذة ومهنتك الحالية ورابط بروفايلك (فيسبوك مثلًا) ومهنتك في السيارات والعقارات. الملف لازم يكون مكتمل قبل ما تقدر «تعرض للمسوقين».",
+      ae:"Name, date of birth, a short bio, current job, a profile link (e.g. Facebook) and your role in cars and properties. A complete profile is required before listing to marketers." },
+    { qa:"إزاي أطلب تثبيت سيارتي في أول المعرض؟", qe:"How do I request pinning my item to the top?",
+      k:["تثبيت","اثبت","ثبت","اول المعرض","pin","pinned","top of gallery"],
+      aa:"اضغط زرار «تثبيت» على سيارتك في المعرض ليتبعت طلب للأدمن. لو وافق بتتثبت في أول القايمة وتظهر عليها شارة «مثبتة».",
+      ae:"Tap Pin on your item in the gallery to send a request to the admin. If approved it stays at the top with a Pinned badge." },
+    { qa:"إزاي أنشر وظيفة أو أدوّر على وظيفة؟", qe:"How do I post or find a job?",
+      k:["وظيفه","وظايف","وظائف","شغل","عمل","توظيف","job","jobs","hiring","work","vacancy"],
+      aa:"اضغط «المزيد» من الشريط السفلي ثم «الوظائف». كل وضع ليه وظائفه (سيارات أو عقارات). اضغط «إضافة وظيفة» واكتب العنوان والتفاصيل ورقم التواصل، والمهتمين هيتواصلوا معاك على واتساب.",
+      ae:"Tap More in the bottom bar, then Jobs. Each mode has its own jobs (cars or properties). Tap Post a job and enter the title, details and contact; interested people reach you on WhatsApp." },
+    { qa:"إيه الإحصائيات وأشوفها فين؟", qe:"Where are the stats?",
+      k:["احصائيات","احصاءات","ارقام","تقرير","stats","statistics","report","numbers"],
+      aa:"من «المزيد» ثم «الإحصائيات»: بتوريك نشاطك وأكتر سيارة نشرتها وأكتر قناة بتنشر عليها والسيارات اللي محتاجة نشر.",
+      ae:"Under More → Stats: your activity, your most posted car, top channel and the cars that need posting." },
+    { qa:"إيه حكاية الاشتراك التجريبي؟", qe:"How does the free trial work?",
+      k:["اشتراك","تجريبي","تجربه","مجاني","ينتهي","انتهى","تجديد","فلوس","subscription","trial","free","expire","renew","payment"],
+      aa:"أول ما تسجّل بحساب جوجل بتاخد اشتراك تجريبي شهر كامل تلقائيًا من غير موافقة. بعد ما ينتهي بيتوقف الدخول لحد ما تتواصل مع الأدمن لتجديد الاشتراك.",
+      ae:"On first sign-in with Google you get a full-month free trial automatically. When it ends, access pauses until you contact the admin to renew." },
+    { qa:"إزاي أثبّت التطبيق على موبايلي؟", qe:"How do I install the app on my phone?",
+      k:["تثبيت التطبيق","نزل","حمل","اثبت التطبيق","شاشه رئيسيه","install","download","home screen","add to home"],
+      aa:"افتح التطبيق من كروم (أندرويد) أو سفاري (آيفون)، واختار «إضافة إلى الشاشة الرئيسية» من قائمة المتصفح. هيشتغل بعدها كتطبيق عادي.",
+      ae:"Open the app in Chrome (Android) or Safari (iPhone) and choose Add to Home Screen from the browser menu. It then runs like a normal app." },
+    { qa:"إيه الفرق بين الدول (مصر/السعودية/أمريكا)؟", qe:"How do countries work?",
+      k:["دوله","بلد","مصر","سعوديه","امريكا","country","egypt","saudi","usa"],
+      aa:"كل دولة ليها قنواتها ومعرضها ووظائفها المنفصلة، وانت بتشوف بس اللي يخص بلدك. الأدمن بيشوف كل الدول.",
+      ae:"Each country has its own channels, gallery and jobs, and you only see your own country's. The admin sees all." },
+    { qa:"إزاي أتواصل مع صاحب سيارة أو وظيفة؟", qe:"How do I contact a seller or job poster?",
+      k:["تواصل","اكلم","كلم","رقم","واتساب","contact","call","whatsapp","message"],
+      aa:"اضغط زرار «تواصل» الأخضر في المعرض أو في الوظيفة، وهيفتح محادثة واتساب مع الناشر برسالة جاهزة.",
+      ae:"Tap the green Contact button in the gallery or on a job; it opens a WhatsApp chat with the poster with a ready message." }
+  ];
+
+  var faqMsgs = [];
+  var faqEls = {};
+
+  function faqNorm(s){
+    return String(s||"").toLowerCase()
+      .replace(/[\u064B-\u0652\u0640]/g,"").replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه")
+      .replace(/[^\u0600-\u06FFa-z0-9\s/]/g," ").replace(/\s+/g," ").trim()
+      .split(" ").map(function(w){ return w.length > 3 ? w.replace(/^ال/,"") : w; }).join(" ");
+  }
+  function faqEn(){ return state.lang === "en"; }
+  function faqQuestion(f){ return faqEn() ? f.qe : f.qa; }
+  function faqAnswer(f){ return faqEn() ? f.ae : f.aa; }
+
+  function faqSearch(query){
+    var q = faqNorm(query);
+    if(!q) return [];
+    var qTokens = q.split(" ").filter(function(w){ return w.length > 2; });
+    return FAQ_DATA.map(function(f){
+      var score = 0;
+      f.k.forEach(function(kw){
+        var nk = faqNorm(kw);
+        if(nk && q.indexOf(nk) !== -1) score += (nk.indexOf(" ") !== -1 ? 3 : 2);
+      });
+      var qq = faqNorm(f.qa + " " + f.qe);
+      qTokens.forEach(function(w){ if(qq.indexOf(w) !== -1) score += 1; });
+      return { f:f, score:score };
+    }).filter(function(r){ return r.score > 0; }).sort(function(a,b){ return b.score - a.score; });
+  }
+
+  function faqAdd(role, text){
+    faqMsgs.push({ role:role, text:text });
+    var b = document.createElement("div");
+    b.className = "faq-msg faq-" + role;
+    b.textContent = text;
+    faqEls.list.appendChild(b);
+    faqEls.list.scrollTop = faqEls.list.scrollHeight;
+  }
+
+  function faqChips(items){
+    var old = faqEls.list.querySelector(".faq-chips");
+    if(old) old.remove();
+    var wrap = document.createElement("div");
+    wrap.className = "faq-chips";
+    items.forEach(function(f){
+      var c = document.createElement("button");
+      c.className = "faq-chip";
+      c.textContent = faqQuestion(f);
+      c.onclick = function(){ faqAsk(faqQuestion(f), f); };
+      wrap.appendChild(c);
+    });
+    faqEls.list.appendChild(wrap);
+    faqEls.list.scrollTop = faqEls.list.scrollHeight;
+  }
+
+  function faqAsk(text, exact){
+    text = (text || "").trim();
+    if(!text) return;
+    faqAdd("user", text);
+    var hit = exact || null, others = [];
+    if(!hit){
+      var res = faqSearch(text);
+      if(res.length && res[0].score >= 2){ hit = res[0].f; others = res.slice(1, 4).map(function(r){ return r.f; }); }
+    }
+    setTimeout(function(){
+      if(hit){
+        faqAdd("bot", faqAnswer(hit));
+        if(others.length) faqChips(others);
+      } else {
+        faqAdd("bot", faqEn() ? "I couldn't find an exact answer. Try different words, or pick one of these:" : "ما لقيتش إجابة مطابقة. جرّب بكلمات تانية أو اختار من الأسئلة دي:");
+        faqChips(FAQ_DATA.slice(0, 6));
+      }
+    }, 250);
+  }
+
+  function faqOpen(){
+    faqBuild();
+    faqEls.sheet.classList.add("open");
+    faqEls.backdrop.classList.add("open");
+    if(!faqMsgs.length){
+      faqAdd("bot", faqEn() ? "Hi! Ask me anything about using the app, or pick a question:" : "أهلًا! اسألني عن أي حاجة في استخدام التطبيق، أو اختار سؤال:");
+      faqChips(FAQ_DATA.slice(0, 6));
+    }
+  }
+  function faqClose(){
+    if(!faqEls.sheet) return;
+    faqEls.sheet.classList.remove("open");
+    faqEls.backdrop.classList.remove("open");
+  }
+
+  function faqBuild(){
+    if(faqEls.sheet){
+      faqEls.title.textContent = faqEn() ? "App assistant" : "مساعد التطبيق";
+      faqEls.input.placeholder = faqEn() ? "Type your question..." : "اكتب سؤالك...";
+      faqEls.sheet.setAttribute("dir", faqEn() ? "ltr" : "rtl");
+      return;
+    }
+    var backdrop = document.createElement("div");
+    backdrop.className = "faq-backdrop";
+    backdrop.onclick = faqClose;
+    var sheet = document.createElement("div");
+    sheet.className = "faq-sheet";
+    sheet.setAttribute("dir", faqEn() ? "ltr" : "rtl");
+    sheet.innerHTML = '<div class="faq-head"><span class="faq-title"></span><button class="faq-x" aria-label="close">✕</button></div>' +
+      '<div class="faq-list"></div>' +
+      '<div class="faq-inputrow"><input class="faq-input" type="text" enterkeyhint="send" /><button class="faq-send" aria-label="send">➤</button></div>';
+    document.body.appendChild(backdrop);
+    document.body.appendChild(sheet);
+    faqEls = { backdrop:backdrop, sheet:sheet, title:sheet.querySelector(".faq-title"), list:sheet.querySelector(".faq-list"), input:sheet.querySelector(".faq-input") };
+    faqEls.title.textContent = faqEn() ? "App assistant" : "مساعد التطبيق";
+    faqEls.input.placeholder = faqEn() ? "Type your question..." : "اكتب سؤالك...";
+    sheet.querySelector(".faq-x").onclick = faqClose;
+    var send = function(){ var v = faqEls.input.value; faqEls.input.value = ""; faqAsk(v); };
+    sheet.querySelector(".faq-send").onclick = send;
+    faqEls.input.onkeydown = function(e){ if(e.key === "Enter"){ e.preventDefault(); send(); } };
+  }
+
+
 </script>
 </body>
 </html>
