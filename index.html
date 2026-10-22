@@ -334,6 +334,21 @@
   .as-x{width:26px; height:26px; border-radius:50%; background:var(--ink-800); color:var(--text-4); font-size:11px;}
   .as-payform{display:flex; flex-direction:column; gap:8px; margin-top:12px;}
   .as-payrow{display:flex; gap:8px;} .as-payrow .input{flex:1; min-width:0;} .as-payrow select{flex:0 0 90px;}
+  /* تذكير الاشتراك + اكتمال الملف */
+  .nb-card{display:flex; align-items:center; gap:12px; background:var(--ink-850); border:1px solid var(--ink-700); border-radius:14px; padding:12px 14px; margin-bottom:12px;}
+  .nb-card.warn{border-color:rgba(245,166,35,.5); background:rgba(245,166,35,.07);}
+  .nb-ico{font-size:24px; flex-shrink:0;}
+  .nb-txt{flex:1; min-width:0;}
+  .nb-t1{font-size:13.5px; font-weight:800; color:#fff;}
+  .nb-t2{font-size:12px; color:var(--text-4); font-weight:600; line-height:1.6; margin-top:2px;}
+  .nb-t2 b{color:var(--gold);}
+  .nb-ring{flex-shrink:0; width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:conic-gradient(var(--red) calc(var(--p) * 1%), var(--ink-700) 0);}
+  .nb-ring b{width:38px; height:38px; border-radius:50%; background:var(--ink-850); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; color:#fff; direction:ltr;}
+  .nb-btn{flex-shrink:0; padding:8px 12px; border-radius:10px; background:var(--red); color:#fff; font-size:12px; font-weight:800;}
+  .pf-prog{height:8px; border-radius:99px; background:var(--ink-700); overflow:hidden; margin:2px 0 14px; direction:ltr;}
+  .pf-prog i{display:block; height:100%; background:linear-gradient(90deg,var(--red),var(--gold)); border-radius:99px;}
+  .pf-req{color:var(--red); font-weight:900;}
+  .pf-opt{color:var(--text-5); font-weight:600; font-size:11.5px;}
   .mkt-phone{font-size:12.5px; color:var(--text-4); font-weight:600; margin-top:3px; direction:ltr; display:inline-block;}
   .mkt-contact-btn{display:flex; align-items:center; justify-content:center; gap:6px; flex-shrink:0; background:#25D366; color:#fff; border-radius:10px; padding:6px 10px; font-size:12px; font-weight:800; white-space:nowrap; box-shadow:0 5px 14px -8px rgba(37,211,102,.7); transition:transform .1s;}
   .mkt-contact-btn:active{transform:scale(.94);}
@@ -733,13 +748,13 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
   function uid(){ return Math.random().toString(36).slice(2,10) + Date.now().toString(36); }
 
   var DEFAULT_PLATFORMS = [
-    { id:"fb1", label:"فيسبوك — منشور 1", emoji:"📘", bg:"rgba(24,119,242,.15)", order:0, messaging:false },
-    { id:"fb2", label:"فيسبوك — منشور 2", emoji:"📘", bg:"rgba(24,119,242,.15)", order:1, messaging:false },
-    { id:"whatsapp", label:"واتساب", emoji:"💬", bg:"rgba(37,211,102,.15)", order:2, messaging:true },
-    { id:"telegram", label:"تيليجرام", emoji:"✈️", bg:"rgba(41,182,246,.15)", order:3, messaging:true },
-    { id:"sms", label:"رسائل SMS", emoji:"📨", bg:"rgba(245,166,35,.15)", order:4, messaging:true },
-    { id:"tiktok", label:"تيك توك", emoji:"🎵", bg:"rgba(255,255,255,.10)", order:5, messaging:false },
-    { id:"youtube", label:"يوتيوب شورتس", emoji:"▶️", bg:"rgba(255,0,51,.15)", order:6, messaging:false }
+    { id:"fb1", label:"فيسبوك — منشور 1", en:"Facebook — Post 1", emoji:"📘", bg:"rgba(24,119,242,.15)", order:0, messaging:false },
+    { id:"fb2", label:"فيسبوك — منشور 2", en:"Facebook — Post 2", emoji:"📘", bg:"rgba(24,119,242,.15)", order:1, messaging:false },
+    { id:"whatsapp", label:"واتساب", en:"WhatsApp", emoji:"💬", bg:"rgba(37,211,102,.15)", order:2, messaging:true },
+    { id:"telegram", label:"تيليجرام", en:"Telegram", emoji:"✈️", bg:"rgba(41,182,246,.15)", order:3, messaging:true },
+    { id:"sms", label:"رسائل SMS", en:"SMS", emoji:"📨", bg:"rgba(245,166,35,.15)", order:4, messaging:true },
+    { id:"tiktok", label:"تيك توك", en:"TikTok", emoji:"🎵", bg:"rgba(255,255,255,.10)", order:5, messaging:false },
+    { id:"youtube", label:"يوتيوب شورتس", en:"YouTube Shorts", emoji:"▶️", bg:"rgba(255,0,51,.15)", order:6, messaging:false }
   ];
   var PRIORITY_META = {
     high:   { label:"عالية",  weight:3, urgencyWeight:1.5,  chip:"background:rgba(232,25,44,.15);color:#E8192C;border-color:rgba(232,25,44,.3)" },
@@ -834,7 +849,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       topbar_stats_title: "لوحة الإحصائيات", topbar_stats_sub: "نظرة سريعة على أداء النشر",
       topbar_subs_title: "إدارة الاشتراكات",
       sign_out: "تسجيل الخروج", the_user: "المستخدم",
-      login_sub: "نظام تنظيم نشر إعلانات السيارات — سجّل دخولك عشان تبدأ تستخدم حسابك الخاص.",
+      login_sub: "نظام تتبع التسويق للسيارات والعقارات — سجّل دخولك عشان تبدأ.",
       google_signin: "تسجيل الدخول بحساب جوجل",
       sub_blocked_title: "الاشتراك غير مفعّل", sub_blocked_sub: "حسابك موقوف حاليًا. تواصل مع إدارة النظام لتفعيل الاشتراك.",
       pending_review: "قيد المراجعة", pending_title: "طلبك قيد الانتظار",
@@ -1016,6 +1031,8 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       mkt_view_ad_link: "رابط الإعلان", tab_more: "المزيد", more_title: "المزيد", more_sub: "أقسام وأدوات إضافية", more_jobs_car: "وظائف مسوقي السيارات", more_jobs_prop: "وظائف مسوقي العقارات", more_jobs_desc: "اعرض فرصة عمل أو اعثر على واحدة", more_stats_desc: "أرقام نشاطك وحملاتك", more_subs_desc: "إدارة اشتراكات المستخدمين",
       jobs_sub_suffix: " وظيفة", jobs_add_btn: "إضافة وظيفة", jobs_f_title: "عنوان الوظيفة", jobs_f_title_ph: "مثال: مطلوب مسوق بالعمولة", jobs_f_desc: "تفاصيل الوظيفة", jobs_f_desc_ph: "المهام، الشروط، العمولة أو الراتب...", jobs_f_contact: "رقم التواصل (واتساب)", jobs_publish: "نشر الوظيفة", jobs_cancel: "إلغاء", jobs_empty_title: "لا توجد وظائف حتى الآن", jobs_empty_sub: "كن أول من ينشر فرصة عمل", jobs_loading: "جاري تحميل الوظائف...", jobs_contact_btn: "تواصل", jobs_delete: "حذف", jobs_delete_confirm: "حذف هذه الوظيفة؟", jobs_published: "تم نشر الوظيفة", jobs_deleted: "تم حذف الوظيفة", jobs_required: "اكتب العنوان والتفاصيل ووسيلة تواصل واحدة على الأقل", jobs_f_email: "الإيميل (اختياري)", jobs_f_link: "رابط الإعلان (اختياري)", jobs_f_wa: "رقم الواتساب (اختياري)", jobs_btn_wa: "واتساب", jobs_read_more: "قراءة المزيد", jobs_show_less: "إخفاء التفاصيل", jobs_btn_email: "إيميل", jobs_btn_link: "رابط الإعلان", jobs_bad_email: "الإيميل غير صحيح", jobs_bad_link: "الرابط غير صحيح", jobs_failed: "فشلت العملية — تحقق من الاتصال", jobs_mine: "وظيفتك", jobs_wa_msg: "السلام عليكم، بخصوص وظيفة: ",
       more_assistant: "مساعد التطبيق", more_assistant_desc: "إجابات سريعة عن استخدام التطبيق",
+      onb_title: "أكمل ملفك الشخصي", onb_sub: "خطوة أخيرة قبل ما تبدأ: بياناتك الأساسية مطلوبة، وبتظهر لباقي المسوقين.", onb_role_hint: "حدّد نشاطك: مسوق ولا معرض ولا تاجر...؟ (اختار واحد على الأقل في السيارات أو العقارات)", onb_optional_hint: "الحقول التالية اختيارية، لكن كل ما كمّلتها زادت نسبة اكتمال ملفك:", onb_optional: "اختياري", onb_missing: "من فضلك أكمل: ", onb_required_toast: "لازم تكمل البيانات الأساسية الأول", onb_m_name: "الاسم الأول والأخير", onb_m_dob: "تاريخ الميلاد", onb_m_phone: "رقم الهاتف", onb_m_role: "نوع النشاط", profile_phone: "رقم الهاتف (واتساب)", onb_pct_title: "اكتمال ملفك الشخصي", onb_complete_btn: "أكمل الملف", onb_h_link: "ضيف رابط بروفايلك أو صفحتك", onb_h_bio: "اكتب نبذة مختصرة عنك", onb_h_job: "ضيف عملك الحالي", onb_h_prev: "ضيف أعمالك السابقة",
+      trial_title: "أنت في الشهر التجريبي المجاني", sub_ending_title: "اشتراكك على وشك الانتهاء", trial_left_prefix: "المتبقي", trial_ends_on: "وينتهي في", trial_renew_hint: "للتجديد تواصل مع الإدارة.", sub_left_today: "ينتهي اليوم", sub_day: "يوم", sub_days: "يوم",
       mkt_lbl_user: "المستخدم", mkt_lbl_car: "السيارة", mkt_lbl_prop: "العقار",
       new_trial_single: "عضو جديد بدأ الشهر التجريبي: ",
       new_trial_plural: " أعضاء جدد بدأوا الشهر التجريبي",
@@ -1056,7 +1073,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       topbar_stats_title: "Stats Dashboard", topbar_stats_sub: "A quick look at publishing performance",
       topbar_subs_title: "Manage Subscriptions",
       sign_out: "Sign out", the_user: "User",
-      login_sub: "Car ad publishing tracker — sign in to start using your account.",
+      login_sub: "Cars & properties marketing tracker — sign in to get started.",
       google_signin: "Sign in with Google",
       sub_blocked_title: "Subscription inactive", sub_blocked_sub: "Your account is currently paused. Contact the admin to activate your subscription.",
       pending_review: "Under review", pending_title: "Your request is pending",
@@ -1084,7 +1101,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       pause_btn: "Pause", activate_btn: "Activate",
       list_for_sale_title: "List this car on the marketplace page so other subscribers can see it",
       list_for_sale_title_prop: "List this property on the marketplace page so other subscribers can see it",
-      unlist_btn: "Unlist", list_btn: "List for sale",
+      unlist_btn: "Unlist", list_btn: "List for marketers",
       confirm_delete_btn: "Confirm delete", delete_btn: "Delete",
       chan_add_global_title: "Add a global channel (visible to all customers)",
       chan_add_private_title: "Add your own channel",
@@ -1107,7 +1124,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       chan_promote_note: 'This will become a global channel visible to all customers, and will stay linked to the same cars and campaigns you have. Tap "Confirm transfer" to continue.',
       chan_confirm_promote: "Confirm transfer", chan_promote_title: "Transfer to a global channel visible to all customers",
       mkt_loading: "Loading...", mkt_empty_title: "No cars listed for sale right now",
-      mkt_empty_sub: 'If you have a car you want to list, go to the "Cars" page and tap "List for sale"',
+      mkt_empty_sub: 'If you have a car you want to list, go to the "Cars" page and tap "List for marketers"',
       chan_url_placeholder: "https://... (the link that opens when the task is done)",
       chan_target_label: "Number of posts required daily on this channel",
       chan_interval_label: "Repost interval for the same car (days) — 0 means no interval",
@@ -1199,9 +1216,9 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       stat_active_properties: "Active properties",
       topbar_marketplace_title_prop: "Properties For Sale", topbar_marketplace_sub_suffix_prop: " properties listed",
       mkt_empty_title_prop: "No properties listed right now",
-      mkt_empty_sub_prop: 'If you have a property to list, go to the "Properties" page and tap "List for sale"',
+      mkt_empty_sub_prop: 'If you have a property to list, go to the "Properties" page and tap "List for marketers"',
       mkt_your_prop_btn: "Your property",
-      mkt_your_car_btn: "Your car", mkt_request_pin_btn: "Request pin",
+      mkt_your_car_btn: "Your car", mkt_request_pin_btn: "Request pinning",
       pm_links_title: "Publishing links — ", pm_location_prefix: "Post #",
       pm_links_note: "If you have the post links, paste them here (one link per line) — this step is fully optional.",
       pm_links_hint: 'Leave the field empty and tap "Skip" if there are no links right now.',
@@ -1238,6 +1255,8 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       mkt_view_ad_link: "Ad link", tab_more: "More", more_title: "More", more_sub: "Extra sections and tools", more_jobs_car: "Car marketer jobs", more_jobs_prop: "Property marketer jobs", more_jobs_desc: "Post a job or find one", more_stats_desc: "Your activity and campaign numbers", more_subs_desc: "Manage user subscriptions",
       jobs_sub_suffix: " jobs", jobs_add_btn: "Post a job", jobs_f_title: "Job title", jobs_f_title_ph: "e.g. Commission-based marketer wanted", jobs_f_desc: "Job details", jobs_f_desc_ph: "Duties, requirements, commission or pay...", jobs_f_contact: "Contact number (WhatsApp)", jobs_publish: "Publish job", jobs_cancel: "Cancel", jobs_empty_title: "No jobs yet", jobs_empty_sub: "Be the first to post an opportunity", jobs_loading: "Loading jobs...", jobs_contact_btn: "Contact", jobs_delete: "Delete", jobs_delete_confirm: "Delete this job?", jobs_published: "Job published", jobs_deleted: "Job deleted", jobs_required: "Enter the title, details and at least one contact method", jobs_f_email: "Email (optional)", jobs_f_link: "Ad link (optional)", jobs_f_wa: "WhatsApp number (optional)", jobs_btn_wa: "WhatsApp", jobs_read_more: "Read more", jobs_show_less: "Show less", jobs_btn_email: "Email", jobs_btn_link: "Ad link", jobs_bad_email: "Invalid email", jobs_bad_link: "Invalid link", jobs_failed: "Action failed — check your connection", jobs_mine: "Your job", jobs_wa_msg: "Hello, regarding the job: ",
       more_assistant: "App assistant", more_assistant_desc: "Quick answers about using the app",
+      onb_title: "Complete your profile", onb_sub: "One last step: your basic details are required and are shown to other marketers.", onb_role_hint: "Choose your role: marketer, showroom, dealer...? (pick at least one for cars or properties)", onb_optional_hint: "The fields below are optional, but each one raises your profile completion:", onb_optional: "optional", onb_missing: "Please complete: ", onb_required_toast: "Please complete the required details first", onb_m_name: "first and last name", onb_m_dob: "date of birth", onb_m_phone: "phone number", onb_m_role: "your role", profile_phone: "Phone number (WhatsApp)", onb_pct_title: "Profile completion", onb_complete_btn: "Complete", onb_h_link: "Add your profile or page link", onb_h_bio: "Write a short bio", onb_h_job: "Add your current job", onb_h_prev: "Add your previous work",
+      trial_title: "You're on the free trial", sub_ending_title: "Your subscription is ending soon", trial_left_prefix: "Remaining", trial_ends_on: "ends on", trial_renew_hint: "Contact the admin to renew.", sub_left_today: "ends today", sub_day: "day", sub_days: "days",
       mkt_lbl_user: "User", mkt_lbl_car: "Car", mkt_lbl_prop: "Property",
       new_trial_single: "New trial signup: ",
       new_trial_plural: " new members started their trial",
@@ -1338,14 +1357,14 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
   }
 
   var COUNTRIES = [
-    { id:"egypt", flag:"🇪🇬", ar:"مصر", en:"Egypt", phoneCode:"20" },
-    { id:"saudi", flag:"🇸🇦", ar:"السعودية", en:"Saudi Arabia", phoneCode:"966" },
-    { id:"usa",   flag:"🇺🇸", ar:"أمريكا", en:"USA", phoneCode:"1" }
+    { id:"egypt", ar:"مصر", en:"Egypt", phoneCode:"20" },
+    { id:"saudi", ar:"السعودية", en:"Saudi Arabia", phoneCode:"966" },
+    { id:"usa",   ar:"أمريكا", en:"USA", phoneCode:"1" }
   ];
   function countryLabel(id){
     var c = COUNTRIES.find(function(c){ return c.id === id; });
     if(!c) return id || "";
-    return c.flag + " " + (state.lang === "en" ? c.en : c.ar);
+    return (state.lang === "en" ? c.en : c.ar);
   }
   function countryPhoneCode(id){
     var c = COUNTRIES.find(function(c){ return c.id === id; });
@@ -1555,7 +1574,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
         platformsSeedAttempted = true;
         DEFAULT_PLATFORMS.forEach(function(p){
           setDoc(doc(db, "accounts", userId, "platforms", p.id), {
-            label: p.label, emoji: p.emoji, bg: p.bg, order: p.order, active: true, createdAt: Date.now(), messaging: !!p.messaging
+            label: (state.lang === "en" && p.en) ? p.en : p.label, emoji: p.emoji, bg: p.bg, order: p.order, active: true, createdAt: Date.now(), messaging: !!p.messaging
           }).catch(function(err){ console.error("seed platform error:", err); });
         });
         return; // the setDoc calls will re-trigger this listener
@@ -1855,6 +1874,8 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       state.mySubscriptionEnd = (data && data.subscriptionEnd) || null;
       state.myPhone = (data && data.phone) || "";
       state.myCountry = (data && data.country) || "";
+      state.myIsTrial = !!(data && data.isTrial);
+      state.myCreatedAt = (data && data.createdAt) || 0;
       state.myProfile = {
         firstName: (data && data.profile && data.profile.firstName) || "",
         lastName: (data && data.profile && data.profile.lastName) || "",
@@ -1882,9 +1903,17 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       } else {
         state.showCountryPicker = false;
       }
+      if(data && data.country && !state.isAdmin && !state.onboardingChecked){
+        state.onboardingChecked = true;
+        var recentAcc = state.isBrandNewAccount || (state.myCreatedAt && Date.now() - state.myCreatedAt < 3 * 86400000);
+        if(recentAcc && profileMissing(state.myProfile, state.myPhone).length){
+          profileDraft = Object.assign({}, state.myProfile, { phone: state.myPhone });
+          state.profileOnboarding = true; state.showProfileScreen = true;
+        }
+      }
       if(!activeLogged){ activeLogged = true; updateDoc(doc(db, "accounts", userId), { lastActiveAt: Date.now() }).catch(function(){ activeLogged = false; }); }
       state.accountStatusResolved = true;
-      maybeStartAppDataListeners(userId);
+      if(!accountCreating) maybeStartAppDataListeners(userId);
       render();
     }, function(err){
       console.error("account watch error:", err);
@@ -1934,6 +1963,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
 
   /* ---------------- account bootstrap + one-time legacy data import ---------------- */
   var accountCountryMigrating = false;
+  var accountCreating = false;
 
   function ensureAccount(user){
     var accountRef = doc(db, "accounts", user.uid);
@@ -1943,6 +1973,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
            المستخدم شاشة اختيار البلد مرة واحدة فور التسجيل، بدل ما
            نفترض بلد بالغلط. */
         state.isBrandNewAccount = true;
+        accountCreating = true;
         var trialStart = Date.now();
         setDoc(accountRef, {
           displayName: user.displayName || "",
@@ -1955,7 +1986,12 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
           subscriptionStart: trialStart,
           subscriptionEnd: addOneCalendarMonth(trialStart),
           isTrial: true
-        });
+        }).then(function(){
+          /* الحساب اتأكد على السيرفر: دلوقتي بس نبدأ نقرا بياناته (القواعد بتشترط وجود الحساب). */
+          accountCreating = false;
+          maybeStartAppDataListeners(user.uid);
+          render();
+        }).catch(function(err){ accountCreating = false; console.error("account create error:", err); });
         /* ملحوظة: كان هنا استدعاء checkLegacyData(user.uid) بيفحص
            مجموعة قديمة مشتركة (lam7_cars) من قبل ما يبقى فيه حسابات
            متعددة، وده كان بيخلي أي حساب جديد يشوف نفس القنوات
@@ -2088,7 +2124,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     });
   }
 
-  var profileDraft = { firstName:"", lastName:"", dob:"", bio:"", currentJob:"", previousJobs:"", carRole:"", propertyRole:"", profileLink:"" };
+  var profileDraft = { phone:"", firstName:"", lastName:"", dob:"", bio:"", currentJob:"", previousJobs:"", carRole:"", propertyRole:"", profileLink:"" };
 
   function profileRoleField(domain){
     var list = domain === "property" ? PROPERTY_ROLES : CAR_ROLES;
@@ -2106,20 +2142,24 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     return '<div class="pm-backdrop" data-action="profile-close">' +
       '<div class="pm-sheet bc-sheet" data-stop-close="1">' +
         '<div class="pm-handle"></div>' +
-        '<p class="pm-title">👤 ' + esc(t("profile_title")) + '</p>' +
-        '<p class="pm-sub">' + esc(t("profile_sub")) + '</p>' +
-        '<div class="field"><label>' + esc(t("profile_first_name")) + '</label><input class="input" id="pf-first-name" value="' + esc(profileDraft.firstName) + '" /></div>' +
-        '<div class="field"><label>' + esc(t("profile_last_name")) + '</label><input class="input" id="pf-last-name" value="' + esc(profileDraft.lastName) + '" /></div>' +
-        '<div class="field"><label>' + esc(t("profile_dob")) + '</label><input class="input" type="date" id="pf-dob" value="' + esc(profileDraft.dob) + '" /></div>' +
+        '<p class="pm-title">👤 ' + esc(t(state.profileOnboarding ? "onb_title" : "profile_title")) + '</p>' +
+        '<p class="pm-sub">' + esc(t(state.profileOnboarding ? "onb_sub" : "profile_sub")) + '</p>' +
+        '<div class="pf-prog"><i style="width:' + profilePct(profileDraft, profileDraft.phone) + '%"></i></div>' +
+        '<div class="field"><label>' + esc(t("profile_first_name")) + ' <span class="pf-req">*</span></label><input class="input" id="pf-first-name" value="' + esc(profileDraft.firstName) + '" /></div>' +
+        '<div class="field"><label>' + esc(t("profile_last_name")) + ' <span class="pf-req">*</span></label><input class="input" id="pf-last-name" value="' + esc(profileDraft.lastName) + '" /></div>' +
+        '<div class="field"><label>' + esc(t("profile_dob")) + ' <span class="pf-req">*</span></label><input class="input" type="date" id="pf-dob" value="' + esc(profileDraft.dob) + '" /></div>' +
+        '<div class="field"><label>' + esc(t("profile_phone")) + ' <span class="pf-req">*</span></label><input class="input" type="tel" id="pf-phone" inputmode="tel" dir="ltr" style="text-align:left" placeholder="01XXXXXXXXX" value="' + esc(profileDraft.phone) + '" /></div>' +
+        '<p class="pm-sub" style="margin:0 0 8px"><span class="pf-req">*</span> ' + esc(t("onb_role_hint")) + '</p>' +
         profileRoleField("car") +
         profileRoleField("property") +
-        '<div class="field"><label>' + esc(t("profile_link_label")) + '</label><input class="input" id="pf-profile-link" dir="ltr" style="text-align:left" placeholder="' + esc(t("profile_link_placeholder")) + '" value="' + esc(profileDraft.profileLink) + '" />' +
+        '<p class="pm-sub" style="margin:6px 0 8px">' + esc(t("onb_optional_hint")) + '</p>' +
+        '<div class="field"><label>' + esc(t("profile_link_label")) + ' <span class="pf-opt">(' + esc(t("onb_optional")) + ')</span></label><input class="input" id="pf-profile-link" dir="ltr" style="text-align:left" placeholder="' + esc(t("profile_link_placeholder")) + '" value="' + esc(profileDraft.profileLink) + '" />' +
           '<p style="font-size:11px;color:var(--text-5);margin:4px 0 0;line-height:1.6">' + esc(t("profile_link_hint_combined")) + '</p></div>' +
         '<div class="field"><label>' + esc(t("profile_bio")) + ' <span style="color:var(--text-5);font-weight:600">(' + bioLen + '/150' + esc(t("profile_char_count")) + ')</span></label><textarea class="input" id="pf-bio" rows="2" maxlength="150" placeholder="' + esc(t("profile_bio_placeholder")) + '">' + esc(profileDraft.bio) + '</textarea></div>' +
         '<div class="field"><label>' + esc(t("profile_current_job")) + '</label><input class="input" id="pf-current-job" placeholder="' + esc(t("profile_current_job_placeholder")) + '" value="' + esc(profileDraft.currentJob) + '" /></div>' +
         '<div class="field"><label>' + esc(t("profile_previous_jobs")) + '</label><textarea class="input" id="pf-previous-jobs" rows="2" placeholder="' + esc(t("profile_previous_jobs_placeholder")) + '">' + esc(profileDraft.previousJobs) + '</textarea></div>' +
         '<div class="pm-actions">' +
-          '<button class="pm-skip" data-action="profile-close">' + esc(t("cancel_btn")) + '</button>' +
+          (state.profileOnboarding ? '' : '<button class="pm-skip" data-action="profile-close">' + esc(t("cancel_btn")) + '</button>') +
           '<button class="pm-confirm" data-action="profile-save">' + esc(t("profile_save_btn")) + '</button>' +
         '</div>' +
       '</div>' +
@@ -2169,9 +2209,9 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
   getRedirectResult(auth).catch(function(err){
     console.error("redirect signin error:", err);
     if(err && err.code === "auth/unauthorized-domain"){
-      state.authError = "الدومين ده مش مسموح بيه في إعدادات Firebase. لازم تضيفه في Authentication → Settings → Authorized domains.";
+      state.authError = state.lang === "en" ? "This domain isn't allowed in Firebase settings. Add it under Authentication → Settings → Authorized domains." : "الدومين ده مش مسموح بيه في إعدادات Firebase. لازم تضيفه في Authentication → Settings → Authorized domains.";
     } else if(err && err.code) {
-      state.authError = "حصل خطأ أثناء تسجيل الدخول (" + err.code + "). حاول تاني.";
+      state.authError = (state.lang === "en" ? "Sign-in error (" : "حصل خطأ أثناء تسجيل الدخول (") + err.code + (state.lang === "en" ? "). Please try again." : "). حاول تاني.");
     }
     render();
   });
@@ -2192,6 +2232,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       state.isAdmin = false;
       state.accountStatusResolved = false;
       state.myCountry = ""; state.isBrandNewAccount = false; state.showCountryPicker = false;
+      state.onboardingChecked = false; state.profileOnboarding = false; accountCreating = false;
       dataListenersStarted = false;
       stopListening();
       state.cars = []; state.platforms = []; state.log = [];
@@ -3101,7 +3142,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
         return '<span class="mgmt-plat-chip"' + (done ? ' style="color:#34d399"' : '') + '>' + p.emoji + ' <span class="num-ltr">' + camp.done + '/' + camp.target + '</span>' + (done ? ' ✅' : '') + '</span>';
       }
       var d = daysSince(car.lastPublished[p.id]);
-      var label = d === null ? "—" : (d + "ي");
+      var label = d === null ? "—" : (d + (state.lang === "en" ? "d" : "ي"));
       return '<span class="mgmt-plat-chip">' + p.emoji + ' ' + label + '</span>';
     }).join("");
 
@@ -3585,7 +3626,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       '<p style="margin:0 0 10px;font-size:13px;font-weight:800;color:var(--text-3)">' + esc(t("chan_add_global_title")) + '</p>' +
       '<div class="chan-type-toggle" style="margin-bottom:8px">' +
       COUNTRIES.map(function(c){
-        return '<button class="chan-type-opt' + (d.country===c.id?' active':'') + '" data-action="set-new-propgchan-country" data-value="' + c.id + '">' + c.flag + ' ' + esc(state.lang==="en"?c.en:c.ar) + '</button>';
+        return '<button class="chan-type-opt' + (d.country===c.id?' active':'') + '" data-action="set-new-propgchan-country" data-value="' + c.id + '">' + esc(state.lang==="en"?c.en:c.ar) + '</button>';
       }).join("") +
       '</div>' +
       '<div class="chan-add-row">' +
@@ -3788,7 +3829,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       '<div class="mgmt-filters" style="margin-bottom:10px">' +
         '<button class="chip' + (state.mktCountryFilter==="all"?' active':'') + '" data-action="mkt-country-filter" data-value="all">' + esc(t("sub_all")) + '</button>' +
         COUNTRIES.map(function(c){
-          return '<button class="chip' + (state.mktCountryFilter===c.id?' active':'') + '" data-action="mkt-country-filter" data-value="' + c.id + '">' + c.flag + ' ' + esc(state.lang==="en"?c.en:c.ar) + '</button>';
+          return '<button class="chip' + (state.mktCountryFilter===c.id?' active':'') + '" data-action="mkt-country-filter" data-value="' + c.id + '">' + esc(state.lang==="en"?c.en:c.ar) + '</button>';
         }).join("") +
       '</div>' : '';
     var searchBox = '<div class="mgmt-search-box" style="margin-bottom:12px">' + ICONS.search.replace('viewBox','style="width:16px;height:16px;flex-shrink:0;color:#6c6c74" viewBox') +
@@ -3914,7 +3955,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       '<p style="margin:0 0 10px;font-size:13px;font-weight:800;color:var(--text-3)">' + esc(t("chan_add_global_title")) + '</p>' +
       '<div class="chan-type-toggle" style="margin-bottom:8px">' +
       COUNTRIES.map(function(c){
-        return '<button class="chan-type-opt' + (newGlobalChannelDraft.country===c.id?' active':'') + '" data-action="set-new-gchan-country" data-value="' + c.id + '">' + c.flag + ' ' + esc(state.lang==="en"?c.en:c.ar) + '</button>';
+        return '<button class="chan-type-opt' + (newGlobalChannelDraft.country===c.id?' active':'') + '" data-action="set-new-gchan-country" data-value="' + c.id + '">' + esc(state.lang==="en"?c.en:c.ar) + '</button>';
       }).join("") +
       '</div>' +
       '<div class="chan-add-row">' +
@@ -4183,7 +4224,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     var n = (t.id === "more" && state.isAdmin) ? adminBadgeCount() : 0;
     if(!n) return '<span class="nav-ico">' + t.icon + '</span>';
     return '<span class="nav-ico has-alert">' + t.icon +
-      '<span class="nav-badge" role="status" aria-label="' + n + ' طلب اشتراك بانتظار الموافقة">' + (n > 9 ? '9+' : n) + '</span></span>';
+      '<span class="nav-badge" role="status" aria-label="' + n + (state.lang === "en" ? ' subscription request(s) awaiting approval' : ' طلب اشتراك بانتظار الموافقة') + '">' + (n > 9 ? '9+' : n) + '</span></span>';
   }
 
   function bottomNav(){
@@ -4256,7 +4297,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       '<div style="display:flex;flex-direction:column;gap:10px;width:100%;max-width:280px;margin:10px auto 0">' +
       COUNTRIES.map(function(c){
         return '<button class="mgmt-btn" data-action="set-country" data-value="' + c.id + '" style="font-size:16px">' +
-          c.flag + '&nbsp; ' + esc(state.lang === "en" ? c.en : c.ar) + '</button>';
+          esc(state.lang === "en" ? c.en : c.ar) + '</button>';
       }).join("") +
       '</div>' +
       '<button class="mgmt-btn" style="flex:none;width:auto;max-width:160px;margin:18px auto 0;background:var(--ink-700)" data-action="toggle-lang">' + esc(t("lang_toggle")) + '</button>' +
@@ -4837,7 +4878,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       return;
     }
     var html = statusBanner() + installCardHtml() + migrationBanner();
-    if(state.tab === "today") html += screenToday();
+    if(state.tab === "today") html += withBanners(screenToday());
     else if(state.tab === "manage") html += screenManage();
     else if(state.tab === "marketplace") html += screenMarketplace();
     else if(state.tab === "channels") html += screenChannels();
@@ -4888,6 +4929,8 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       if(pfFirstEl) pfFirstEl.oninput = function(e){ profileDraft.firstName = e.target.value; };
       if(pfLastEl) pfLastEl.oninput = function(e){ profileDraft.lastName = e.target.value; };
       if(pfDobEl) pfDobEl.oninput = function(e){ profileDraft.dob = e.target.value; };
+      var pfPhoneEl = document.getElementById("pf-phone");
+      if(pfPhoneEl) pfPhoneEl.oninput = function(e){ profileDraft.phone = e.target.value; };
       if(pfBioEl) pfBioEl.oninput = function(e){ profileDraft.bio = e.target.value.slice(0,150); };
       if(pfJobEl) pfJobEl.oninput = function(e){ profileDraft.currentJob = e.target.value; };
       if(pfPrevEl) pfPrevEl.oninput = function(e){ profileDraft.previousJobs = e.target.value; };
@@ -5373,7 +5416,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       }
       if(willList && !state.myProfile.carRole){
         showToast(t("profile_incomplete_toast"));
-        profileDraft = Object.assign({}, state.myProfile);
+        profileDraft = Object.assign({}, state.myProfile, { phone: state.myPhone });
         state.showProfileScreen = true;
         render();
         return;
@@ -5420,7 +5463,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       }
       if(willListProp && !state.myProfile.propertyRole){
         showToast(t("profile_incomplete_toast"));
-        profileDraft = Object.assign({}, state.myProfile);
+        profileDraft = Object.assign({}, state.myProfile, { phone: state.myPhone });
         state.showProfileScreen = true;
         render();
         return;
@@ -6171,13 +6214,13 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       signInWithPopup(auth, googleProvider).catch(function(err){
         console.error("popup signin error:", err);
         if(err && err.code === "auth/popup-blocked"){
-          state.authError = "المتصفح منع نافذة تسجيل الدخول. اسمح بالنوافذ المنبثقة (popups) لهذا الموقع وحاول تاني.";
+          state.authError = state.lang === "en" ? "The browser blocked the sign-in window. Allow pop-ups for this site and try again." : "المتصفح منع نافذة تسجيل الدخول. اسمح بالنوافذ المنبثقة (popups) لهذا الموقع وحاول تاني.";
         } else if(err && err.code === "auth/unauthorized-domain"){
-          state.authError = "الدومين ده مش مسموح بيه في إعدادات Firebase. لازم تضيفه في Authentication → Settings → Authorized domains.";
+          state.authError = state.lang === "en" ? "This domain isn't allowed in Firebase settings. Add it under Authentication → Settings → Authorized domains." : "الدومين ده مش مسموح بيه في إعدادات Firebase. لازم تضيفه في Authentication → Settings → Authorized domains.";
         } else if(err && err.code === "auth/popup-closed-by-user" || err && err.code === "auth/cancelled-popup-request"){
           /* the user closed the popup themselves — no need to show an error */
         } else if(err && err.code) {
-          state.authError = "حصل خطأ أثناء تسجيل الدخول (" + err.code + "). حاول تاني.";
+          state.authError = (state.lang === "en" ? "Sign-in error (" : "حصل خطأ أثناء تسجيل الدخول (") + err.code + (state.lang === "en" ? "). Please try again." : "). حاول تاني.");
         }
         render();
       });
@@ -6191,11 +6234,12 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       setDomain(state.domain === "property" ? "car" : "property");
     } else if(action === "open-profile"){
       state.showAccountMenu = false;
-      profileDraft = Object.assign({}, state.myProfile);
+      profileDraft = Object.assign({}, state.myProfile, { phone: state.myPhone });
       state.showProfileScreen = true;
       render();
     } else if(action === "profile-close"){
       if(e.target !== el) return;
+      if(state.profileOnboarding){ showToast(t("onb_required_toast")); return; }
       state.showProfileScreen = false;
       render();
     } else if(action === "set-profile-car-role"){
@@ -6220,12 +6264,21 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
         currentJob: pJobEl ? pJobEl.value.trim() : "",
         previousJobs: pPrevEl ? pPrevEl.value.trim() : "",
         carRole: profileDraft.carRole,
-        propertyRole: profileDraft.propertyRole
+        propertyRole: profileDraft.propertyRole,
+        profileLink: (profileDraft.profileLink || "").trim().slice(0, 300)
       };
+      var pPhoneEl = document.getElementById("pf-phone");
+      var newPhone = cleanPhone(pPhoneEl ? pPhoneEl.value : profileDraft.phone);
+      var miss = profileMissing(newProfile, newPhone);
+      if(miss.length){ showToast(t("onb_missing") + miss.map(function(k){ return t(k); }).join(state.lang === "en" ? ", " : "، ")); return; }
+      if(newProfile.profileLink && !normalizeUrl(newProfile.profileLink)){ showToast(t("jobs_bad_link")); return; }
+      if(newProfile.profileLink) newProfile.profileLink = normalizeUrl(newProfile.profileLink);
       state.myProfile = newProfile;
+      state.myPhone = newPhone;
+      state.profileOnboarding = false;
       state.showProfileScreen = false;
       render();
-      updateDoc(doc(db, "accounts", currentUser.uid), { profile: newProfile }).then(function(){
+      updateDoc(doc(db, "accounts", currentUser.uid), { profile: newProfile, phone: newPhone }).then(function(){
         showToast(t("profile_saved"));
       }).catch(function(err){
         console.error("profile-save error:", err);
@@ -6477,7 +6530,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
         render();
       } else {
         copyText(bcMsg).then(function(ok){
-          showToast(ok ? "الرسالة طويلة — اتنسخت، الصقها في نص الإيميل" : "الرسالة طويلة — انسخها من زر (نسخ الرسالة)", 4000);
+          showToast(state.lang === "en" ? (ok ? "Message is long — copied, paste it in the email body" : "Message is long — copy it with the Copy message button") : (ok ? "الرسالة طويلة — اتنسخت، الصقها في نص الإيميل" : "الرسالة طويلة — انسخها من زر (نسخ الرسالة)"), 4000);
         });
       }
     }
@@ -6875,6 +6928,67 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     body += asCard(asT("الأرباح", "Revenue"), rev + recent + payForm);
 
     return topbar(asT("إحصائيات التطبيق", "App analytics"), asT("للأدمن فقط", "Admin only")) + '<div class="content">' + body + '</div>';
+  }
+
+  /* ---------------- اكتمال الملف الشخصي + الشهر التجريبي ---------------- */
+  function cleanPhone(v){
+    var d = String(v || "").replace(/[٠-٩]/g, function(c){ return String(c.charCodeAt(0) - 1632); }).replace(/\D/g, "");
+    if(d.indexOf("00") === 0) d = d.slice(2);
+    else if(d.charAt(0) === "0"){
+      var c = COUNTRIES.filter(function(x){ return x.id === state.myCountry; })[0];
+      if(c) d = c.phoneCode + d.slice(1);
+    }
+    return d;
+  }
+  function profileMissing(p, phone){
+    p = p || {};
+    var m = [];
+    if(!(p.firstName && p.lastName)) m.push("onb_m_name");
+    if(!p.dob) m.push("onb_m_dob");
+    if(cleanPhone(phone).length < 8) m.push("onb_m_phone");
+    if(!(p.carRole || p.propertyRole)) m.push("onb_m_role");
+    return m;
+  }
+  function profilePct(p, phone){
+    p = p || {};
+    var items = [
+      [15, !!(p.firstName && p.lastName)], [15, !!p.dob], [15, cleanPhone(phone).length >= 8], [15, !!(p.carRole || p.propertyRole)],
+      [10, !!normalizeUrl(p.profileLink || "")], [10, !!p.bio], [10, !!p.currentJob], [10, !!p.previousJobs]
+    ];
+    return items.reduce(function(a, i){ return a + (i[1] ? i[0] : 0); }, 0);
+  }
+  function profileNextHint(p, phone){
+    p = p || {};
+    if(!p.profileLink) return t("onb_h_link");
+    if(!p.bio) return t("onb_h_bio");
+    if(!p.currentJob) return t("onb_h_job");
+    if(!p.previousJobs) return t("onb_h_prev");
+    return "";
+  }
+  function bannersHtml(){
+    if(state.isAdmin || !currentUser) return "";
+    var out = "";
+    var end = state.mySubscriptionEnd;
+    if(end && state.mySubscriptionStatus === "active"){
+      var days = Math.ceil((end - Date.now()) / 86400000);
+      if(days >= 0 && (state.myIsTrial || days <= 7)){
+        var ds = new Date(end).toLocaleDateString(state.lang === "en" ? "en-GB" : "ar-EG", { day:"numeric", month:"long", year:"numeric" });
+        var left = days === 0 ? t("sub_left_today") : (days + " " + (days === 1 ? t("sub_day") : t("sub_days")));
+        out += '<div class="nb-card' + (days <= 7 ? ' warn' : '') + '"><span class="nb-ico">' + (state.myIsTrial ? '🎁' : '⏳') + '</span><div class="nb-txt"><p class="nb-t1">' +
+          esc(t(state.myIsTrial ? "trial_title" : "sub_ending_title")) + '</p><p class="nb-t2">' + esc(t("trial_left_prefix")) + ' <b>' + esc(left) + '</b> · ' + esc(t("trial_ends_on")) + ' ' + esc(ds) + '. ' + esc(t("trial_renew_hint")) + '</p></div></div>';
+      }
+    }
+    var pct = profilePct(state.myProfile, state.myPhone);
+    if(pct < 100){
+      var hint = profileNextHint(state.myProfile, state.myPhone);
+      out += '<div class="nb-card prof"><div class="nb-ring" style="--p:' + pct + '"><b>' + pct + '%</b></div><div class="nb-txt"><p class="nb-t1">' + esc(t("onb_pct_title")) + '</p>' +
+        (hint ? '<p class="nb-t2">' + esc(hint) + '</p>' : '') + '</div><button class="nb-btn" data-action="open-profile">' + esc(t("onb_complete_btn")) + '</button></div>';
+    }
+    return out;
+  }
+  function withBanners(h){
+    var b = bannersHtml();
+    return b ? h.replace('<div class="content">', '<div class="content">' + b) : h;
   }
 
   visitLog();
