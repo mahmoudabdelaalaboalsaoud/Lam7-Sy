@@ -349,6 +349,25 @@
   .pf-prog i{display:block; height:100%; background:linear-gradient(90deg,var(--red),var(--gold)); border-radius:99px;}
   .pf-req{color:var(--red); font-weight:900;}
   .pf-opt{color:var(--text-5); font-weight:600; font-size:11.5px;}
+  /* اشتراكي + الباقات */
+  .ms-card{background:var(--ink-850); border:1px solid var(--ink-700); border-radius:16px; padding:16px; margin-bottom:16px;}
+  .ms-top{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px;}
+  .ms-badge{font-size:12.5px; font-weight:800; padding:5px 12px; border-radius:999px; border:1px solid var(--ink-600); color:var(--text-3);}
+  .ms-badge.on{color:#34d399; background:rgba(52,211,153,.1); border-color:rgba(52,211,153,.35);}
+  .ms-badge.off{color:var(--red); background:rgba(232,25,44,.1); border-color:rgba(232,25,44,.35);}
+  .ms-days{font-size:16px; font-weight:900; color:#fff;}
+  .ms-dates{display:flex; justify-content:space-between; gap:10px; font-size:12px; color:var(--text-4); font-weight:700;}
+  .ms-dates em{font-style:normal; color:#fff; display:block; margin-top:2px;}
+  .plan-card{background:var(--ink-850); border:1px solid var(--ink-700); border-radius:16px; padding:16px; margin-bottom:12px;}
+  .plan-head{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+  .plan-name{font-size:17px; font-weight:900; color:#fff;}
+  .plan-save{font-size:11.5px; font-weight:900; color:#06240f; background:#22c55e; padding:3px 10px; border-radius:999px;}
+  .plan-months{font-size:12.5px; color:var(--text-4); font-weight:700; margin-top:2px;}
+  .plan-price{font-size:24px; font-weight:900; color:var(--gold); margin:10px 0 2px;}
+  .plan-sub{font-size:12px; color:var(--text-5); font-weight:700;}
+  .plan-btn{display:flex; align-items:center; justify-content:center; gap:8px; width:100%; margin-top:14px; padding:12px 0; border-radius:12px; background:#22c55e; color:#06240f; font-size:14px; font-weight:900;}
+  .plan-btn svg{width:16px; height:16px;}
+  .plan-btn:active{transform:scale(.98);}
   .mkt-phone{font-size:12.5px; color:var(--text-4); font-weight:600; margin-top:3px; direction:ltr; display:inline-block;}
   .mkt-contact-btn{display:flex; align-items:center; justify-content:center; gap:6px; flex-shrink:0; background:#25D366; color:#fff; border-radius:10px; padding:6px 10px; font-size:12px; font-weight:800; white-space:nowrap; box-shadow:0 5px 14px -8px rgba(37,211,102,.7); transition:transform .1s;}
   .mkt-contact-btn:active{transform:scale(.94);}
@@ -1032,7 +1051,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       jobs_sub_suffix: " وظيفة", jobs_add_btn: "إضافة وظيفة", jobs_f_title: "عنوان الوظيفة", jobs_f_title_ph: "مثال: مطلوب مسوق بالعمولة", jobs_f_desc: "تفاصيل الوظيفة", jobs_f_desc_ph: "المهام، الشروط، العمولة أو الراتب...", jobs_f_contact: "رقم التواصل (واتساب)", jobs_publish: "نشر الوظيفة", jobs_cancel: "إلغاء", jobs_empty_title: "لا توجد وظائف حتى الآن", jobs_empty_sub: "كن أول من ينشر فرصة عمل", jobs_loading: "جاري تحميل الوظائف...", jobs_contact_btn: "تواصل", jobs_delete: "حذف", jobs_delete_confirm: "حذف هذه الوظيفة؟", jobs_published: "تم نشر الوظيفة", jobs_deleted: "تم حذف الوظيفة", jobs_required: "اكتب العنوان والتفاصيل ووسيلة تواصل واحدة على الأقل", jobs_f_email: "الإيميل (اختياري)", jobs_f_link: "رابط الإعلان (اختياري)", jobs_f_wa: "رقم الواتساب (اختياري)", jobs_btn_wa: "واتساب", jobs_read_more: "قراءة المزيد", jobs_show_less: "إخفاء التفاصيل", jobs_btn_email: "إيميل", jobs_btn_link: "رابط الإعلان", jobs_bad_email: "الإيميل غير صحيح", jobs_bad_link: "الرابط غير صحيح", jobs_failed: "فشلت العملية — تحقق من الاتصال", jobs_mine: "وظيفتك", jobs_wa_msg: "السلام عليكم، بخصوص وظيفة: ",
       more_assistant: "مساعد التطبيق", more_assistant_desc: "إجابات سريعة عن استخدام التطبيق",
       onb_title: "أكمل ملفك الشخصي", onb_sub: "خطوة أخيرة قبل ما تبدأ: بياناتك الأساسية مطلوبة، وبتظهر لباقي المسوقين.", onb_role_hint: "حدّد نشاطك: مسوق ولا معرض ولا تاجر...؟ (اختار واحد على الأقل في السيارات أو العقارات)", onb_optional_hint: "الحقول التالية اختيارية، لكن كل ما كمّلتها زادت نسبة اكتمال ملفك:", onb_optional: "اختياري", onb_missing: "من فضلك أكمل: ", onb_required_toast: "لازم تكمل البيانات الأساسية الأول", onb_m_name: "الاسم الأول والأخير", onb_m_dob: "تاريخ الميلاد", onb_m_phone: "رقم الهاتف", onb_m_role: "نوع النشاط", profile_phone: "رقم الهاتف (واتساب)", onb_pct_title: "اكتمال ملفك الشخصي", onb_complete_btn: "أكمل الملف", onb_h_link: "ضيف رابط بروفايلك أو صفحتك", onb_h_bio: "اكتب نبذة مختصرة عنك", onb_h_job: "ضيف عملك الحالي", onb_h_prev: "ضيف أعمالك السابقة",
-      trial_title: "أنت في الشهر التجريبي المجاني", sub_ending_title: "اشتراكك على وشك الانتهاء", trial_left_prefix: "المتبقي", trial_ends_on: "وينتهي في", trial_renew_hint: "للتجديد تواصل مع الإدارة.", sub_left_today: "ينتهي اليوم", sub_day: "يوم", sub_days: "يوم",
+      trial_title: "أنت في الشهر التجريبي المجاني", sub_ending_title: "اشتراكك على وشك الانتهاء", trial_left_prefix: "المتبقي", trial_ends_on: "وينتهي في", trial_renew_hint: "للتجديد اختر باقة من صفحة الباقات.", sub_left_today: "ينتهي اليوم", sub_day: "يوم", sub_days: "يوم",
       mkt_lbl_user: "المستخدم", mkt_lbl_car: "السيارة", mkt_lbl_prop: "العقار",
       new_trial_single: "عضو جديد بدأ الشهر التجريبي: ",
       new_trial_plural: " أعضاء جدد بدأوا الشهر التجريبي",
@@ -1256,7 +1275,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       jobs_sub_suffix: " jobs", jobs_add_btn: "Post a job", jobs_f_title: "Job title", jobs_f_title_ph: "e.g. Commission-based marketer wanted", jobs_f_desc: "Job details", jobs_f_desc_ph: "Duties, requirements, commission or pay...", jobs_f_contact: "Contact number (WhatsApp)", jobs_publish: "Publish job", jobs_cancel: "Cancel", jobs_empty_title: "No jobs yet", jobs_empty_sub: "Be the first to post an opportunity", jobs_loading: "Loading jobs...", jobs_contact_btn: "Contact", jobs_delete: "Delete", jobs_delete_confirm: "Delete this job?", jobs_published: "Job published", jobs_deleted: "Job deleted", jobs_required: "Enter the title, details and at least one contact method", jobs_f_email: "Email (optional)", jobs_f_link: "Ad link (optional)", jobs_f_wa: "WhatsApp number (optional)", jobs_btn_wa: "WhatsApp", jobs_read_more: "Read more", jobs_show_less: "Show less", jobs_btn_email: "Email", jobs_btn_link: "Ad link", jobs_bad_email: "Invalid email", jobs_bad_link: "Invalid link", jobs_failed: "Action failed — check your connection", jobs_mine: "Your job", jobs_wa_msg: "Hello, regarding the job: ",
       more_assistant: "App assistant", more_assistant_desc: "Quick answers about using the app",
       onb_title: "Complete your profile", onb_sub: "One last step: your basic details are required and are shown to other marketers.", onb_role_hint: "Choose your role: marketer, showroom, dealer...? (pick at least one for cars or properties)", onb_optional_hint: "The fields below are optional, but each one raises your profile completion:", onb_optional: "optional", onb_missing: "Please complete: ", onb_required_toast: "Please complete the required details first", onb_m_name: "first and last name", onb_m_dob: "date of birth", onb_m_phone: "phone number", onb_m_role: "your role", profile_phone: "Phone number (WhatsApp)", onb_pct_title: "Profile completion", onb_complete_btn: "Complete", onb_h_link: "Add your profile or page link", onb_h_bio: "Write a short bio", onb_h_job: "Add your current job", onb_h_prev: "Add your previous work",
-      trial_title: "You're on the free trial", sub_ending_title: "Your subscription is ending soon", trial_left_prefix: "Remaining", trial_ends_on: "ends on", trial_renew_hint: "Contact the admin to renew.", sub_left_today: "ends today", sub_day: "day", sub_days: "days",
+      trial_title: "You're on the free trial", sub_ending_title: "Your subscription is ending soon", trial_left_prefix: "Remaining", trial_ends_on: "ends on", trial_renew_hint: "To renew, pick a plan from the Plans page.", sub_left_today: "ends today", sub_day: "day", sub_days: "days",
       mkt_lbl_user: "User", mkt_lbl_car: "Car", mkt_lbl_prop: "Property",
       new_trial_single: "New trial signup: ",
       new_trial_plural: " new members started their trial",
@@ -1872,6 +1891,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       }
       state.mySubscriptionStatus = (data && data.subscriptionStatus) || "pending";
       state.mySubscriptionEnd = (data && data.subscriptionEnd) || null;
+      state.mySubscriptionStart = (data && data.subscriptionStart) || null;
       state.myPhone = (data && data.phone) || "";
       state.myCountry = (data && data.country) || "";
       state.myIsTrial = !!(data && data.isTrial);
@@ -2225,6 +2245,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       state.mySubscriptionStatus = "pending";
       dataListenersStarted = false;
       ensureAccount(user);
+      startPlansListening();
       startAccountWatch(user.uid, state.isAdmin);
       maybeStartAppDataListeners(user.uid); /* covers admins, whose own account snapshot may lag */
     } else {
@@ -2233,6 +2254,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       state.accountStatusResolved = false;
       state.myCountry = ""; state.isBrandNewAccount = false; state.showCountryPicker = false;
       state.onboardingChecked = false; state.profileOnboarding = false; accountCreating = false;
+      if(unsubPlans){ unsubPlans(); unsubPlans = null; }
       dataListenersStarted = false;
       stopListening();
       state.cars = []; state.platforms = []; state.log = [];
@@ -4131,6 +4153,8 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     var items = [ tile("stats", ICONS.stats, t("tab_stats"), t("more_stats_desc"), "", 0) ];
     if(state.isAdmin) items.push(tile("appstats", ICONS.stats, asT("إحصائيات التطبيق", "App analytics"), asT("الزيارات والمصادر والأرباح", "Visits, sources and revenue"), "", 0));
     if(state.isAdmin) items.push(tile("subscriptions", ICONS.crown, t("tab_subscriptions"), t("more_subs_desc"), "", pend));
+    if(state.isAdmin) items.push(tile("plans", ICONS.tag, asT("الباقات والأسعار", "Plans & pricing"), asT("عدّل الأسماء والمدد والأسعار", "Edit names, durations and prices"), "", 0));
+    else items.push(tile("mysub", ICONS.crown, asT("اشتراكي والباقات", "My plan & packages"), asT("تابع اشتراكك واختر باقة", "Track your plan and pick a package"), "", 0));
     items.push(tile("assistant", ICONS.chat, t("more_assistant"), t("more_assistant_desc"), "", 0).replace('data-action="switch-tab"', 'data-action="open-assistant"'));
     if(items.length % 2 === 1) items[items.length - 1] = items[items.length - 1].replace('class="more-tile ', 'class="more-tile more-wide ');
     var html = tile("jobs", ICONS.briefcase, t(isProp ? "more_jobs_prop" : "more_jobs_car"), t("more_jobs_desc"), "more-hero", 0) +
@@ -4230,7 +4254,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
   function bottomNav(){
     return '<div class="bottomnav"><div class="bottomnav-inner" style="--tab-count:' + visibleTabs().length + '">' +
       visibleTabs().map(function(t){
-        var active = state.tab === t.id || (t.id === "more" && ["stats","jobs","subscriptions","appstats"].indexOf(state.tab) > -1);
+        var active = state.tab === t.id || (t.id === "more" && ["stats","jobs","subscriptions","appstats","mysub","plans"].indexOf(state.tab) > -1);
         return '<button class="navbtn' + (active?' active':'') + '" data-action="switch-tab" data-value="' + t.id + '">' +
           (active ? '<span class="bar"></span>' : '') + navIcon(t) + '<span>' + t.label + '</span></button>';
       }).join("") +
@@ -4886,6 +4910,8 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     else if(state.tab === "more") html += screenMore();
     else if(state.tab === "jobs") html += screenJobs();
     else if(state.tab === "appstats" && state.isAdmin) html += screenAppStats();
+    else if(state.tab === "mysub" && !state.isAdmin) html += screenMySub();
+    else if(state.tab === "plans" && state.isAdmin) html += screenPlansAdmin();
     else if(state.tab === "subscriptions" && state.isAdmin) html += screenSubscriptions();
     else html += screenToday();
     html += bottomNav() + toast() + publishModalHtml() + broadcastModalHtml() + legacyCleanupModalHtml() + profileModalHtml();
@@ -4966,6 +4992,16 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       });
     }
 
+    if(state.tab === "plans" && state.isAdmin){
+      Array.prototype.forEach.call(document.querySelectorAll("[data-pl]"), function(inp){
+        inp.oninput = function(e){
+          var k = e.target.getAttribute("data-pl");
+          if(k === "wa"){ plansDraft.wa = e.target.value; return; }
+          var parts = k.split(":");
+          plansDraft.plans[parseInt(parts[0], 10)][parts[1]] = e.target.value;
+        };
+      });
+    }
     if(state.tab === "appstats" && state.asForm){
       var pu = document.getElementById("pay-uid"), pa = document.getElementById("pay-amount"), pc = document.getElementById("pay-cur"), pn = document.getElementById("pay-note");
       if(pu) pu.onchange = function(e){ payDraft.uid = e.target.value; };
@@ -5180,6 +5216,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       state.subsNew = (state.tab === "subscriptions" && state.isAdmin) ? newSignups() : [];
       if(state.tab === "subscriptions" && state.isAdmin) markSignupsSeen();
       if(state.tab === "appstats" && state.isAdmin && !state.asLoaded) loadAppStats();
+      if(state.tab === "plans" && state.isAdmin) plansDraft = { plans: state.plans.map(function(p){ return Object.assign({}, p); }), wa: state.adminWa };
       if(state.tab === "marketplace"){ if(state.domain === "property") maybeStartPropertyMarketplaceListening(); else maybeStartMarketplaceListening(); }
       if(state.tab === "jobs") maybeStartJobsListening();
       render();
@@ -5517,6 +5554,26 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     } else if(action === "as-pay-del"){
       if(!window.confirm(asT("حذف هذه الدفعة؟", "Delete this payment?"))) return;
       deleteDoc(doc(db, "payments", el.getAttribute("data-id"))).then(function(){ loadAppStats(); }).catch(function(err){ console.error(err); });
+    } else if(action === "plan-request"){
+      var pl = state.plans.filter(function(p){ return p.id === el.getAttribute("data-id"); })[0];
+      var waNum = String(state.adminWa || "").replace(/\D/g, "");
+      if(!pl || !currentUser) return;
+      if(waNum.length < 8){ showToast(asT("رقم واتساب الإدارة لسه ما اتضافش", "The admin's WhatsApp number isn't set yet")); return; }
+      var plPrice = planPrice(pl);
+      var plMsg = state.lang === "en"
+        ? "Hello, I'd like to subscribe to the " + planName(pl) + " plan (" + planMonthsText(pl.months) + ")" + (plPrice > 0 ? " — " + planPriceText(plPrice) : "") + ".\nEmail: " + (currentUser.email || "") + (state.myPhone ? "\nPhone: " + state.myPhone : "")
+        : "مرحبًا، أريد الاشتراك في باقة " + planName(pl) + " (" + planMonthsText(pl.months) + ")" + (plPrice > 0 ? " بسعر " + planPriceText(plPrice) : "") + ".\nالبريد: " + (currentUser.email || "") + (state.myPhone ? "\nالهاتف: " + state.myPhone : "");
+      window.open("https://wa.me/" + waNum + "?text=" + encodeURIComponent(plMsg), "_blank");
+    } else if(action === "plans-save"){
+      if(!state.isAdmin) return;
+      var outPlans = plansDraft.plans.map(function(p){
+        return { id: p.id, nameAr: String(p.nameAr || "").trim().slice(0, 30), nameEn: String(p.nameEn || "").trim().slice(0, 30),
+          months: Math.max(1, Math.min(60, parseInt(p.months, 10) || 1)), priceEGP: Math.max(0, Number(p.priceEGP) || 0), priceUSD: Math.max(0, Number(p.priceUSD) || 0) };
+      });
+      if(outPlans.some(function(p){ return !p.nameAr || !p.nameEn; })){ showToast(asT("اكتب اسم كل باقة بالعربي والإنجليزي", "Enter each plan's name in Arabic and English")); return; }
+      setDoc(doc(db, "appSettings", "plans"), { plans: outPlans, adminWhatsapp: String(plansDraft.wa || "").replace(/\D/g, ""), updatedAt: Date.now() })
+        .then(function(){ showToast(asT("تم حفظ الباقات", "Plans saved")); })
+        .catch(function(err){ console.error("plans save error:", err); showToast(asT("فشل الحفظ — تأكد من تحديث القواعد", "Save failed — check the Firebase rules")); });
     } else if(action === "open-assistant"){
       faqOpen();
     } else if(action === "job-show-form"){
@@ -6244,10 +6301,10 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       render();
     } else if(action === "set-profile-car-role"){
       profileDraft.carRole = el.getAttribute("data-value");
-      render();
+      pfRoleUi(el);
     } else if(action === "set-profile-property-role"){
       profileDraft.propertyRole = el.getAttribute("data-value");
-      render();
+      pfRoleUi(el);
     } else if(action === "profile-save"){
       if(!currentUser) return;
       var pFirstEl = document.getElementById("pf-first-name");
@@ -6965,6 +7022,14 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     if(!p.previousJobs) return t("onb_h_prev");
     return "";
   }
+  /* تحديث شكل أزرار المهنة وشريط الاكتمال من غير render، عشان الصفحة ما تقفزش لفوق. */
+  function pfRoleUi(el){
+    var grp = el.parentNode;
+    if(grp) Array.prototype.forEach.call(grp.children, function(b){ b.classList.remove("active"); });
+    el.classList.add("active");
+    var pb = document.querySelector(".pf-prog i");
+    if(pb) pb.style.width = profilePct(profileDraft, profileDraft.phone) + "%";
+  }
   function bannersHtml(){
     if(state.isAdmin || !currentUser) return "";
     var out = "";
@@ -6975,7 +7040,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
         var ds = new Date(end).toLocaleDateString(state.lang === "en" ? "en-GB" : "ar-EG", { day:"numeric", month:"long", year:"numeric" });
         var left = days === 0 ? t("sub_left_today") : (days + " " + (days === 1 ? t("sub_day") : t("sub_days")));
         out += '<div class="nb-card' + (days <= 7 ? ' warn' : '') + '"><span class="nb-ico">' + (state.myIsTrial ? '🎁' : '⏳') + '</span><div class="nb-txt"><p class="nb-t1">' +
-          esc(t(state.myIsTrial ? "trial_title" : "sub_ending_title")) + '</p><p class="nb-t2">' + esc(t("trial_left_prefix")) + ' <b>' + esc(left) + '</b> · ' + esc(t("trial_ends_on")) + ' ' + esc(ds) + '. ' + esc(t("trial_renew_hint")) + '</p></div></div>';
+          esc(t(state.myIsTrial ? "trial_title" : "sub_ending_title")) + '</p><p class="nb-t2">' + esc(t("trial_left_prefix")) + ' <b>' + esc(left) + '</b> · ' + esc(t("trial_ends_on")) + ' ' + esc(ds) + '. ' + esc(t("trial_renew_hint")) + '</p></div><button class="nb-btn" data-action="switch-tab" data-value="mysub">' + esc(asT("الباقات", "Plans")) + '</button></div>';
       }
     }
     var pct = profilePct(state.myProfile, state.myPhone);
@@ -6989,6 +7054,89 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
   function withBanners(h){
     var b = bannersHtml();
     return b ? h.replace('<div class="content">', '<div class="content">' + b) : h;
+  }
+
+  /* ---------------- الباقات + اشتراكي ---------------- */
+  var DEFAULT_PLANS = [
+    { id:"m1",  nameAr:"شهري",   nameEn:"Monthly",  months:1,  priceEGP:0, priceUSD:0 },
+    { id:"m3",  nameAr:"3 شهور", nameEn:"3 Months", months:3,  priceEGP:0, priceUSD:0 },
+    { id:"m12", nameAr:"سنوي",   nameEn:"Yearly",   months:12, priceEGP:0, priceUSD:0 }
+  ];
+  state.plans = DEFAULT_PLANS.map(function(p){ return Object.assign({}, p); });
+  state.adminWa = "";
+  var unsubPlans = null;
+  var plansDraft = { plans: [], wa: "" };
+
+  function startPlansListening(){
+    if(unsubPlans) return;
+    unsubPlans = onSnapshot(doc(db, "appSettings", "plans"), function(snap){
+      var d = snap.data();
+      if(d && Array.isArray(d.plans) && d.plans.length){
+        state.plans = d.plans.map(function(p, i){
+          var base = DEFAULT_PLANS[i] || DEFAULT_PLANS[0];
+          return { id: p.id || base.id, nameAr: p.nameAr || base.nameAr, nameEn: p.nameEn || base.nameEn,
+            months: Math.max(1, parseInt(p.months, 10) || base.months), priceEGP: Number(p.priceEGP) || 0, priceUSD: Number(p.priceUSD) || 0 };
+        });
+      }
+      state.adminWa = (d && d.adminWhatsapp) || "";
+      render();
+    }, function(err){ console.error("plans watch error:", err); });
+  }
+  function planCur(){ return state.myCountry === "egypt" ? "EGP" : "USD"; }
+  function planPrice(p){ return planCur() === "EGP" ? p.priceEGP : p.priceUSD; }
+  function planPriceText(price){
+    if(!(price > 0)) return asT("السعر عند التواصل", "Price on request");
+    return planCur() === "EGP" ? asNum(price) + " " + asT("ج.م", "EGP") : "$" + asNum(price);
+  }
+  function planName(p){ return state.lang === "en" ? p.nameEn : p.nameAr; }
+  function planMonthsText(m){
+    if(state.lang === "en") return m + (m === 1 ? " month" : " months");
+    if(m === 1) return "شهر واحد"; if(m === 2) return "شهران"; if(m <= 10) return m + " شهور"; return m + " شهرًا";
+  }
+  function fmtLong(ts){ return ts ? new Date(ts).toLocaleDateString(state.lang === "en" ? "en-GB" : "ar-EG", { day:"numeric", month:"long", year:"numeric" }) : "—"; }
+
+  function screenMySub(){
+    var end = state.mySubscriptionEnd, start = state.mySubscriptionStart;
+    var active = state.mySubscriptionStatus === "active";
+    var days = end ? Math.ceil((end - Date.now()) / 86400000) : null;
+    var pct = (start && end && end > start) ? Math.min(100, Math.max(0, Math.round((Date.now() - start) * 100 / (end - start)))) : 0;
+    var statusTxt = !active ? asT("غير مفعّل", "Inactive") : (state.myIsTrial ? asT("شهر تجريبي مجاني", "Free trial") : asT("اشتراك مدفوع", "Paid subscription"));
+    var daysTxt = days === null ? "—" : (days < 0 ? asT("منتهي", "Expired") : (days === 0 ? asT("ينتهي اليوم", "Ends today") : days + " " + asT("يوم متبقي", "days left")));
+    var card = '<div class="ms-card"><div class="ms-top"><span class="ms-badge ' + (active ? 'on' : 'off') + '">' + esc(statusTxt) + '</span><b class="ms-days">' + esc(daysTxt) + '</b></div>' +
+      '<div class="pf-prog"><i style="width:' + pct + '%"></i></div>' +
+      '<div class="ms-dates"><span>' + esc(asT("البداية", "Start")) + ' <em>' + esc(fmtLong(start)) + '</em></span><span>' + esc(asT("النهاية", "End")) + ' <em>' + esc(fmtLong(end)) + '</em></span></div></div>';
+    var monthly = state.plans.filter(function(p){ return p.months === 1; })[0];
+    var mPrice = monthly ? planPrice(monthly) : 0;
+    var plans = state.plans.map(function(p){
+      var price = planPrice(p);
+      var save = (mPrice > 0 && p.months > 1 && price > 0) ? Math.round((1 - price / (mPrice * p.months)) * 100) : 0;
+      var perMonth = (price > 0 && p.months > 1) ? planPriceText(Math.round(price / p.months * 10) / 10) + " " + asT("/ شهر", "/ month") : "";
+      return '<div class="plan-card"><div class="plan-head"><b class="plan-name">' + esc(planName(p)) + '</b>' + (save > 0 ? '<span class="plan-save">' + esc(asT("وفّر ", "Save ")) + save + '%</span>' : '') + '</div>' +
+        '<p class="plan-months">' + esc(planMonthsText(p.months)) + '</p><p class="plan-price">' + esc(planPriceText(price)) + '</p>' + (perMonth ? '<p class="plan-sub">' + esc(perMonth) + '</p>' : '') +
+        '<button class="plan-btn" data-action="plan-request" data-id="' + esc(p.id) + '">' + ICONS.send + ' ' + esc(asT("اطلب الاشتراك عبر واتساب", "Request via WhatsApp")) + '</button></div>';
+    }).join("");
+    return topbar(asT("اشتراكي", "My subscription"), asT("تابع اشتراكك واختر باقة", "Track your plan and pick a package")) +
+      '<div class="content">' + card + '<p class="as-h" style="margin:6px 2px 10px">' + esc(asT("الباقات المتاحة", "Available plans")) + '</p>' + plans +
+      '<p class="as-note">' + esc(asT("الأسعار بـ", "Prices in ")) + esc(planCur() === "EGP" ? asT("الجنيه المصري", "Egyptian pounds") : asT("الدولار الأمريكي", "US dollars")) + esc(asT(". الاشتراك والتفعيل بيتم عن طريق الواتساب مع الإدارة.", ". Subscribing and activation are handled via WhatsApp with the admin.")) + '</p></div>';
+  }
+
+  function planFld(key, label, val, type){
+    return '<div class="field"><label>' + esc(label) + '</label><input class="input" data-pl="' + key + '" type="' + type + '"' + (type === "number" ? ' inputmode="decimal" dir="ltr" style="text-align:left" min="0"' : '') + ' value="' + esc(val) + '" /></div>';
+  }
+  function screenPlansAdmin(){
+    var rows = plansDraft.plans.map(function(p, i){
+      return '<div class="as-card"><p class="as-h">' + esc(asT("الباقة ", "Plan ")) + (i + 1) + '</p>' +
+        planFld(i + ":nameAr", asT("الاسم (عربي)", "Name (Arabic)"), p.nameAr, "text") +
+        planFld(i + ":nameEn", asT("الاسم (إنجليزي)", "Name (English)"), p.nameEn, "text") +
+        planFld(i + ":months", asT("عدد الشهور", "Number of months"), p.months, "number") +
+        planFld(i + ":priceEGP", asT("السعر بالجنيه المصري (مصر)", "Price in EGP (Egypt)"), p.priceEGP, "number") +
+        planFld(i + ":priceUSD", asT("السعر بالدولار (باقي الدول)", "Price in USD (other countries)"), p.priceUSD, "number") + '</div>';
+    }).join("");
+    var wa = '<div class="as-card"><p class="as-h">' + esc(asT("رقم واتساب الإدارة", "Admin WhatsApp number")) + '</p>' +
+      planFld("wa", asT("بكود الدولة (مثال: 201012345678)", "With country code (e.g. 201012345678)"), plansDraft.wa, "tel") +
+      '<p class="as-note">' + esc(asT("المشتركون هيبعتوا طلب الاشتراك على الرقم ده.", "Subscribers send their subscription request to this number.")) + '</p></div>';
+    return topbar(asT("الباقات والأسعار", "Plans & pricing"), asT("للأدمن فقط", "Admin only")) +
+      '<div class="content">' + rows + wa + '<button class="submit-btn" style="width:100%" data-action="plans-save">' + esc(asT("حفظ الباقات", "Save plans")) + '</button></div>';
   }
 
   visitLog();
