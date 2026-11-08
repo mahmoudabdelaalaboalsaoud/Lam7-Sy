@@ -386,6 +386,10 @@
   .chan-fold-in{overflow:hidden; min-height:0;}
   .chan-fold .chan-add-card{margin:0; border:none; border-top:1px solid var(--ink-700); border-radius:0; background:transparent;}
   .chan-fold .chan-add-card > p:first-child{display:none;}
+  .mkt-admin-row{display:flex; gap:5px; align-items:stretch;}
+  .mkt-admin-row .mkt-admin-pin-btn{flex:1; min-width:0; padding-inline:6px;}
+  .mkt-admin-del{flex:0 0 32px; display:flex; align-items:center; justify-content:center; border-radius:10px; border:1px solid rgba(232,25,44,.4); background:rgba(232,25,44,.1); color:var(--red);}
+  .mkt-admin-del svg{width:15px; height:15px;}
   .mkt-phone{font-size:12.5px; color:var(--text-4); font-weight:600; margin-top:3px; direction:ltr; display:inline-block;}
   .mkt-contact-btn{display:flex; align-items:center; justify-content:center; gap:6px; flex-shrink:0; background:#25D366; color:#fff; border-radius:10px; padding:6px 10px; font-size:12px; font-weight:800; white-space:nowrap; box-shadow:0 5px 14px -8px rgba(37,211,102,.7); transition:transform .1s;}
   .mkt-contact-btn:active{transform:scale(.94);}
@@ -3800,7 +3804,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
        برسالة جاهزة — من غير أي صلاحية فعلية على المستند. */
     var pinHtml;
     if(state.isAdmin){
-      pinHtml = '<button class="mkt-admin-pin-btn' + (mc.pinned ? ' is-pinned' : '') + '" data-action="toggle-marketplace-pin" data-mkt="' + mc.id + '" data-pinned="' + (mc.pinned ? "1" : "0") + '">' + ICONS.pin + ' ' + (mc.pinned ? esc(t("mkt_unpin_btn")) : esc(t("mkt_pin_btn"))) + '</button>';
+      pinHtml = '<div class="mkt-admin-row"><button class="mkt-admin-pin-btn' + (mc.pinned ? ' is-pinned' : '') + '" data-action="toggle-marketplace-pin" data-mkt="' + mc.id + '" data-pinned="' + (mc.pinned ? "1" : "0") + '">' + ICONS.pin + ' ' + (mc.pinned ? esc(t("mkt_unpin_btn")) : esc(t("mkt_pin_btn"))) + '</button>' + '<button class="mkt-admin-del" data-action="admin-delete-listing" data-mkt="' + mc.id + '" data-owner="' + esc(mc.ownerId || '') + '" aria-label="delete">' + ICONS.trash + '</button></div>';
     } else if(!mc.pinned && isMine){
       /* غير الأدمن يقدر بس يطلب تثبيت لسيارته هو، مش لسيارات باقي الأعضاء */
       var pinMsg = pinRequestMessage(mc.name);
@@ -4923,6 +4927,12 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     if(!state.isAdmin && (state.tab === "appstats" || state.tab === "plans" || state.tab === "subscriptions")) state.tab = "today";
     if(state.isAdmin && state.tab === "mysub") state.tab = "more";
     try{ localStorage.setItem("lam7_tab", state.tab); }catch(e){}
+    /* لو التطبيق اتفتح من جديد على تاب محفوظ (وظائف/معرض/إحصائيات)، لازم نبدأ تحميل بياناته هنا لأن ضغطة التاب ما حصلتش. */
+    if(currentUser && state.accountStatusResolved && (state.isAdmin || state.mySubscriptionStatus === "active")){
+      if(state.tab === "jobs") maybeStartJobsListening();
+      if(state.tab === "marketplace"){ if(state.domain === "property") maybeStartPropertyMarketplaceListening(); else maybeStartMarketplaceListening(); }
+      if(state.tab === "appstats" && state.isAdmin && !state.asLoaded && !state.asLoading) setTimeout(loadAppStats, 0);
+    }
     var html = statusBanner() + installCardHtml() + migrationBanner();
     if(state.tab === "today") html += withBanners(screenToday());
     else if(state.tab === "manage") html += screenManage();
@@ -5655,6 +5665,16 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
 
       state.mktCountryFilter = el.getAttribute("data-value");
       render();
+    } else if(action === "admin-delete-listing"){
+      /* الأدمن يحذف أي عرض من المعرض. السيارة/العقار نفسه بيفضل في قايمة صاحبه ومابيتحذفش، بس بيرجع "غير معروض". */
+      if(!state.isAdmin) return;
+      var dlId = el.getAttribute("data-mkt"), dlOwner = el.getAttribute("data-owner");
+      if(!window.confirm(asT("حذف هذا العرض من المعرض؟ (السيارة نفسها هتفضل في قايمة صاحبها)", "Remove this listing from the gallery? (The item stays in its owner's list)"))) return;
+      var dlProp = state.domain === "property";
+      deleteDoc(doc(db, dlProp ? "propertyMarketplace" : "marketplace", dlId)).then(function(){
+        showToast(asT("تم حذف العرض من المعرض", "Listing removed from the gallery"));
+      }).catch(function(err){ console.error("admin delete listing error:", err); showToast(asT("فشل الحذف", "Delete failed")); });
+      if(dlOwner) updateDoc(doc(db, "accounts", dlOwner, dlProp ? "properties" : "cars", dlId), { listedForSale: false }).catch(function(){});
     } else if(action === "toggle-marketplace-pin"){
       /* الأدمن بس هو اللي يقدر يثبت عنصر في معرض البيع العام — التثبيت
          بيظهر لكل المشتركين (مش خاص بحساب حد)، وده بيتعمل بتعديل فلاج
