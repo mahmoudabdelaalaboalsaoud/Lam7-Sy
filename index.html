@@ -281,6 +281,8 @@
   .job-title{font-size:15.5px; font-weight:800; color:#fff; line-height:1.45; min-width:0; overflow-wrap:anywhere;}
   .job-time{flex-shrink:0; font-size:11px; color:var(--text-5); font-weight:700; padding-top:3px;}
   .job-pub{display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; margin:8px 0 8px;}
+  .job-card.expired{opacity:.55;}
+  .job-owner.job-expired{color:var(--red);}
   .job-owner{font-size:12px; color:var(--text-4); font-weight:700;}
   .job-mine{color:var(--gold);}
   .job-desc{font-size:13.5px; color:var(--text-2); line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere;}
@@ -3107,7 +3109,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
   state.chanFold = {};
   state.asRange = 7; state.asVisits = []; state.asPayments = []; state.asLoaded = false; state.asLoading = false; state.asError = false; state.asForm = false; state.subsNew = [];
   var payDraft = { uid:"", amount:"", currency:"EGP", note:"" };
-  var jobDraft = { title:"", desc:"", contact:"", email:"", link:"" };
+  var jobDraft = { title:"", desc:"", contact:"", email:"", link:"", days:30 };
   state.mgmtFilter = "all";
   state.mgmtSort = "recent";
   state.mgmtSearchFocused = false;
@@ -4152,7 +4154,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       var myC = state.myCountry || "egypt";
       var list = snap.docs.map(function(d){
         var x = d.data();
-        return { id:d.id, ownerId:x.ownerId||"", ownerName:x.ownerName||"", title:x.title||"", desc:x.desc||"", contact:x.contact||"", email:x.email||"", link:x.link||"", role:x.role||"", country:x.country||"egypt", createdAt:x.createdAt||0 };
+        return { id:d.id, ownerId:x.ownerId||"", ownerName:x.ownerName||"", title:x.title||"", desc:x.desc||"", contact:x.contact||"", email:x.email||"", link:x.link||"", role:x.role||"", country:x.country||"egypt", createdAt:x.createdAt||0, expiresAt:x.expiresAt||0 };
       }).filter(function(j){ return state.isAdmin || j.country === myC; })
         .sort(function(a,b){ return b.createdAt - a.createdAt; });
       if(isProp){ state.propertyJobs = list; state.propertyJobsLoaded = true; } else { state.jobs = list; state.jobsLoaded = true; }
@@ -4185,7 +4187,20 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     return topbar(t("more_title"), t("more_sub")) + '<div class="content">' + html + '</div>';
   }
 
-  function jobsList(){ return state.domain === "property" ? state.propertyJobs : state.jobs; }
+  function jobIsExpired(j){ return !!j.expiresAt && j.expiresAt <= Date.now(); }
+  function jobsList(){
+    var all = state.domain === "property" ? state.propertyJobs : state.jobs;
+    /* المنتهية بتختفي عن الكل، ما عدا صاحبها والأدمن (عشان يحذفوها أو يجدّدوها) */
+    return all.filter(function(j){
+      return !jobIsExpired(j) || state.isAdmin || (currentUser && j.ownerId === currentUser.uid);
+    });
+  }
+  function jobExpiryText(j){
+    if(!j.expiresAt) return "";
+    if(jobIsExpired(j)) return asT("منتهية", "Expired");
+    var d = Math.ceil((j.expiresAt - Date.now()) / 86400000);
+    return asT("تنتهي بعد " + d + " يوم", "Expires in " + d + " day" + (d === 1 ? "" : "s"));
+  }
 
   function jobItemHtml(j){
     var isMine = currentUser && j.ownerId === currentUser.uid;
@@ -4208,13 +4223,14 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
     var contactHtml = btns ? '<div class="job-btns">' + btns + '</div>' : (j.contact && digits.length < 7 && !normalizeUrl(j.contact) ? '<span class="job-contact-text">' + esc(j.contact) + '</span>' : '');
     var delHtml = (isMine || state.isAdmin) ? '<button class="job-del" data-action="job-delete" data-id="' + esc(j.id) + '">' + esc(t("jobs_delete")) + '</button>' : '';
     var open = !!state.jobsOpen[j.id];
-    return '<div class="job-card' + (open ? ' open' : '') + '">' +
+    return '<div class="job-card' + (open ? ' open' : '') + (jobIsExpired(j) ? ' expired' : '') + '">' +
       '<div class="job-head"><p class="job-title">' + esc(j.title) + '</p><span class="job-time">' + esc(formatRelative(j.createdAt)) + '</span></div>' +
       '<div class="job-pub">' +
         (roleText ? '<span class="mkt-role-badge"><span class="mkt-badge-lbl">' + esc(t("mkt_lbl_user")) + '</span>' + esc(roleText) + '</span>' : '') +
         (j.ownerName ? '<span class="job-owner">' + esc(j.ownerName) + '</span>' : '') +
         (state.isAdmin ? '<span class="job-owner">' + countryLabel(j.country) + '</span>' : '') +
         (isMine ? '<span class="job-owner job-mine">' + esc(t("jobs_mine")) + '</span>' : '') +
+        (j.expiresAt ? '<span class="job-owner' + (jobIsExpired(j) ? ' job-expired' : '') + '">' + esc(jobExpiryText(j)) + '</span>' : '') +
       '</div>' +
       '<div class="job-more">' +
         '<p class="job-desc">' + esc(j.desc) + '</p>' +
@@ -4231,6 +4247,9 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       '<div class="field"><label>' + esc(t("jobs_f_wa")) + '</label><input class="input" id="job-contact" dir="ltr" style="text-align:left" maxlength="20" inputmode="tel" value="' + esc(jobDraft.contact) + '" /></div>' +
       '<div class="field"><label>' + esc(t("jobs_f_email")) + '</label><input class="input" id="job-email" type="email" dir="ltr" style="text-align:left" maxlength="100" inputmode="email" autocapitalize="off" value="' + esc(jobDraft.email) + '" /></div>' +
       '<div class="field"><label>' + esc(t("jobs_f_link")) + '</label><input class="input" id="job-link" type="url" dir="ltr" style="text-align:left" maxlength="300" inputmode="url" autocapitalize="off" placeholder="https://" value="' + esc(jobDraft.link) + '" /></div>' +
+      '<div class="field"><label>' + esc(asT("مدة الإعلان", "Listing duration")) + '</label><select class="input" id="job-days">' +
+        [7,15,30,60].map(function(n){ return '<option value="' + n + '"' + (Number(jobDraft.days) === n ? ' selected' : '') + '>' + esc(asT(n + " يوم", n + " days")) + '</option>'; }).join("") +
+      '</select></div>' +
       '<div class="job-form-actions"><button class="submit-btn" data-action="job-submit">' + esc(t("jobs_publish")) + '</button>' +
       '<button class="job-cancel" data-action="job-cancel">' + esc(t("jobs_cancel")) + '</button></div>' +
     '</div>';
@@ -5059,6 +5078,8 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       var jeEl = document.getElementById("job-email"), jlEl = document.getElementById("job-link");
       if(jeEl) jeEl.oninput = function(e){ jobDraft.email = e.target.value; };
       if(jlEl) jlEl.oninput = function(e){ jobDraft.link = e.target.value; };
+      var jdaysEl = document.getElementById("job-days");
+      if(jdaysEl) jdaysEl.onchange = function(e){ jobDraft.days = Number(e.target.value) || 30; };
     }
 
     if(state.tab === "marketplace"){
@@ -5629,7 +5650,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       render();
     } else if(action === "job-cancel"){
       state.showJobForm = false;
-      jobDraft = { title:"", desc:"", contact:"", email:"", link:"" };
+      jobDraft = { title:"", desc:"", contact:"", email:"", link:"", days:30 };
       render();
     } else if(action === "job-submit"){
       var jTitle = jobDraft.title.trim(), jDesc = jobDraft.desc.trim(), jContact = jobDraft.contact.trim();
@@ -5643,7 +5664,8 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
       addDoc(collection(db, jProp ? "propertyJobs" : "jobs"), {
         ownerId: currentUser.uid, ownerName: jName, title: jTitle, desc: jDesc, contact: jContact, email: jEmailV, link: jLinkV,
         role: (jProp ? state.myProfile.propertyRole : state.myProfile.carRole) || "",
-        country: state.myCountry || "egypt", createdAt: Date.now()
+        country: state.myCountry || "egypt", createdAt: Date.now(),
+        expiresAt: Date.now() + ([7,15,30,60].indexOf(Number(jobDraft.days)) > -1 ? Number(jobDraft.days) : 30) * 86400000
       }).then(function(){
         showToast(t("jobs_published"));
       }).catch(function(err){
@@ -5651,7 +5673,7 @@ var ADMIN_EMAIL = "mahmoudabdelaalaboalsaoud@gmail.com";
         showToast(t("jobs_failed"));
       });
       state.showJobForm = false;
-      jobDraft = { title:"", desc:"", contact:"", email:"", link:"" };
+      jobDraft = { title:"", desc:"", contact:"", email:"", link:"", days:30 };
       render();
     } else if(action === "job-delete"){
       if(!window.confirm(t("jobs_delete_confirm"))) return;
